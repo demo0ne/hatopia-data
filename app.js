@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.5";
+window.HatopiaAppVersion = "1.0.6";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1633,6 +1633,20 @@ window.HatopiaAppVersion = "1.0.5";
         uploadsPanel.setAttribute("hidden", "hidden");
         uploadsPanel.style.display = "none";
       }
+    }
+    // Sync which panel is actually shown to the currently selected tab (fixes Admin load: Uploads panel was visible while Info tab selected)
+    const selectedBtn = document.querySelector(".tab-btn.is-selected");
+    const panelId = selectedBtn?.getAttribute("data-panel");
+    const panelDashboard = document.getElementById("panel-dashboard");
+    const panelFlowers = document.getElementById("panel-flowers");
+    const panelAnimals = document.getElementById("panel-animals");
+    const panelInfo = document.getElementById("panel-info");
+    if (panelId && panelDashboard && panelFlowers && panelAnimals && panelInfo && uploadsPanel) {
+      panelDashboard.hidden = panelId !== "dashboard";
+      panelFlowers.hidden = panelId !== "flowers";
+      panelAnimals.hidden = panelId !== "animals";
+      panelInfo.hidden = panelId !== "info";
+      uploadsPanel.hidden = panelId !== "uploads";
     }
   }
 
