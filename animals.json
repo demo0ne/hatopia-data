@@ -1,0 +1,47 @@
+[
+    {
+        "emoji": "🐰",
+        "name": "Bunnies",
+        "foods": ["🌿 Weeds", "🍓 Strawberry", "🥕 Carrot"]
+    },
+    {
+        "emoji": "🦙",
+        "name": "Alpaca",
+        "foods": ["🔵 Blueberries", "🍍 Pineapple", "🌾 Wheat"]
+    },
+    {
+        "emoji": "🐼",
+        "name": "Panda",
+        "foods": ["🎍 Bamboo", "🌽 Corn", "🍎 Apple"]
+    },
+    {
+        "emoji": "🦊",
+        "name": "Fox",
+        "foods": ["🐟 European Perch", "🐠 Largemouth Bass", "🥩 Meat"]
+    },
+    {
+        "emoji": "🦭",
+        "name": "Sea Otter",
+        "foods": ["🍤 Common Shrimp", "🦐 Oriental Shrimp", "🐚 Mussels"]
+    },
+    {
+        "emoji": "🦫",
+        "name": "Capybara",
+        "foods": ["🍒 Raspberry", "🍇 Grape", "🍅 Tomato"]
+    },
+    {
+        "emoji": "🦌",
+        "name": "Deer",
+        "foods": ["🪵 Branches", "🥗 House Salad", "🥬 Lettuce"]
+    },
+    {
+        "emoji": "🦡",
+        "name": "Ferret",
+        "foods": ["🐠 Goby", "🐟 Sea Bass", "🥚 Egg"]
+    },
+    {
+        "emoji": "🐧",
+        "name": "Penguin",
+        "foods": ["🐟 Sardine", "🦐 Common Prawn", "🐟 False Scad"]
+    }
+]
