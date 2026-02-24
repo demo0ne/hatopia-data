@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.8";
+window.HatopiaAppVersion = "1.0.9";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1097,8 +1097,7 @@ window.HatopiaAppVersion = "1.0.8";
   }
 
   function getGuideItemTitle(item) {
-    if (item.title) return item.title;
-    if (item.name) return (item.emoji || "") + " " + item.name;
+    if (item.title != null && String(item.title).trim() !== "") return String(item.title).trim();
     if (item.image) return titleFromFilename(item.image);
     return "";
   }
@@ -1111,45 +1110,47 @@ window.HatopiaAppVersion = "1.0.8";
     const linkEl = lb?.querySelector(".guide-lightbox-link");
     const textWrap = lb?.querySelector(".guide-lightbox-text");
     if (!lb || !imgEl || !titleEl || !detailsEl || !linkEl) return;
-    const hasImage = !!(item.image && item.image.trim());
-    const hasText = !!(item.name || item.title || (item.details && item.details.length));
-    const hasLink = !!(item.url && item.url.trim());
+    const hasImage = !!(item.image && String(item.image).trim());
+    const hasText = !!(item.text != null && String(item.text).trim() !== "");
+    const hasLink = !!(item.url && String(item.url).trim());
+    const titleStr = getGuideItemTitle(item);
+
+    titleEl.textContent = titleStr;
+    titleEl.hidden = false;
+
     if (hasImage) {
       imgEl.src = item.image.indexOf("/") >= 0 ? item.image : GUIDES_IMAGES_BASE + item.image;
-      imgEl.alt = getGuideItemTitle(item);
+      imgEl.alt = titleStr;
       imgEl.hidden = false;
-      lb.classList.add("guide-lightbox-has-image");
     } else {
       imgEl.removeAttribute("src");
       imgEl.hidden = true;
-      lb.classList.remove("guide-lightbox-has-image");
     }
+
+    detailsEl.innerHTML = "";
+    textWrap.style.display = "";
     if (hasText) {
-      titleEl.textContent = getGuideItemTitle(item);
-      titleEl.hidden = false;
-      detailsEl.innerHTML = "";
-      (item.details || []).forEach((d) => {
-        const li = document.createElement("li");
-        li.textContent = d;
-        detailsEl.appendChild(li);
+      const lines = String(item.text).split(/\n/);
+      lines.forEach((line) => {
+        const p = document.createElement("p");
+        p.textContent = line;
+        p.className = "guide-lightbox-text-line";
+        detailsEl.appendChild(p);
       });
-      textWrap.style.display = "";
-      lb.classList.add("guide-lightbox-has-text");
-    } else {
-      titleEl.textContent = "";
-      titleEl.hidden = true;
-      detailsEl.innerHTML = "";
-      textWrap.style.display = "none";
-      lb.classList.remove("guide-lightbox-has-text");
     }
     if (hasLink) {
       linkEl.href = item.url;
-      linkEl.textContent = item.detail != null ? item.detail : "Click Me 🌐";
+      linkEl.textContent = "Click Me 🌐";
       linkEl.hidden = false;
     } else {
       linkEl.href = "#";
       linkEl.hidden = true;
     }
+
+    lb.classList.remove("guide-lightbox-has-image", "guide-lightbox-has-text", "guide-lightbox-half");
+    if (hasImage) lb.classList.add("guide-lightbox-has-image");
+    if (hasText) lb.classList.add("guide-lightbox-has-text");
+    if (hasImage && (hasText || hasLink)) lb.classList.add("guide-lightbox-half");
     lb.hidden = false;
   }
 
@@ -1177,7 +1178,7 @@ window.HatopiaAppVersion = "1.0.8";
         const arr = JSON.parse(raw);
         if (Array.isArray(arr) && arr.length > 0) {
           const known = new Set(fallback);
-          const merged = arr.filter((id) => known.has(id));
+          const merged = arr.map((id) => (id === "links" ? "misc" : id)).filter((id) => known.has(id));
           fallback.forEach((id) => { if (!merged.includes(id)) merged.push(id); });
           return merged;
         }
@@ -1197,7 +1198,9 @@ window.HatopiaAppVersion = "1.0.8";
       const raw = localStorage.getItem(GUIDES_COLLAPSED_KEY);
       if (raw) {
         const arr = JSON.parse(raw);
-        if (Array.isArray(arr)) return new Set(arr);
+        if (Array.isArray(arr)) {
+          return new Set(arr.map((id) => (id === "links" ? "misc" : id)));
+        }
       }
     } catch (_) {}
     return new Set();
@@ -1210,9 +1213,9 @@ window.HatopiaAppVersion = "1.0.8";
   }
 
   function buildGuideCard(item, grid) {
-    const hasImage = !!(item.image && item.image.trim());
-    const hasText = !!(item.name || item.title || (item.details && item.details.length));
-    const hasLink = !!(item.url && item.url.trim());
+    const hasImage = !!(item.image && String(item.image).trim());
+    const hasText = !!(item.text != null && String(item.text).trim() !== "");
+    const hasLink = !!(item.url && String(item.url).trim());
     const titleStr = getGuideItemTitle(item);
     const imgSrc = hasImage ? (item.image.indexOf("/") >= 0 ? item.image : GUIDES_IMAGES_BASE + item.image) : "";
 
@@ -1223,9 +1226,15 @@ window.HatopiaAppVersion = "1.0.8";
       card.href = item.url;
       card.target = "_blank";
       card.rel = "noopener noreferrer";
+      if (titleStr) {
+        const titleEl = document.createElement("h3");
+        titleEl.className = "guide-card-title";
+        titleEl.textContent = titleStr;
+        card.appendChild(titleEl);
+      }
       const label = document.createElement("span");
       label.className = "guide-card-label";
-      label.textContent = item.detail != null ? item.detail : "Click Me 🌐";
+      label.textContent = "Click Me 🌐";
       card.appendChild(label);
       grid.appendChild(card);
       return;
@@ -1234,6 +1243,12 @@ window.HatopiaAppVersion = "1.0.8";
     const card = document.createElement("div");
     card.className = "guide-card";
     card.setAttribute("role", "listitem");
+    if (titleStr) {
+      const titleEl = document.createElement("h3");
+      titleEl.className = "guide-card-title";
+      titleEl.textContent = titleStr;
+      card.appendChild(titleEl);
+    }
     if (hasImage) {
       const img = document.createElement("img");
       img.className = "guide-card-img";
@@ -1241,22 +1256,19 @@ window.HatopiaAppVersion = "1.0.8";
       img.alt = titleStr;
       img.loading = "lazy";
       card.appendChild(img);
-    }
-    if (hasText) {
-      const titleEl = document.createElement("h3");
-      titleEl.className = "guide-card-title";
-      titleEl.textContent = titleStr;
-      card.appendChild(titleEl);
-      if (item.details && item.details.length) {
-        const ul = document.createElement("ul");
-        ul.className = "guide-card-details";
-        item.details.forEach((d) => {
-          const li = document.createElement("li");
-          li.textContent = d;
-          ul.appendChild(li);
-        });
-        card.appendChild(ul);
-      }
+    } else if (hasText) {
+      const detailEl = document.createElement("div");
+      detailEl.className = "guide-card-details";
+      detailEl.textContent = String(item.text).trim();
+      card.appendChild(detailEl);
+    } else if (hasLink) {
+      const a = document.createElement("a");
+      a.className = "guide-card-link-inline";
+      a.href = item.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = "Click Me 🌐";
+      card.appendChild(a);
     }
     card.addEventListener("click", (e) => {
       e.preventDefault();

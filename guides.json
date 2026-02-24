@@ -4,43 +4,46 @@
       "id": "flowers",
       "label": "🌻 Flowers",
       "items": [
-        { "image": "callalily.jpg" },
-        { "image": "carnation.jpg" },
-        { "image": "daisy.webp" },
-        { "image": "flower_combo_1.png" },
-        { "image": "flower_combo_2.png" },
-        { "image": "flower_combo_3.png" },
-        { "image": "guide_01.png" },
-        { "image": "guide_02.png" },
-        { "image": "lanceleaf.webp" },
-        { "image": "pansy.webp" },
-        { "image": "poppy.webp" },
-        { "image": "table_01.png" },
-        { "image": "table_02.png" },
-        { "image": "table_03.png" },
-        { "image": "winterfrost_event.png" }
+        { "title": "Callalily", "image": "callalily.jpg" },
+        { "title": "Carnation", "image": "carnation.jpg" },
+        { "title": "Daisy", "image": "daisy.webp" },
+        { "title": "Flower Combo 1", "image": "flower_combo_1.png" },
+        { "title": "Flower Combo 2", "image": "flower_combo_2.png" },
+        { "title": "Flower Combo 3", "image": "flower_combo_3.png" },
+        { "title": "Guide 01", "image": "guide_01.png" },
+        { "title": "Guide 02", "image": "guide_02.png" },
+        { "title": "Lanceleaf", "image": "lanceleaf.webp" },
+        { "title": "Pansy", "image": "pansy.webp" },
+        { "title": "Poppy", "image": "poppy.webp" },
+        { "title": "Table 01", "image": "table_01.png" },
+        { "title": "Table 02", "image": "table_02.png" },
+        { "title": "Table 03", "image": "table_03.png" },
+        { "title": "Winterfrost Event", "image": "winterfrost_event.png" }
       ]
     },
     {
       "id": "animals",
       "label": "🐰 Animals",
       "items": [
-        { "emoji": "🐰", "name": "Bunnies", "details": ["🌿 Weeds", "🍓 Strawberry", "🥕 Carrot"] },
-        { "emoji": "🦙", "name": "Alpaca", "details": ["🔵 Blueberries", "🍍 Pineapple", "🌾 Wheat"] },
-        { "emoji": "🐼", "name": "Panda", "details": ["🎍 Bamboo", "🌽 Corn", "🍎 Apple"] },
-        { "emoji": "🦊", "name": "Fox", "details": ["🐟 European Perch", "🐠 Largemouth Bass", "🥩 Meat"] },
-        { "emoji": "🦭", "name": "Sea Otter", "details": ["🍤 Common Shrimp", "🦐 Oriental Shrimp", "🐚 Mussels"] },
-        { "emoji": "🦫", "name": "Capybara", "details": ["🍒 Raspberry", "🍇 Grape", "🍅 Tomato"] },
-        { "emoji": "🦌", "name": "Deer", "details": ["🪵 Branches", "🥗 House Salad", "🥬 Lettuce"] },
-        { "emoji": "🦡", "name": "Ferret", "details": ["🐠 Goby", "🐟 Sea Bass", "🥚 Egg"] },
-        { "emoji": "🐧", "name": "Penguin", "details": ["🐟 Sardine", "🦐 Common Prawn", "🐟 False Scad"] }
+        { "title": "🐰 Bunnies", "text": "🌿 Weeds\n🍓 Strawberry\n🥕 Carrot" },
+        { "title": "🦙 Alpaca", "text": "🔵 Blueberries\n🍍 Pineapple\n🌾 Wheat" },
+        { "title": "🐼 Panda", "text": "🎍 Bamboo\n🌽 Corn\n🍎 Apple" },
+        { "title": "🦊 Fox", "text": "🐟 European Perch\n🐠 Largemouth Bass\n🥩 Meat" },
+        { "title": "🦭 Sea Otter", "text": "🍤 Common Shrimp\n🦐 Oriental Shrimp\n🐚 Mussels" },
+        { "title": "🦫 Capybara", "text": "🍒 Raspberry\n🍇 Grape\n🍅 Tomato" },
+        { "title": "🦌 Deer", "text": "🪵 Branches\n🥗 House Salad\n🥬 Lettuce" },
+        { "title": "🦡 Ferret", "text": "🐠 Goby\n🐟 Sea Bass\n🥚 Egg" },
+        { "title": "🐧 Penguin", "text": "🐟 Sardine\n🦐 Common Prawn\n🐟 False Scad" }
       ]
     },
     {
-      "id": "links",
-      "label": "🔗 Links",
+      "id": "misc",
+      "label": "🎲 Miscellaneous",
       "items": [
-        { "title": "google sheet", "url": "https://docs.google.com/spreadsheets/d/13zfcylxy7dkd37by8ilpsquin1afwfgqvpy_xoysvs8/edit?usp=sharing", "detail": "click me 🌐" }
+        {
+          "title": "google sheet",
+          "url": "https://docs.google.com/spreadsheets/d/13zfcylxy7dkd37by8ilpsquin1afwfgqvpy_xoysvs8/edit?usp=sharing"
+        }
       ]
     }
   ]

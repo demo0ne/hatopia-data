@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.11";
+  --hatopia-version: "1.0.12";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -1861,13 +1861,25 @@ html[data-theme="light"] .tab-btn:hover {
 
 .guide-card-details {
   margin: 0;
-  padding-left: 1em;
   font-size: 0.85rem;
   color: var(--text-muted);
-  list-style: disc;
   text-align: left;
   width: 100%;
   overflow: auto;
+  white-space: pre-line;
+  line-height: 1.35;
+}
+
+.guide-card-link-inline {
+  display: inline-block;
+  margin-top: 4px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.guide-card-link-inline:hover {
+  text-decoration: underline;
 }
 
 .guide-card-link {
@@ -1921,6 +1933,28 @@ html[data-theme="light"] .tab-btn:hover {
   padding: 20px;
 }
 
+.guide-lightbox-half .guide-lightbox-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.guide-lightbox-half .guide-lightbox-img {
+  grid-column: 1;
+  max-height: 50vh;
+  justify-self: center;
+}
+
+.guide-lightbox-half .guide-lightbox-text {
+  grid-column: 2;
+  min-width: 0;
+}
+
+.guide-lightbox-half .guide-lightbox-link {
+  grid-column: 2;
+}
+
 .guide-lightbox-img {
   max-width: 100%;
   max-height: 70vh;
@@ -1928,7 +1962,7 @@ html[data-theme="light"] .tab-btn:hover {
   border-radius: 10px;
 }
 
-.guide-lightbox-has-text .guide-lightbox-img {
+.guide-lightbox-has-text:not(.guide-lightbox-half) .guide-lightbox-img {
   max-height: 45vh;
 }
 
@@ -1944,10 +1978,14 @@ html[data-theme="light"] .tab-btn:hover {
 
 .guide-lightbox-details {
   margin: 0 0 8px;
-  padding-left: 1.2em;
   text-align: left;
   color: var(--text-muted);
   font-size: 0.95rem;
+  white-space: pre-line;
+}
+
+.guide-lightbox-text-line {
+  margin: 0 0 4px;
 }
 
 .guide-lightbox-link {
