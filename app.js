@@ -1325,6 +1325,24 @@ window.HatopiaAppVersion = "1.0.6";
     { value: "⛰️🗻", label: "⛰️🗻 Onsen Mountain (Near Capybara)" },
   ];
 
+  /** Heartopia resets daily at 7:00 GMT+8. Game day = 7:00 D to 6:59:59 D+1 (GMT+8). Returns YYYY-MM-DD of current game day start. */
+  function getCurrentGameDayStartGMT8() {
+    const now = new Date();
+    const gmt8Offset = 8 * 60;
+    const localOffset = now.getTimezoneOffset();
+    const gmt8Ms = now.getTime() + (localOffset + gmt8Offset) * 60 * 1000;
+    const gmt8 = new Date(gmt8Ms);
+    const hour = gmt8.getUTCHours();
+    const y = gmt8.getUTCFullYear();
+    const m = gmt8.getUTCMonth();
+    const d = gmt8.getUTCDate();
+    if (hour < 7) {
+      const prev = new Date(Date.UTC(y, m, d - 1));
+      return prev.getUTCFullYear() + "-" + String(prev.getUTCMonth() + 1).padStart(2, "0") + "-" + String(prev.getUTCDate()).padStart(2, "0");
+    }
+    return y + "-" + String(m + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+  }
+
   let infoPanelLoaded = false;
 
   async function loadInfoPanel() {
@@ -1355,40 +1373,26 @@ window.HatopiaAppVersion = "1.0.6";
       sectionEl.appendChild(titleEl);
 
       if (section.key === "daily") {
-        const dateRow = document.createElement("div");
-        dateRow.className = "info-field-row";
-        const dateLabel = document.createElement("span");
-        dateLabel.className = "info-field-label";
-        dateLabel.textContent = "Data Date";
-        const dateVal = document.createElement("span");
-        dateVal.className = "info-field-value";
-        dateVal.textContent = sectionData.date || "";
-        dateRow.appendChild(dateLabel);
-        dateRow.appendChild(dateVal);
-        sectionEl.appendChild(dateRow);
-
-        const currentDateRow = document.createElement("div");
-        currentDateRow.className = "info-field-row";
-        const currentDateLabel = document.createElement("span");
-        currentDateLabel.className = "info-field-label";
-        currentDateLabel.textContent = "Current Date";
-        const currentDateVal = document.createElement("span");
-        currentDateVal.className = "info-field-value";
-        const d = new Date();
-        currentDateVal.textContent = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-        currentDateRow.appendChild(currentDateLabel);
-        currentDateRow.appendChild(currentDateVal);
-        sectionEl.appendChild(currentDateRow);
+        const currentGameDay = getCurrentGameDayStartGMT8();
+        const dateRoaming = sectionData.dateRoamingOak || sectionData.date || "";
+        const dateFlawless = sectionData.dateFlawlessFlouride || sectionData.date || "";
+        const roamingCurrent = dateRoaming && dateRoaming === currentGameDay;
+        const flawlessCurrent = dateFlawless && dateFlawless === currentGameDay;
 
         const roamingRow = document.createElement("div");
         roamingRow.className = "info-field-row";
         const roamingLabel = document.createElement("span");
         roamingLabel.className = "info-field-label";
         roamingLabel.textContent = "🌳 Roaming Oak";
+        const roamingIndicator = document.createElement("span");
+        roamingIndicator.className = "info-validity-indicator " + (roamingCurrent ? "info-validity-current" : "info-validity-expired");
+        roamingIndicator.setAttribute("title", roamingCurrent ? "Data for current game day (7am–7am GMT+8)" : "Data is for a different game day");
+        roamingIndicator.setAttribute("aria-label", roamingCurrent ? "Current" : "Expired");
         const roamingVal = document.createElement("span");
         roamingVal.className = "info-field-value";
         roamingVal.textContent = ROAMING_OPTIONS.find((o) => o.value === sectionData.roamingOak)?.label || sectionData.roamingOak || "";
         roamingRow.appendChild(roamingLabel);
+        roamingRow.appendChild(roamingIndicator);
         roamingRow.appendChild(roamingVal);
         sectionEl.appendChild(roamingRow);
 
@@ -1397,10 +1401,15 @@ window.HatopiaAppVersion = "1.0.6";
         const flawlessLabel = document.createElement("span");
         flawlessLabel.className = "info-field-label";
         flawlessLabel.textContent = "💎 Flawless Flouride";
+        const flawlessIndicator = document.createElement("span");
+        flawlessIndicator.className = "info-validity-indicator " + (flawlessCurrent ? "info-validity-current" : "info-validity-expired");
+        flawlessIndicator.setAttribute("title", flawlessCurrent ? "Data for current game day (7am–7am GMT+8)" : "Data is for a different game day");
+        flawlessIndicator.setAttribute("aria-label", flawlessCurrent ? "Current" : "Expired");
         const flawlessVal = document.createElement("span");
         flawlessVal.className = "info-field-value";
         flawlessVal.textContent = FLAWLESS_OPTIONS.find((o) => o.value === sectionData.flawlessFlouride)?.label || sectionData.flawlessFlouride || "";
         flawlessRow.appendChild(flawlessLabel);
+        flawlessRow.appendChild(flawlessIndicator);
         flawlessRow.appendChild(flawlessVal);
         sectionEl.appendChild(flawlessRow);
       }
