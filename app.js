@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.12";
+window.HatopiaAppVersion = "1.0.13";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1239,10 +1239,6 @@ window.HatopiaAppVersion = "1.0.12";
         titleEl.textContent = titleStr;
         card.appendChild(titleEl);
       }
-      const label = document.createElement("span");
-      label.className = "guide-card-label";
-      label.textContent = "Click Me 🌐";
-      card.appendChild(label);
       grid.appendChild(card);
       return;
     }
