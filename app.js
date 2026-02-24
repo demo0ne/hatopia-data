@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.9";
+window.HatopiaAppVersion = "1.0.10";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1357,22 +1357,35 @@ window.HatopiaAppVersion = "1.0.9";
       if (sections[guideId]) container.appendChild(sections[guideId].section);
     });
 
+    function toggleGroup(groupId) {
+      const section = document.getElementById("guide-" + groupId);
+      if (!section) return;
+      const rec = sections[groupId];
+      if (!rec) return;
+      const { toggleBtn, chevron } = rec;
+      const expanded = section.classList.toggle("is-expanded");
+      toggleBtn.setAttribute("aria-expanded", expanded ? "true" : "false");
+      chevron.textContent = expanded ? "▲" : "▼";
+      const collapsedSet = getGuidesCollapsed();
+      if (expanded) collapsedSet.delete(groupId);
+      else collapsedSet.add(groupId);
+      saveGuidesCollapsed(collapsedSet);
+    }
+
     groups.forEach((group) => {
       const rec = sections[group.id];
       if (!rec) return;
-      const { toggleBtn, chevron, grid } = rec;
+      const { section, toggleBtn, chevron, grid } = rec;
       toggleBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         e.preventDefault();
-        const section = document.getElementById("guide-" + group.id);
-        if (!section) return;
-        const expanded = section.classList.toggle("is-expanded");
-        toggleBtn.setAttribute("aria-expanded", expanded ? "true" : "false");
-        chevron.textContent = expanded ? "▲" : "▼";
-        const collapsedSet = getGuidesCollapsed();
-        if (expanded) collapsedSet.delete(group.id);
-        else collapsedSet.add(group.id);
-        saveGuidesCollapsed(collapsedSet);
+        toggleGroup(group.id);
+      });
+      section.addEventListener("click", (e) => {
+        if (e.target.closest(".group-drag-handle")) return;
+        if (e.target.closest(".guide-card, .guide-card-link")) return;
+        e.preventDefault();
+        toggleGroup(group.id);
       });
       (group.items || []).forEach((item) => buildGuideCard(item, grid));
     });

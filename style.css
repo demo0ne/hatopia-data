@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.13";
+  --hatopia-version: "1.0.14";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -1791,18 +1791,80 @@ html[data-theme="light"] .tab-btn:hover {
   margin-bottom: 16px;
 }
 
-/* Guides panel (collapsible, re-orderable groups as cards) */
+/* Guides panel: each group is a card when collapsed; expands to full group on click */
 .guides-panel-scroll {
   padding: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 20px;
   align-content: start;
+  align-items: start;
 }
 
 .guide-group.card {
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.guide-group.card:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Collapsed = card shape (5:7), centered label */
+.guide-group.card:not(.is-expanded) {
+  aspect-ratio: 5/7;
+  min-height: 180px;
+  max-width: 220px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.guide-group.card:not(.is-expanded) .list-header {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+  gap: 8px;
+}
+
+.guide-group.card:not(.is-expanded) .group-drag-handle {
+  order: 2;
+  margin: 0;
+}
+
+.guide-group.card:not(.is-expanded) .group-toggle {
+  flex-direction: column;
+  order: 1;
+}
+
+.guide-group.card:not(.is-expanded) .list-title h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.guide-group.card:not(.is-expanded) .group-chevron {
+  margin-top: 4px;
+}
+
+/* Expanded = full group, no card aspect ratio */
+.guide-group.card.is-expanded {
+  aspect-ratio: auto;
+  min-height: 0;
+  max-width: none;
+  grid-column: 1 / -1;
+}
+
+.guide-group.card.is-expanded .list-header {
+  flex-direction: row;
+  text-align: left;
+}
+
+.guide-group.card.is-expanded .group-toggle {
+  flex-direction: row;
 }
 
 .guide-group .guide-group-content {
