@@ -485,9 +485,9 @@ window.APP_SHELL_HTML = `
             <button type="button" class="guide-lightbox-close" aria-label="Close">×</button>
             <div class="guide-lightbox-backdrop"></div>
             <div class="guide-lightbox-inner">
+                <h2 class="guide-lightbox-title"></h2>
                 <img class="guide-lightbox-img" src="" alt="" hidden />
                 <div class="guide-lightbox-text">
-                    <h2 class="guide-lightbox-title"></h2>
                     <ul class="guide-lightbox-details"></ul>
                 </div>
                 <a class="guide-lightbox-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Click Me 🌐</a>

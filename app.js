@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.13";
+window.HatopiaAppVersion = "1.0.14";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1117,7 +1117,7 @@ window.HatopiaAppVersion = "1.0.13";
     const titleStr = getGuideItemTitle(item);
 
     titleEl.textContent = titleStr;
-    titleEl.hidden = false;
+    titleEl.hidden = !titleStr;
 
     if (hasImage) {
       imgEl.src = item.image.indexOf("/") >= 0 ? item.image : GUIDES_IMAGES_BASE + item.image;
@@ -1133,10 +1133,10 @@ window.HatopiaAppVersion = "1.0.13";
     if (hasText) {
       const lines = String(item.text).split(/\n/);
       lines.forEach((line) => {
-        const p = document.createElement("p");
-        p.textContent = line;
-        p.className = "guide-lightbox-text-line";
-        detailsEl.appendChild(p);
+        const li = document.createElement("li");
+        li.textContent = line;
+        li.className = "guide-lightbox-text-line";
+        detailsEl.appendChild(li);
       });
     }
     if (hasLink) {
@@ -1227,18 +1227,22 @@ window.HatopiaAppVersion = "1.0.13";
     const imgSrc = hasImage ? (item.image.indexOf("/") >= 0 ? item.image : GUIDES_IMAGES_BASE + item.image) : "";
 
     if (hasLink && !hasImage && !hasText) {
-      const card = document.createElement("a");
-      card.className = "guide-card guide-card-link";
+      const card = document.createElement("div");
+      card.className = "guide-card guide-card-link-only";
       card.setAttribute("role", "listitem");
-      card.href = item.url;
-      card.target = "_blank";
-      card.rel = "noopener noreferrer";
       if (titleStr) {
         const titleEl = document.createElement("h3");
         titleEl.className = "guide-card-title";
         titleEl.textContent = titleStr;
         card.appendChild(titleEl);
       }
+      const linkEl = document.createElement("a");
+      linkEl.className = "guide-card-link-label";
+      linkEl.href = item.url;
+      linkEl.target = "_blank";
+      linkEl.rel = "noopener noreferrer";
+      linkEl.textContent = "Click Me 🌐";
+      card.appendChild(linkEl);
       grid.appendChild(card);
       return;
     }
@@ -1396,7 +1400,7 @@ window.HatopiaAppVersion = "1.0.13";
       });
       section.addEventListener("click", (e) => {
         if (e.target.closest(".group-drag-handle")) return;
-        if (e.target.closest(".guide-card, .guide-card-link")) return;
+        if (e.target.closest(".guide-card, .guide-card-link, .guide-card-link-only")) return;
         e.preventDefault();
         toggleGroup(group.id);
       });
