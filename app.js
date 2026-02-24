@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.11";
+window.HatopiaAppVersion = "1.0.12";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1268,14 +1268,6 @@ window.HatopiaAppVersion = "1.0.11";
       detailEl.className = "guide-card-details";
       detailEl.textContent = String(item.text).trim();
       card.appendChild(detailEl);
-    } else if (hasLink) {
-      const a = document.createElement("a");
-      a.className = "guide-card-link-inline";
-      a.href = item.url;
-      a.target = "_blank";
-      a.rel = "noopener noreferrer";
-      a.textContent = "Click Me 🌐";
-      card.appendChild(a);
     }
     card.addEventListener("click", (e) => {
       e.preventDefault();

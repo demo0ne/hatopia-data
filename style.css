@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.14";
+  --hatopia-version: "1.0.15";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -1920,6 +1920,8 @@ html[data-theme="light"] .tab-btn:hover {
 }
 
 .guide-card-title {
+  order: -1;
+  flex-shrink: 0;
   margin: 0;
   font-size: 0.95rem;
   font-weight: 600;
@@ -1937,18 +1939,6 @@ html[data-theme="light"] .tab-btn:hover {
   overflow: auto;
   white-space: pre-line;
   line-height: 1.35;
-}
-
-.guide-card-link-inline {
-  display: inline-block;
-  margin-top: 4px;
-  font-weight: 600;
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.guide-card-link-inline:hover {
-  text-decoration: underline;
 }
 
 .guide-card-link {
