@@ -1325,12 +1325,11 @@ window.HatopiaAppVersion = "1.0.6";
     { value: "⛰️🗻", label: "⛰️🗻 Onsen Mountain (Near Capybara)" },
   ];
 
-  /** Heartopia resets daily at 7:00 GMT+8. Game day = 7:00 D to 6:59:59 D+1 (GMT+8). Returns YYYY-MM-DD of current game day start. */
+  /** Heartopia resets daily at 7:00 GMT+8. Game day = 7:00 D to 6:59:59 D+1 (GMT+8). Returns YYYY-MM-DD of current game day start.
+   *  Date source: browser's clock (new Date()); we convert UTC to GMT+8 by adding 8 hours. */
   function getCurrentGameDayStartGMT8() {
     const now = new Date();
-    const gmt8Offset = 8 * 60;
-    const localOffset = now.getTimezoneOffset();
-    const gmt8Ms = now.getTime() + (localOffset + gmt8Offset) * 60 * 1000;
+    const gmt8Ms = now.getTime() + 8 * 60 * 60 * 1000;
     const gmt8 = new Date(gmt8Ms);
     const hour = gmt8.getUTCHours();
     const y = gmt8.getUTCFullYear();
@@ -1374,10 +1373,12 @@ window.HatopiaAppVersion = "1.0.6";
 
       if (section.key === "daily") {
         const currentGameDay = getCurrentGameDayStartGMT8();
-        const dateRoaming = sectionData.dateRoamingOak || sectionData.date || "";
-        const dateFlawless = sectionData.dateFlawlessFlouride || sectionData.date || "";
+        const dateRoaming = String(sectionData.dateRoamingOak || sectionData.date || "").trim();
+        const dateFlawless = String(sectionData.dateFlawlessFlouride || sectionData.date || "").trim();
         const roamingCurrent = dateRoaming && dateRoaming === currentGameDay;
         const flawlessCurrent = dateFlawless && dateFlawless === currentGameDay;
+        const tooltipRoaming = "Saved: " + (dateRoaming || "(none)") + ". Current game day (7am GMT+8): " + currentGameDay;
+        const tooltipFlawless = "Saved: " + (dateFlawless || "(none)") + ". Current game day (7am GMT+8): " + currentGameDay;
 
         const roamingRow = document.createElement("div");
         roamingRow.className = "info-field-row";
@@ -1386,7 +1387,7 @@ window.HatopiaAppVersion = "1.0.6";
         roamingLabel.textContent = "🌳 Roaming Oak";
         const roamingIndicator = document.createElement("span");
         roamingIndicator.className = "info-validity-indicator " + (roamingCurrent ? "info-validity-current" : "info-validity-expired");
-        roamingIndicator.setAttribute("title", roamingCurrent ? "Data for current game day (7am–7am GMT+8)" : "Data is for a different game day");
+        roamingIndicator.setAttribute("title", tooltipRoaming);
         roamingIndicator.setAttribute("aria-label", roamingCurrent ? "Current" : "Expired");
         const roamingVal = document.createElement("span");
         roamingVal.className = "info-field-value";
@@ -1403,7 +1404,7 @@ window.HatopiaAppVersion = "1.0.6";
         flawlessLabel.textContent = "💎 Flawless Flouride";
         const flawlessIndicator = document.createElement("span");
         flawlessIndicator.className = "info-validity-indicator " + (flawlessCurrent ? "info-validity-current" : "info-validity-expired");
-        flawlessIndicator.setAttribute("title", flawlessCurrent ? "Data for current game day (7am–7am GMT+8)" : "Data is for a different game day");
+        flawlessIndicator.setAttribute("title", tooltipFlawless);
         flawlessIndicator.setAttribute("aria-label", flawlessCurrent ? "Current" : "Expired");
         const flawlessVal = document.createElement("span");
         flawlessVal.className = "info-field-value";
