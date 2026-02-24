@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.12";
+  --hatopia-version: "1.0.13";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -1573,6 +1573,7 @@ html[data-theme="light"] .tab-btn:hover {
 
 .tab-panel > #flowers-panel-content,
 .tab-panel > #animals-panel-content,
+.tab-panel > #guides-panel-content,
 .tab-panel > #info-panel-content,
 .tab-panel > #uploads-panel-content {
   flex: 1 1 0;
@@ -1790,12 +1791,18 @@ html[data-theme="light"] .tab-btn:hover {
   margin-bottom: 16px;
 }
 
-/* Guides panel (collapsible, re-orderable groups) */
+/* Guides panel (collapsible, re-orderable groups as cards) */
 .guides-panel-scroll {
   padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  align-content: start;
+}
+
+.guide-group.card {
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
 .guide-group .guide-group-content {
