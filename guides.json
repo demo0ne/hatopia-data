@@ -1,0 +1,47 @@
+{
+  "groups": [
+    {
+      "id": "flowers",
+      "label": "🌻 Flowers",
+      "items": [
+        { "image": "callalily.jpg" },
+        { "image": "carnation.jpg" },
+        { "image": "daisy.webp" },
+        { "image": "flower_combo_1.png" },
+        { "image": "flower_combo_2.png" },
+        { "image": "flower_combo_3.png" },
+        { "image": "guide_01.png" },
+        { "image": "guide_02.png" },
+        { "image": "lanceleaf.webp" },
+        { "image": "pansy.webp" },
+        { "image": "poppy.webp" },
+        { "image": "table_01.png" },
+        { "image": "table_02.png" },
+        { "image": "table_03.png" },
+        { "image": "winterfrost_event.png" }
+      ]
+    },
+    {
+      "id": "animals",
+      "label": "🐰 Animals",
+      "items": [
+        { "emoji": "🐰", "name": "Bunnies", "details": ["🌿 Weeds", "🍓 Strawberry", "🥕 Carrot"] },
+        { "emoji": "🦙", "name": "Alpaca", "details": ["🔵 Blueberries", "🍍 Pineapple", "🌾 Wheat"] },
+        { "emoji": "🐼", "name": "Panda", "details": ["🎍 Bamboo", "🌽 Corn", "🍎 Apple"] },
+        { "emoji": "🦊", "name": "Fox", "details": ["🐟 European Perch", "🐠 Largemouth Bass", "🥩 Meat"] },
+        { "emoji": "🦭", "name": "Sea Otter", "details": ["🍤 Common Shrimp", "🦐 Oriental Shrimp", "🐚 Mussels"] },
+        { "emoji": "🦫", "name": "Capybara", "details": ["🍒 Raspberry", "🍇 Grape", "🍅 Tomato"] },
+        { "emoji": "🦌", "name": "Deer", "details": ["🪵 Branches", "🥗 House Salad", "🥬 Lettuce"] },
+        { "emoji": "🦡", "name": "Ferret", "details": ["🐠 Goby", "🐟 Sea Bass", "🥚 Egg"] },
+        { "emoji": "🐧", "name": "Penguin", "details": ["🐟 Sardine", "🦐 Common Prawn", "🐟 False Scad"] }
+      ]
+    },
+    {
+      "id": "links",
+      "label": "🔗 Links",
+      "items": [
+        { "title": "google sheet", "url": "https://docs.google.com/spreadsheets/d/13zfcylxy7dkd37by8ilpsquin1afwfgqvpy_xoysvs8/edit?usp=sharing", "detail": "click me 🌐" }
+      ]
+    }
+  ]
+}

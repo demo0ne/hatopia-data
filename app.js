@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.6";
+window.HatopiaAppVersion = "1.0.8";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1086,203 +1086,339 @@ window.HatopiaAppVersion = "1.0.6";
     updateEmptyState();
   }
 
-  const FLOWERS_BASE = DATA_BASE + "images/flowers/";
-  const FLOWERS_FALLBACK = [
-    "callalily.jpg",
-    "carnation.jpg",
-    "daisy.webp",
-    "lanceleaf.webp",
-    "pansy.webp",
-    "poppy.webp",
-  ];
-  let flowersPanelLoaded = false;
-
-  const ANIMALS_FALLBACK = [
-    { emoji: "🐰", name: "Bunnies", foods: ["🌿 Weeds", "🍓 Strawberry", "🥕 Carrot"] },
-    { emoji: "🦙", name: "Alpaca", foods: ["🔵 Blueberries", "🍍 Pineapple", "🌾 Wheat"] },
-    { emoji: "🐼", name: "Panda", foods: ["🎍 Bamboo", "🌽 Corn", "🍎 Apple"] },
-    { emoji: "🦊", name: "Fox", foods: ["🐟 European Perch", "🐠 Largemouth Bass", "🥩 Meat"] },
-    { emoji: "🦭", name: "Sea Otter", foods: ["🍤 Common Shrimp", "🦐 Oriental Shrimp", "🐚 Mussels"] },
-    { emoji: "🦫", name: "Capybara", foods: ["🍒 Raspberry", "🍇 Grape", "🍅 Tomato"] },
-    { emoji: "🦌", name: "Deer", foods: ["🪵 Branches", "🥗 House Salad", "🥬 Lettuce"] },
-    { emoji: "🦡", name: "Ferret", foods: ["🐠 Goby", "🐟 Sea Bass", "🥚 Egg"] },
-  ];
-  let animalsPanelLoaded = false;
+  const GUIDES_IMAGES_BASE = DATA_BASE + "images/guides/";
+  const GUIDES_ORDER_KEY = "hatopia_guides_order";
+  const GUIDES_COLLAPSED_KEY = "hatopia_guides_collapsed";
+  let guidesPanelLoaded = false;
 
   function titleFromFilename(filename) {
-    const base = filename.replace(/\.[^.]+$/, "");
+    const base = (filename || "").replace(/\.[^.]+$/, "");
     return base.replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   }
 
-  function openFlowerLightbox(src, title) {
-    const lb = document.getElementById("flower-lightbox");
-    const img = lb?.querySelector(".flower-lightbox-img");
-    if (!lb || !img) return;
-    img.src = src;
-    img.alt = title;
-    lb.hidden = false;
+  function getGuideItemTitle(item) {
+    if (item.title) return item.title;
+    if (item.name) return (item.emoji || "") + " " + item.name;
+    if (item.image) return titleFromFilename(item.image);
+    return "";
   }
 
-  function closeFlowerLightbox() {
-    const lb = document.getElementById("flower-lightbox");
-    if (lb) lb.hidden = true;
-  }
-
-  function initFlowerLightbox() {
-    const lightbox = document.getElementById("flower-lightbox");
-    const closeBtn = lightbox?.querySelector(".flower-lightbox-close");
-    const backdrop = lightbox?.querySelector(".flower-lightbox-backdrop");
-    if (closeBtn) closeBtn.addEventListener("click", closeFlowerLightbox);
-    if (backdrop) backdrop.addEventListener("click", closeFlowerLightbox);
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeFlowerLightbox();
-    });
-  }
-
-  function buildFlowersGrid(grid, filenames) {
-    filenames.forEach((filename) => {
-      const title = titleFromFilename(filename);
-      const src = FLOWERS_BASE + filename;
-      const card = document.createElement("div");
-      card.className = "flower-card";
-      card.setAttribute("role", "listitem");
-      const titleEl = document.createElement("h3");
-      titleEl.className = "flower-card-title";
-      titleEl.textContent = title;
-      const img = document.createElement("img");
-      img.className = "flower-card-img";
-      img.src = src;
-      img.alt = title;
-      img.loading = "lazy";
-      card.appendChild(titleEl);
-      card.appendChild(img);
-      card.addEventListener("click", () => openFlowerLightbox(src, title));
-      grid.appendChild(card);
-    });
-  }
-
-  async function loadFlowersPanel() {
-    if (flowersPanelLoaded) return;
-    const container = document.getElementById("flowers-panel-content");
-    const panel = document.getElementById("panel-flowers");
-    if (!container || !panel) return;
-
-    const section = document.createElement("section");
-    section.className = "flowers-page card";
-    const titleEl = document.createElement("h2");
-    titleEl.className = "flowers-page-title";
-    titleEl.textContent = "🌻 Flowers";
-    const grid = document.createElement("div");
-    grid.id = "flowers-grid";
-    grid.className = "flowers-grid";
-    grid.setAttribute("role", "list");
-    section.appendChild(titleEl);
-    section.appendChild(grid);
-    container.appendChild(section);
-
-    let filenames = FLOWERS_FALLBACK;
-    const manifest = await fetchManifest();
-    if (manifest && Array.isArray(manifest.flowers) && manifest.flowers.length > 0) {
-      filenames = manifest.flowers;
+  function openGuideLightbox(item) {
+    const lb = document.getElementById("guide-lightbox");
+    const imgEl = lb?.querySelector(".guide-lightbox-img");
+    const titleEl = lb?.querySelector(".guide-lightbox-title");
+    const detailsEl = lb?.querySelector(".guide-lightbox-details");
+    const linkEl = lb?.querySelector(".guide-lightbox-link");
+    const textWrap = lb?.querySelector(".guide-lightbox-text");
+    if (!lb || !imgEl || !titleEl || !detailsEl || !linkEl) return;
+    const hasImage = !!(item.image && item.image.trim());
+    const hasText = !!(item.name || item.title || (item.details && item.details.length));
+    const hasLink = !!(item.url && item.url.trim());
+    if (hasImage) {
+      imgEl.src = item.image.indexOf("/") >= 0 ? item.image : GUIDES_IMAGES_BASE + item.image;
+      imgEl.alt = getGuideItemTitle(item);
+      imgEl.hidden = false;
+      lb.classList.add("guide-lightbox-has-image");
     } else {
-      try {
-        const jsonRes = await fetch(DATA_BASE + "flowers.json");
-        if (jsonRes.ok) {
-          const parsed = await jsonRes.json();
-          if (Array.isArray(parsed) && parsed.length > 0) filenames = parsed;
-        }
-      } catch (_) {
-        /* use FLOWERS_FALLBACK */
-      }
+      imgEl.removeAttribute("src");
+      imgEl.hidden = true;
+      lb.classList.remove("guide-lightbox-has-image");
     }
-
-    buildFlowersGrid(grid, filenames);
-    flowersPanelLoaded = true;
-  }
-
-  function openAnimalLightbox(animal) {
-    const lb = document.getElementById("animal-lightbox");
-    const titleEl = lb?.querySelector(".animal-lightbox-title");
-    const foodsEl = lb?.querySelector(".animal-lightbox-foods");
-    if (!lb || !titleEl || !foodsEl) return;
-    titleEl.textContent = animal.emoji + " " + animal.name;
-    foodsEl.innerHTML = "";
-    (animal.foods || []).forEach((food) => {
-      const li = document.createElement("li");
-      li.textContent = food;
-      foodsEl.appendChild(li);
-    });
+    if (hasText) {
+      titleEl.textContent = getGuideItemTitle(item);
+      titleEl.hidden = false;
+      detailsEl.innerHTML = "";
+      (item.details || []).forEach((d) => {
+        const li = document.createElement("li");
+        li.textContent = d;
+        detailsEl.appendChild(li);
+      });
+      textWrap.style.display = "";
+      lb.classList.add("guide-lightbox-has-text");
+    } else {
+      titleEl.textContent = "";
+      titleEl.hidden = true;
+      detailsEl.innerHTML = "";
+      textWrap.style.display = "none";
+      lb.classList.remove("guide-lightbox-has-text");
+    }
+    if (hasLink) {
+      linkEl.href = item.url;
+      linkEl.textContent = item.detail != null ? item.detail : "Click Me 🌐";
+      linkEl.hidden = false;
+    } else {
+      linkEl.href = "#";
+      linkEl.hidden = true;
+    }
     lb.hidden = false;
   }
 
-  function closeAnimalLightbox() {
-    const lb = document.getElementById("animal-lightbox");
+  function closeGuideLightbox() {
+    const lb = document.getElementById("guide-lightbox");
     if (lb) lb.hidden = true;
   }
 
-  function buildAnimalsGrid(grid, animals) {
-    const lightbox = document.getElementById("animal-lightbox");
-    const closeBtn = lightbox?.querySelector(".animal-lightbox-close");
-    const backdrop = lightbox?.querySelector(".animal-lightbox-backdrop");
-    if (closeBtn) closeBtn.addEventListener("click", closeAnimalLightbox);
-    if (backdrop) backdrop.addEventListener("click", closeAnimalLightbox);
+  function initGuideLightbox() {
+    const lightbox = document.getElementById("guide-lightbox");
+    const closeBtn = lightbox?.querySelector(".guide-lightbox-close");
+    const backdrop = lightbox?.querySelector(".guide-lightbox-backdrop");
+    if (closeBtn) closeBtn.addEventListener("click", closeGuideLightbox);
+    if (backdrop) backdrop.addEventListener("click", closeGuideLightbox);
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeAnimalLightbox();
-    });
-    animals.forEach((animal) => {
-      const card = document.createElement("div");
-      card.className = "animal-card";
-      card.setAttribute("role", "listitem");
-      const titleEl = document.createElement("h3");
-      titleEl.className = "animal-card-title";
-      titleEl.textContent = animal.emoji + " " + animal.name;
-      const detailEl = document.createElement("ul");
-      detailEl.className = "animal-card-foods";
-      (animal.foods || []).forEach((food) => {
-        const li = document.createElement("li");
-        li.textContent = food;
-        detailEl.appendChild(li);
-      });
-      card.appendChild(titleEl);
-      card.appendChild(detailEl);
-      card.addEventListener("click", () => openAnimalLightbox(animal));
-      grid.appendChild(card);
+      if (e.key === "Escape") closeGuideLightbox();
     });
   }
 
-  async function loadAnimalsPanel() {
-    if (animalsPanelLoaded) return;
-    const container = document.getElementById("animals-panel-content");
-    const panel = document.getElementById("panel-animals");
-    if (!container || !panel) return;
-
-    const section = document.createElement("section");
-    section.className = "animals-page card";
-    const titleEl = document.createElement("h2");
-    titleEl.className = "animals-page-title";
-    titleEl.textContent = "🐰 Animals";
-    const grid = document.createElement("div");
-    grid.id = "animals-grid";
-    grid.className = "animals-grid";
-    grid.setAttribute("role", "list");
-    section.appendChild(titleEl);
-    section.appendChild(grid);
-    container.appendChild(section);
-
-    let animals = ANIMALS_FALLBACK;
+  function getGuidesOrder(defaultOrder) {
+    const fallback = Array.isArray(defaultOrder) && defaultOrder.length ? defaultOrder.slice() : [];
     try {
-      const jsonRes = await fetch(DATA_BASE + "animals.json");
-      if (jsonRes.ok) {
-        const parsed = await jsonRes.json();
-        if (Array.isArray(parsed) && parsed.length > 0) animals = parsed;
+      const raw = localStorage.getItem(GUIDES_ORDER_KEY);
+      if (raw) {
+        const arr = JSON.parse(raw);
+        if (Array.isArray(arr) && arr.length > 0) {
+          const known = new Set(fallback);
+          const merged = arr.filter((id) => known.has(id));
+          fallback.forEach((id) => { if (!merged.includes(id)) merged.push(id); });
+          return merged;
+        }
       }
-    } catch (_) {
-      /* use ANIMALS_FALLBACK */
+    } catch (_) {}
+    return fallback;
+  }
+
+  function saveGuidesOrder(order) {
+    try {
+      localStorage.setItem(GUIDES_ORDER_KEY, JSON.stringify(order));
+    } catch (_) {}
+  }
+
+  function getGuidesCollapsed() {
+    try {
+      const raw = localStorage.getItem(GUIDES_COLLAPSED_KEY);
+      if (raw) {
+        const arr = JSON.parse(raw);
+        if (Array.isArray(arr)) return new Set(arr);
+      }
+    } catch (_) {}
+    return new Set();
+  }
+
+  function saveGuidesCollapsed(collapsedSet) {
+    try {
+      localStorage.setItem(GUIDES_COLLAPSED_KEY, JSON.stringify([...collapsedSet]));
+    } catch (_) {}
+  }
+
+  function buildGuideCard(item, grid) {
+    const hasImage = !!(item.image && item.image.trim());
+    const hasText = !!(item.name || item.title || (item.details && item.details.length));
+    const hasLink = !!(item.url && item.url.trim());
+    const titleStr = getGuideItemTitle(item);
+    const imgSrc = hasImage ? (item.image.indexOf("/") >= 0 ? item.image : GUIDES_IMAGES_BASE + item.image) : "";
+
+    if (hasLink && !hasImage && !hasText) {
+      const card = document.createElement("a");
+      card.className = "guide-card guide-card-link";
+      card.setAttribute("role", "listitem");
+      card.href = item.url;
+      card.target = "_blank";
+      card.rel = "noopener noreferrer";
+      const label = document.createElement("span");
+      label.className = "guide-card-label";
+      label.textContent = item.detail != null ? item.detail : "Click Me 🌐";
+      card.appendChild(label);
+      grid.appendChild(card);
+      return;
     }
 
-    buildAnimalsGrid(grid, animals);
-    animalsPanelLoaded = true;
+    const card = document.createElement("div");
+    card.className = "guide-card";
+    card.setAttribute("role", "listitem");
+    if (hasImage) {
+      const img = document.createElement("img");
+      img.className = "guide-card-img";
+      img.src = imgSrc;
+      img.alt = titleStr;
+      img.loading = "lazy";
+      card.appendChild(img);
+    }
+    if (hasText) {
+      const titleEl = document.createElement("h3");
+      titleEl.className = "guide-card-title";
+      titleEl.textContent = titleStr;
+      card.appendChild(titleEl);
+      if (item.details && item.details.length) {
+        const ul = document.createElement("ul");
+        ul.className = "guide-card-details";
+        item.details.forEach((d) => {
+          const li = document.createElement("li");
+          li.textContent = d;
+          ul.appendChild(li);
+        });
+        card.appendChild(ul);
+      }
+    }
+    card.addEventListener("click", (e) => {
+      e.preventDefault();
+      openGuideLightbox(item);
+    });
+    grid.appendChild(card);
   }
+
+  async function loadGuidesPanel() {
+    if (guidesPanelLoaded) return;
+    const container = document.getElementById("guides-panel-content");
+    const panel = document.getElementById("panel-guides");
+    if (!container || !panel) return;
+
+    let data = { groups: [] };
+    try {
+      const res = await fetch(DATA_BASE + "guides.json");
+      if (res.ok) data = await res.json();
+    } catch (_) {}
+    if (!Array.isArray(data.groups) || data.groups.length === 0) {
+      try {
+        const resLocal = await fetch("hatopia-data/guides.json");
+        if (resLocal.ok) data = await resLocal.json();
+      } catch (_) {}
+    }
+    const groups = Array.isArray(data.groups) ? data.groups : [];
+    if (groups.length === 0) {
+      const msg = document.createElement("p");
+      msg.className = "guides-empty-msg";
+      msg.textContent = "No guides loaded. Add hatopia-data/guides.json or ensure it is available from the data source.";
+      container.appendChild(msg);
+      guidesPanelLoaded = true;
+      return;
+    }
+    const defaultOrder = groups.map((g) => g.id);
+    const order = getGuidesOrder(defaultOrder);
+    const collapsed = getGuidesCollapsed();
+
+    const sections = {};
+    groups.forEach((group) => {
+      const guideId = group.id;
+      const section = document.createElement("section");
+      section.className = "guide-group card list-card is-expanded";
+      section.id = "guide-" + guideId;
+      section.setAttribute("data-guide", guideId);
+      const isCollapsed = collapsed.has(guideId);
+      if (isCollapsed) section.classList.remove("is-expanded");
+
+      const header = document.createElement("header");
+      header.className = "list-header";
+      const dragHandle = document.createElement("span");
+      dragHandle.className = "group-drag-handle";
+      dragHandle.setAttribute("draggable", "true");
+      dragHandle.setAttribute("aria-label", "Drag to reorder group");
+      dragHandle.setAttribute("data-guide", guideId);
+      dragHandle.textContent = "⋮⋮";
+      const toggleBtn = document.createElement("button");
+      toggleBtn.type = "button";
+      toggleBtn.className = "group-toggle";
+      toggleBtn.setAttribute("data-guide", guideId);
+      toggleBtn.setAttribute("aria-expanded", isCollapsed ? "false" : "true");
+      const titleSpan = document.createElement("span");
+      titleSpan.className = "list-title";
+      titleSpan.innerHTML = "<h2>" + (group.label || guideId) + "</h2>";
+      const chevron = document.createElement("span");
+      chevron.className = "group-chevron";
+      chevron.textContent = isCollapsed ? "▼" : "▲";
+      toggleBtn.appendChild(titleSpan);
+      toggleBtn.appendChild(chevron);
+      header.appendChild(dragHandle);
+      header.appendChild(toggleBtn);
+
+      const content = document.createElement("div");
+      content.className = "group-content guide-group-content";
+      const grid = document.createElement("div");
+      grid.className = "guides-grid";
+      grid.setAttribute("role", "list");
+      content.appendChild(grid);
+
+      section.appendChild(header);
+      section.appendChild(content);
+      sections[guideId] = { section, content, toggleBtn, chevron, grid, group };
+    });
+
+    order.forEach((guideId) => {
+      if (sections[guideId]) container.appendChild(sections[guideId].section);
+    });
+
+    groups.forEach((group) => {
+      const rec = sections[group.id];
+      if (!rec) return;
+      const { toggleBtn, chevron, grid } = rec;
+      toggleBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        const section = document.getElementById("guide-" + group.id);
+        if (!section) return;
+        const expanded = section.classList.toggle("is-expanded");
+        toggleBtn.setAttribute("aria-expanded", expanded ? "true" : "false");
+        chevron.textContent = expanded ? "▲" : "▼";
+        const collapsedSet = getGuidesCollapsed();
+        if (expanded) collapsedSet.delete(group.id);
+        else collapsedSet.add(group.id);
+        saveGuidesCollapsed(collapsedSet);
+      });
+      (group.items || []).forEach((item) => buildGuideCard(item, grid));
+    });
+
+    let draggedGuideId = null;
+    container.addEventListener("dragstart", (e) => {
+      const handle = e.target.closest(".group-drag-handle[data-guide]");
+      if (!handle) return;
+      const guideId = handle.getAttribute("data-guide");
+      if (guideId) {
+        draggedGuideId = guideId;
+        e.dataTransfer.setData("text/plain", guideId);
+        e.dataTransfer.effectAllowed = "move";
+        const section = handle.closest(".guide-group");
+        if (section) section.classList.add("group-dragging");
+      }
+    });
+    container.addEventListener("dragend", () => {
+      draggedGuideId = null;
+      container.querySelectorAll(".guide-group.group-dragging").forEach((el) => el.classList.remove("group-dragging"));
+      container.querySelectorAll(".guide-group.group-drag-over").forEach((el) => el.classList.remove("group-drag-over"));
+    });
+    container.addEventListener("dragover", (e) => {
+      if (e.dataTransfer.types.includes("text/plain")) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+        const overSection = e.target.closest(".guide-group");
+        container.querySelectorAll(".guide-group.group-drag-over").forEach((el) => {
+          if (el !== overSection) el.classList.remove("group-drag-over");
+        });
+        if (overSection && draggedGuideId && overSection.getAttribute("data-guide") !== draggedGuideId) {
+          overSection.classList.add("group-drag-over");
+        }
+      }
+    });
+    container.addEventListener("dragleave", (e) => {
+      if (!container.contains(e.relatedTarget)) {
+        container.querySelectorAll(".guide-group.group-drag-over").forEach((el) => el.classList.remove("group-drag-over"));
+      }
+    });
+    container.addEventListener("drop", (e) => {
+      e.preventDefault();
+      container.querySelectorAll(".guide-group.group-drag-over").forEach((el) => el.classList.remove("group-drag-over"));
+      const guideId = e.dataTransfer.getData("text/plain");
+      if (!guideId) return;
+      const dropSection = e.target.closest(".guide-group");
+      const draggedSection = document.getElementById("guide-" + guideId);
+      if (!dropSection || !draggedSection || dropSection === draggedSection) return;
+      container.insertBefore(draggedSection, dropSection);
+      const newOrder = Array.from(container.querySelectorAll(".guide-group[data-guide]")).map((el) =>
+        el.getAttribute("data-guide")
+      );
+      saveGuidesOrder(newOrder);
+    });
+
+    guidesPanelLoaded = true;
+  }
+
 
   let infoData = null;
   let manifestData = null;
@@ -1448,54 +1584,13 @@ window.HatopiaAppVersion = "1.0.6";
         img.alt = title;
         card.appendChild(titleEl);
         card.appendChild(img);
-        card.addEventListener("click", () => openFlowerLightbox(imgSrc, title));
+        card.addEventListener("click", () => openGuideLightbox({ image: imgSrc, title }));
         grid.appendChild(card);
       });
       sectionEl.appendChild(grid);
 
       container.appendChild(sectionEl);
     });
-
-    // Links row (from links.json)
-    let links = [];
-    try {
-      const res = await fetch(DATA_BASE + "links.json");
-      if (res.ok) {
-        const parsed = await res.json();
-        if (Array.isArray(parsed)) links = parsed;
-      }
-    } catch (_) {}
-    const linksSectionEl = document.createElement("section");
-    linksSectionEl.className = "info-section card links-section";
-    const linksTitleEl = document.createElement("h2");
-    linksTitleEl.className = "info-section-title";
-    linksTitleEl.textContent = "🔗 Links";
-    linksSectionEl.appendChild(linksTitleEl);
-    const linksGrid = document.createElement("div");
-    linksGrid.className = "info-section-grid links-grid";
-    linksGrid.setAttribute("role", "list");
-    links.forEach((item) => {
-      const title = item.title || "Link";
-      const url = item.url || "#";
-      const detail = item.detail != null ? item.detail : "Click me 🌐";
-      const card = document.createElement("a");
-      card.className = "info-section-card link-card";
-      card.setAttribute("role", "listitem");
-      card.href = url;
-      card.target = "_blank";
-      card.rel = "noopener noreferrer";
-      const titleEl = document.createElement("h3");
-      titleEl.className = "info-section-card-title";
-      titleEl.textContent = title;
-      const detailEl = document.createElement("p");
-      detailEl.className = "link-card-detail";
-      detailEl.textContent = detail;
-      card.appendChild(titleEl);
-      card.appendChild(detailEl);
-      linksGrid.appendChild(card);
-    });
-    linksSectionEl.appendChild(linksGrid);
-    container.appendChild(linksSectionEl);
 
     infoPanelLoaded = true;
   }
@@ -1648,13 +1743,11 @@ window.HatopiaAppVersion = "1.0.6";
     const selectedBtn = document.querySelector(".tab-btn.is-selected");
     const panelId = selectedBtn?.getAttribute("data-panel");
     const panelDashboard = document.getElementById("panel-dashboard");
-    const panelFlowers = document.getElementById("panel-flowers");
-    const panelAnimals = document.getElementById("panel-animals");
+    const panelGuides = document.getElementById("panel-guides");
     const panelInfo = document.getElementById("panel-info");
-    if (panelId && panelDashboard && panelFlowers && panelAnimals && panelInfo && uploadsPanel) {
+    if (panelId && panelDashboard && panelGuides && panelInfo && uploadsPanel) {
       panelDashboard.hidden = panelId !== "dashboard";
-      panelFlowers.hidden = panelId !== "flowers";
-      panelAnimals.hidden = panelId !== "animals";
+      panelGuides.hidden = panelId !== "guides";
       panelInfo.hidden = panelId !== "info";
       uploadsPanel.hidden = panelId !== "uploads";
     }
@@ -1707,11 +1800,10 @@ window.HatopiaAppVersion = "1.0.6";
   function initTabsAndFlowers() {
     const tabBtns = document.querySelectorAll(".tab-btn");
     const panelDashboard = document.getElementById("panel-dashboard");
-    const panelFlowers = document.getElementById("panel-flowers");
-    const panelAnimals = document.getElementById("panel-animals");
+    const panelGuides = document.getElementById("panel-guides");
     const panelInfo = document.getElementById("panel-info");
     const panelUploads = document.getElementById("panel-uploads");
-    if (!panelDashboard || !panelFlowers || !panelAnimals || !panelInfo || !panelUploads) return;
+    if (!panelDashboard || !panelGuides || !panelInfo || !panelUploads) return;
     tabBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
         const panelId = btn.getAttribute("data-panel");
@@ -1720,12 +1812,10 @@ window.HatopiaAppVersion = "1.0.6";
           b.setAttribute("aria-selected", b === btn ? "true" : "false");
         });
         panelDashboard.hidden = panelId !== "dashboard";
-        panelFlowers.hidden = panelId !== "flowers";
-        panelAnimals.hidden = panelId !== "animals";
+        panelGuides.hidden = panelId !== "guides";
         panelInfo.hidden = panelId !== "info";
         panelUploads.hidden = panelId !== "uploads";
-        if (panelId === "flowers") loadFlowersPanel();
-        if (panelId === "animals") loadAnimalsPanel();
+        if (panelId === "guides") loadGuidesPanel();
         if (panelId === "info") loadInfoPanel();
         if (panelId === "uploads") {
           syncUploadsReadonly();
@@ -1765,7 +1855,7 @@ window.HatopiaAppVersion = "1.0.6";
 
   function init() {
     applyAdminTabVisibility();
-    initFlowerLightbox();
+    initGuideLightbox();
     if (
       !form ||
       !input ||

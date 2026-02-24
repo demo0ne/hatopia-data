@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.8";
+  --hatopia-version: "1.0.11";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -1739,6 +1739,8 @@ html[data-theme="light"] .tab-btn:hover {
   gap: 8px;
   transition: box-shadow var(--transition-fast);
   cursor: pointer;
+  aspect-ratio: 5/7;
+  width: 100%;
 }
 
 .info-section-card:hover {
@@ -1756,7 +1758,8 @@ html[data-theme="light"] .tab-btn:hover {
 
 .info-section-card-img {
   width: 100%;
-  height: 140px;
+  flex: 1;
+  min-height: 0;
   object-fit: cover;
   border-radius: 10px;
 }
@@ -1787,7 +1790,204 @@ html[data-theme="light"] .tab-btn:hover {
   margin-bottom: 16px;
 }
 
-/* Flowers page */
+/* Guides panel (collapsible, re-orderable groups) */
+.guides-panel-scroll {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.guide-group .guide-group-content {
+  padding-top: 8px;
+}
+
+.guide-group .guide-group-content .guides-grid {
+  margin: 0;
+}
+
+.guides-empty-msg {
+  margin: 20px 0;
+  padding: 16px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.guides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.guide-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  aspect-ratio: 5/7;
+  width: 100%;
+  min-height: 0;
+}
+
+.guide-card:hover {
+  box-shadow: var(--shadow-soft);
+}
+
+.guide-card-img {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.guide-card-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-main);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.guide-card-details {
+  margin: 0;
+  padding-left: 1em;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  list-style: disc;
+  text-align: left;
+  width: 100%;
+  overflow: auto;
+}
+
+.guide-card-link {
+  text-decoration: none;
+  color: inherit;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.guide-card-link .guide-card-label {
+  margin: auto;
+}
+
+/* Guide lightbox (unified: image and/or text and/or link) */
+.guide-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: var(--dialog-backdrop);
+  border: none;
+}
+
+.guide-lightbox[hidden] {
+  display: none !important;
+}
+
+.guide-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+.guide-lightbox-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow: auto;
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: 20px;
+}
+
+.guide-lightbox-img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.guide-lightbox-has-text .guide-lightbox-img {
+  max-height: 45vh;
+}
+
+.guide-lightbox-text {
+  text-align: center;
+}
+
+.guide-lightbox-title {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+  color: var(--text-main);
+}
+
+.guide-lightbox-details {
+  margin: 0 0 8px;
+  padding-left: 1.2em;
+  text-align: left;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.guide-lightbox-link {
+  display: inline-block;
+  padding: 8px 16px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background var(--transition-fast);
+}
+
+.guide-lightbox-link:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.guide-lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  color: var(--text-main);
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.guide-lightbox-close:hover {
+  background: var(--bg-elevated-soft);
+}
+
+/* Flowers page (legacy / info section cards) */
 .flowers-page {
   padding: 24px;
 }
@@ -1817,6 +2017,8 @@ html[data-theme="light"] .tab-btn:hover {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  aspect-ratio: 5/7;
+  width: 100%;
 }
 
 .flower-card:hover {
@@ -1841,7 +2043,8 @@ html[data-theme="light"] .tab-btn:hover {
 
 .flower-card-img {
   width: 100%;
-  height: 140px;
+  flex: 1;
+  min-height: 0;
   object-fit: cover;
   border-radius: 10px;
 }
@@ -2192,6 +2395,8 @@ html[data-theme="light"] .tab-btn:hover {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  aspect-ratio: 5/7;
+  width: 100%;
 }
 
 .upload-card:hover {
@@ -2238,7 +2443,8 @@ html[data-theme="light"] .tab-btn:hover {
   font-size: 0.9rem;
   color: var(--text-muted);
   line-height: 1.4;
-  min-height: 60px;
+  flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2246,7 +2452,7 @@ html[data-theme="light"] .tab-btn:hover {
 
 .upload-card-detail .upload-card-img {
   width: 100%;
-  height: 120px;
+  height: 100%;
   object-fit: cover;
   border-radius: 10px;
 }

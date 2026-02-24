@@ -1,4 +1,4 @@
-window.HatopiaShellVersion = "1.0.0";
+window.HatopiaShellVersion = "1.0.1";
 window.APP_SHELL_HTML = `
         <div class="app-shell">
             <div class="sticky-top">
@@ -23,13 +23,9 @@ window.APP_SHELL_HTML = `
                             <span class="tab-icon" aria-hidden="true">📝</span>
                             <span class="tab-label">To-do</span>
                         </button>
-                        <button type="button" class="tab-btn" role="tab" id="tab-flowers-btn" aria-selected="false" aria-controls="panel-flowers" data-panel="flowers">
-                            <span class="tab-icon" aria-hidden="true">🌻</span>
-                            <span class="tab-label">Flowers</span>
-                        </button>
-                        <button type="button" class="tab-btn" role="tab" id="tab-animals-btn" aria-selected="false" aria-controls="panel-animals" data-panel="animals">
-                            <span class="tab-icon" aria-hidden="true">🐰</span>
-                            <span class="tab-label">Animals</span>
+                        <button type="button" class="tab-btn" role="tab" id="tab-guides-btn" aria-selected="false" aria-controls="panel-guides" data-panel="guides">
+                            <span class="tab-icon" aria-hidden="true">📖</span>
+                            <span class="tab-label">Guides</span>
                         </button>
                         <button type="button" class="tab-btn admin-only-tab" role="tab" id="tab-uploads-btn" aria-selected="false" aria-controls="panel-uploads" data-panel="uploads" hidden>
                             <span class="tab-icon" aria-hidden="true">📲</span>
@@ -310,23 +306,13 @@ window.APP_SHELL_HTML = `
             </div>
 
             <div
-                id="panel-flowers"
+                id="panel-guides"
                 class="tab-panel"
                 role="tabpanel"
-                aria-labelledby="tab-flowers-btn"
+                aria-labelledby="tab-guides-btn"
                 hidden
             >
-                <div id="flowers-panel-content"></div>
-            </div>
-
-            <div
-                id="panel-animals"
-                class="tab-panel"
-                role="tabpanel"
-                aria-labelledby="tab-animals-btn"
-                hidden
-            >
-                <div id="animals-panel-content"></div>
+                <div id="guides-panel-content" class="guides-panel-scroll"></div>
             </div>
 
             <div
@@ -489,43 +475,22 @@ window.APP_SHELL_HTML = `
         </div>
 
         <div
-            id="flower-lightbox"
-            class="flower-lightbox"
+            id="guide-lightbox"
+            class="guide-lightbox"
             role="dialog"
             aria-modal="true"
-            aria-label="Flower image"
+            aria-label="Guide detail"
             hidden
         >
-            <button
-                type="button"
-                class="flower-lightbox-close"
-                aria-label="Close"
-            >
-                ×
-            </button>
-            <div class="flower-lightbox-backdrop"></div>
-            <img class="flower-lightbox-img" src="" alt="" />
-        </div>
-
-        <div
-            id="animal-lightbox"
-            class="animal-lightbox"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Animal details"
-            hidden
-        >
-            <button
-                type="button"
-                class="animal-lightbox-close"
-                aria-label="Close"
-            >
-                ×
-            </button>
-            <div class="animal-lightbox-backdrop"></div>
-            <div class="animal-lightbox-content">
-                <h2 class="animal-lightbox-title"></h2>
-                <ul class="animal-lightbox-foods"></ul>
+            <button type="button" class="guide-lightbox-close" aria-label="Close">×</button>
+            <div class="guide-lightbox-backdrop"></div>
+            <div class="guide-lightbox-inner">
+                <img class="guide-lightbox-img" src="" alt="" hidden />
+                <div class="guide-lightbox-text">
+                    <h2 class="guide-lightbox-title"></h2>
+                    <ul class="guide-lightbox-details"></ul>
+                </div>
+                <a class="guide-lightbox-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Click Me 🌐</a>
             </div>
         </div>
 
