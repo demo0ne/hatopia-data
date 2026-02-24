@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.10";
+window.HatopiaAppVersion = "1.0.11";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1089,6 +1089,7 @@ window.HatopiaAppVersion = "1.0.10";
   const GUIDES_IMAGES_BASE = DATA_BASE + "images/guides/";
   const GUIDES_ORDER_KEY = "hatopia_guides_order";
   const GUIDES_COLLAPSED_KEY = "hatopia_guides_collapsed";
+  const GUIDES_EXPANDED_KEY = "hatopia_guides_expanded";
   let guidesPanelLoaded = false;
 
   function titleFromFilename(filename) {
@@ -1193,23 +1194,29 @@ window.HatopiaAppVersion = "1.0.10";
     } catch (_) {}
   }
 
-  function getGuidesCollapsed() {
+  function getGuidesExpandedId() {
     try {
-      const raw = localStorage.getItem(GUIDES_COLLAPSED_KEY);
-      if (raw) {
-        const arr = JSON.parse(raw);
-        if (Array.isArray(arr)) {
-          return new Set(arr.map((id) => (id === "links" ? "misc" : id)));
-        }
-      }
+      const raw = localStorage.getItem(GUIDES_EXPANDED_KEY);
+      if (raw && typeof raw === "string" && raw.trim() !== "") return raw.trim();
     } catch (_) {}
-    return new Set();
+    return null;
   }
 
-  function saveGuidesCollapsed(collapsedSet) {
+  function saveGuidesExpandedId(id) {
     try {
-      localStorage.setItem(GUIDES_COLLAPSED_KEY, JSON.stringify([...collapsedSet]));
+      localStorage.setItem(GUIDES_EXPANDED_KEY, id == null ? "" : id);
     } catch (_) {}
+  }
+
+  function applyGuidesVisibility(container, sections, expandedId) {
+    container.querySelectorAll(".guide-group[data-guide]").forEach((section) => {
+      const guideId = section.getAttribute("data-guide");
+      if (!expandedId || expandedId === "") {
+        section.style.display = "";
+      } else {
+        section.style.display = expandedId === guideId ? "" : "none";
+      }
+    });
   }
 
   function buildGuideCard(item, grid) {
@@ -1305,17 +1312,17 @@ window.HatopiaAppVersion = "1.0.10";
     }
     const defaultOrder = groups.map((g) => g.id);
     const order = getGuidesOrder(defaultOrder);
-    const collapsed = getGuidesCollapsed();
+    const expandedId = getGuidesExpandedId();
 
     const sections = {};
     groups.forEach((group) => {
       const guideId = group.id;
       const section = document.createElement("section");
-      section.className = "guide-group card list-card is-expanded";
+      section.className = "guide-group card list-card";
       section.id = "guide-" + guideId;
       section.setAttribute("data-guide", guideId);
-      const isCollapsed = collapsed.has(guideId);
-      if (isCollapsed) section.classList.remove("is-expanded");
+      const isExpanded = expandedId === guideId;
+      if (isExpanded) section.classList.add("is-expanded");
 
       const header = document.createElement("header");
       header.className = "list-header";
@@ -1329,13 +1336,13 @@ window.HatopiaAppVersion = "1.0.10";
       toggleBtn.type = "button";
       toggleBtn.className = "group-toggle";
       toggleBtn.setAttribute("data-guide", guideId);
-      toggleBtn.setAttribute("aria-expanded", isCollapsed ? "false" : "true");
+      toggleBtn.setAttribute("aria-expanded", isExpanded ? "true" : "false");
       const titleSpan = document.createElement("span");
       titleSpan.className = "list-title";
       titleSpan.innerHTML = "<h2>" + (group.label || guideId) + "</h2>";
       const chevron = document.createElement("span");
       chevron.className = "group-chevron";
-      chevron.textContent = isCollapsed ? "▼" : "▲";
+      chevron.textContent = isExpanded ? "▲" : "▼";
       toggleBtn.appendChild(titleSpan);
       toggleBtn.appendChild(chevron);
       header.appendChild(dragHandle);
@@ -1357,19 +1364,37 @@ window.HatopiaAppVersion = "1.0.10";
       if (sections[guideId]) container.appendChild(sections[guideId].section);
     });
 
+    applyGuidesVisibility(container, sections, expandedId);
+
     function toggleGroup(groupId) {
       const section = document.getElementById("guide-" + groupId);
       if (!section) return;
       const rec = sections[groupId];
       if (!rec) return;
       const { toggleBtn, chevron } = rec;
-      const expanded = section.classList.toggle("is-expanded");
-      toggleBtn.setAttribute("aria-expanded", expanded ? "true" : "false");
-      chevron.textContent = expanded ? "▲" : "▼";
-      const collapsedSet = getGuidesCollapsed();
-      if (expanded) collapsedSet.delete(groupId);
-      else collapsedSet.add(groupId);
-      saveGuidesCollapsed(collapsedSet);
+      const currentlyExpanded = section.classList.contains("is-expanded");
+      let newExpandedId = null;
+      if (currentlyExpanded) {
+        section.classList.remove("is-expanded");
+        toggleBtn.setAttribute("aria-expanded", "false");
+        chevron.textContent = "▼";
+      } else {
+        order.forEach((id) => {
+          const s = document.getElementById("guide-" + id);
+          const r = sections[id];
+          if (s && r) {
+            s.classList.remove("is-expanded");
+            r.toggleBtn.setAttribute("aria-expanded", "false");
+            r.chevron.textContent = "▼";
+          }
+        });
+        section.classList.add("is-expanded");
+        toggleBtn.setAttribute("aria-expanded", "true");
+        chevron.textContent = "▲";
+        newExpandedId = groupId;
+      }
+      saveGuidesExpandedId(newExpandedId);
+      applyGuidesVisibility(container, sections, newExpandedId);
     }
 
     groups.forEach((group) => {
