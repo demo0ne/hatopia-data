@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.23";
+  --hatopia-version: "1.0.24";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -2045,6 +2045,8 @@ html[data-theme="light"] .tab-btn:hover {
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  min-width: min(280px, 90vw);
+  min-height: 400px;
   max-width: 90vw;
   max-height: 85vh;
   overflow: auto;
