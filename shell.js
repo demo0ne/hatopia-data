@@ -1,4 +1,4 @@
-window.HatopiaShellVersion = "1.0.1";
+window.HatopiaShellVersion = "1.0.2";
 window.APP_SHELL_HTML = `
         <div class="app-shell">
             <div class="sticky-top">
@@ -283,11 +283,11 @@ window.APP_SHELL_HTML = `
                     </div>
                     <section class="add-reset-buttons">
                         <button type="button" id="btn-add-task" class="btn-circle btn-circle--add" aria-label="Add task">
-                            <span class="btn-circle-icon">➕</span>
+                            <img class="btn-circle-icon" src="https://raw.githubusercontent.com/demo0ne/hatopia-data/master/images/icons/btn_plus.png" alt="" />
                             <span class="btn-circle-label">Add Task</span>
                         </button>
                         <button type="button" id="btn-reset" class="btn-circle btn-circle--reset" aria-label="Reset completed tasks">
-                            <span class="btn-circle-icon">↩️</span>
+                            <img class="btn-circle-icon" src="https://raw.githubusercontent.com/demo0ne/hatopia-data/master/images/icons/btn_reset.png" alt="" />
                             <span class="btn-circle-label">Reset</span>
                         </button>
                     </section>

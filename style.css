@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.19";
+  --hatopia-version: "1.0.21";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -182,7 +182,7 @@ textarea,
   width: 100%;
   max-width: min(1600px, 96vw);
   min-width: 50%;
-  margin: 12px auto 0;
+  margin: 0 auto 0;
   padding: 0 8px 12px;
   min-height: 100vh;
   display: flex;
@@ -193,7 +193,7 @@ textarea,
 
 @media (min-width: 768px) {
   .app-shell {
-    margin: 16px auto 0;
+    margin: 0 auto 0;
     padding: 0 16px 16px;
   }
 }
@@ -212,8 +212,8 @@ textarea,
   /* Full-width breakout */
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding-left: calc(50vw - 50% + 16px);
-  padding-right: calc(50vw - 50% + 16px);
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .app-header {
@@ -223,8 +223,9 @@ textarea,
   gap: 24px;
   padding: 12px 24px;
   background: var(--header-bg);
-  border-radius: 16px;
+  border-radius: 0;
   border: 1px solid var(--header-border);
+  border-top: none;
   box-shadow: var(--header-shadow);
   backdrop-filter: blur(16px);
 }
@@ -412,8 +413,10 @@ textarea,
 }
 
 .btn-circle--add .btn-circle-icon {
-  font-size: 36px;
-  line-height: 1;
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: block;
 }
 
 .btn-circle--reset {
@@ -429,8 +432,10 @@ textarea,
 }
 
 .btn-circle--reset .btn-circle-icon {
-  font-size: 24px;
-  line-height: 1;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
 }
 
 .btn-circle--reset .btn-circle-label {
