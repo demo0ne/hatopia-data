@@ -120,7 +120,7 @@
           "title": "test URL",
           "image": "url.png",
           "text": "just a test url",
-          "url": "www.google.com"
+          "url": "https://www.google.com/"
         }
       ]
     },
