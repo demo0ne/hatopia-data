@@ -2442,10 +2442,10 @@ html[data-theme="light"] .tab-btn:hover {
   margin: 0;
 }
 
-/* Roaming Oak card - standard card size, tree image with value overlay, centered */
+/* Roaming Oak card - same size as info/guide cards (grid uses minmax(180px,1fr)), centered */
 .uploads-section--roaming-card.card {
   padding: 16px;
-  width: 180px;
+  width: 220px;
   align-self: center;
 }
 
