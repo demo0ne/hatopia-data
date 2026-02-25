@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.21";
+  --hatopia-version: "1.0.22";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -1403,6 +1403,7 @@ input:focus-visible {
   border: none;
   border-radius: var(--radius-lg);
   background: var(--bg-elevated);
+  color: var(--text-main);
   box-shadow: var(--shadow-soft);
   max-width: 90vw;
   width: 340px;
@@ -1417,6 +1418,7 @@ input:focus-visible {
   font-size: 1.1rem;
   font-weight: 600;
   padding: 20px 20px 0;
+  color: var(--text-main);
 }
 
 .data-dialog-desc {
