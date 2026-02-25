@@ -1,1 +1,34 @@
-{"info":{"daily":[],"weekly":["Pink_Bubbles_Feb_21_to_27_.png","Romantic_Skater.jpg"],"seasonal":["egg_01_beige.png","egg_02_white.png","egg_03_green.png","egg_04_cyan.png","egg_05_lavander.png","egg_06_azure.png","egg_07_black.png","egg_08_red.png","egg_09_orange.png","egg_10_yellow.png","egg_11_emerald.png","egg_12_aquamarine.png","egg_13_blue.png","egg_14_purple.png","egg_14_rossy.png","egg_16_onsen.png"],"other":["Rainbow_Fishing.jpg","Rainbow_Flower.jpg","Rainbow_Forest.jpg","Rainbow_Onsen.jpg","Rainbow_Town.jpg"]}}
+{
+  "info": {
+    "daily": [],
+    "weekly": [
+      "Pink_Bubbles_Feb_21_to_27_.png",
+      "Romantic_Skater.jpg"
+    ],
+    "seasonal": [
+      "egg_01_beige.png",
+      "egg_02_white.png",
+      "egg_03_green.png",
+      "egg_04_cyan.png",
+      "egg_05_lavander.png",
+      "egg_06_azure.png",
+      "egg_07_black.png",
+      "egg_08_red.png",
+      "egg_09_orange.png",
+      "egg_10_yellow.png",
+      "egg_11_emerald.png",
+      "egg_12_aquamarine.png",
+      "egg_13_blue.png",
+      "egg_14_purple.png",
+      "egg_14_rossy.png",
+      "egg_16_onsen.png"
+    ],
+    "other": [
+      "Rainbow_Fishing.jpg",
+      "Rainbow_Flower.jpg",
+      "Rainbow_Forest.jpg",
+      "Rainbow_Onsen.jpg",
+      "Rainbow_Town.jpg"
+    ]
+  }
+}
