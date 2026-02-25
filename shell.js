@@ -1,4 +1,4 @@
-window.HatopiaShellVersion = "1.0.7";
+window.HatopiaShellVersion = "1.0.8";
 window.APP_SHELL_HTML = `
         <div class="app-shell">
             <div class="sticky-top">
@@ -332,6 +332,15 @@ window.APP_SHELL_HTML = `
                 hidden
             >
                 <section class="uploads-page">
+                    <!-- Weather card (top) -->
+                    <div class="uploads-weather-card-row">
+                        <div class="uploads-section uploads-section--weather-card card">
+                            <h2 class="weather-card-title">Weather</h2>
+                            <div id="weather-card-image-wrap" class="admin-value-card-image-wrap" title="">
+                                <img id="weather-card-img" src="" alt="Weather" class="admin-value-card-img" />
+                            </div>
+                        </div>
+                    </div>
                     <!-- Row A: Roaming / Flawless (read-only) + Include in Message -->
                     <div class="uploads-section uploads-section--row-a card">
                         <div class="uploads-row uploads-row--readonly">

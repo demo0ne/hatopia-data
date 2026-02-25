@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.20";
+window.HatopiaAppVersion = "1.0.21";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1672,6 +1672,37 @@ window.HatopiaAppVersion = "1.0.20";
   let uploadedItems = [];
   let uploadsPanelInitialized = false;
 
+  /** GMT+8 hour → "dawn"|"day"|"dusk"|"night". 7am-1pm dawn, 1pm-7pm day, 7pm-1am dusk, 1am-7am night. */
+  function getCurrentWeatherTimeSlotGMT8() {
+    const now = new Date();
+    const gmt8Ms = now.getTime() + 8 * 60 * 60 * 1000;
+    const gmt8 = new Date(gmt8Ms);
+    const h = gmt8.getUTCHours();
+    if (h >= 7 && h < 13) return "dawn";
+    if (h >= 13 && h < 19) return "day";
+    if (h >= 19 || h < 1) return "dusk";
+    return "night"; // 1–6
+  }
+
+  /** Resolve weather image name: daily.weather[slot] overrides with meteor/rain/rainbow; else use slot (dawn/day/dusk/night). */
+  function getResolvedWeatherImage() {
+    const slot = getCurrentWeatherTimeSlotGMT8();
+    const weather = infoData && infoData.daily && infoData.daily.weather ? infoData.daily.weather : {};
+    const override = String(weather[slot] || "").trim().toLowerCase();
+    if (override === "meteor" || override === "rain" || override === "rainbow") return override;
+    return slot; // default: dawn, day, dusk, night
+  }
+
+  function syncWeatherCard() {
+    const img = document.getElementById("weather-card-img");
+    const wrap = document.getElementById("weather-card-image-wrap");
+    if (!img || !wrap) return;
+    const name = getResolvedWeatherImage();
+    const slot = getCurrentWeatherTimeSlotGMT8();
+    img.src = DATA_BASE + "images/info/weather/" + name + ".png";
+    wrap.setAttribute("title", "Weather: " + slot + (name !== slot ? " (" + name + ")" : ""));
+  }
+
   function syncUploadsReadonly() {
     const daily = infoData && infoData.daily ? infoData.daily : {};
     const currentGameDay = getCurrentGameDayStartGMT8();
@@ -1712,6 +1743,7 @@ window.HatopiaAppVersion = "1.0.20";
       flawlessImageWrap.setAttribute("title", flawlessTooltip);
       flawlessImageWrap.setAttribute("aria-label", flawlessCurrent ? "Current" : "Expired");
     }
+    syncWeatherCard();
   }
 
   function removeUploadedItem(id) {

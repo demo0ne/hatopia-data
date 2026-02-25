@@ -5,6 +5,12 @@
     "roamingOak": "\uD83C\uDF33\uD83C\uDF33",
     "flawlessFlouride": "⛰️🗻",
     "notes": "\uD83D\uDE0E",
+    "weather" : {
+        "dawn" : "",
+        "day" : "",
+        "dusk" : "",
+        "night" : ""
+    },
     "images": []
   },
   "weekly": {

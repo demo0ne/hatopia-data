@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.35";
+  --hatopia-version: "1.0.36";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -2456,6 +2456,28 @@ html[data-theme="light"] .tab-btn:hover {
 
 .uploads-section {
   margin: 0;
+}
+
+/* Weather card row (top of Admin) */
+.uploads-weather-card-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.uploads-section--weather-card.card {
+  padding: 16px;
+  width: 220px;
+}
+
+.weather-card-title {
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  text-align: center;
 }
 
 /* Admin value cards row (Roaming Oak + Flawless Flouride) */
