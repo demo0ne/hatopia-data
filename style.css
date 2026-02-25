@@ -1656,6 +1656,7 @@ html[data-theme="light"] .tab-btn:hover {
   font-weight: 600;
   color: var(--text-main);
   line-height: 1.2;
+  text-align: center;
 }
 
 .info-card-detail {
@@ -1693,6 +1694,7 @@ html[data-theme="light"] .tab-btn:hover {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--text-main);
+  text-align: center;
 }
 
 .info-field-row {
@@ -2454,6 +2456,7 @@ html[data-theme="light"] .tab-btn:hover {
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-main);
+  text-align: center;
 }
 
 .roaming-oak-card-image-wrap {
