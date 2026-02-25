@@ -1602,6 +1602,33 @@ html[data-theme="light"] .tab-btn:hover {
   overflow-x: hidden;
 }
 
+/* Info tab: subtle scrollbar, almost unnoticeable */
+#info-panel-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+
+html[data-theme="dark"] #info-panel-content {
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+
+#info-panel-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+#info-panel-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#info-panel-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+}
+
+html[data-theme="dark"] #info-panel-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+}
+
 /* Info page (card grid) */
 .info-page {
   padding: 24px;
