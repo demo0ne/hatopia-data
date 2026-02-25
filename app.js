@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.17";
+window.HatopiaAppVersion = "1.0.18";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1653,10 +1653,19 @@ window.HatopiaAppVersion = "1.0.17";
 
   function syncUploadsReadonly() {
     const daily = infoData && infoData.daily ? infoData.daily : {};
+    const currentGameDay = getCurrentGameDayStartGMT8();
+    const dateRoaming = String(daily.dateRoamingOak || daily.date || "").trim();
+    const dateFlawless = String(daily.dateFlawlessFlouride || daily.date || "").trim();
+    const roamingCurrent = dateRoaming && dateRoaming === currentGameDay;
+    const flawlessCurrent = dateFlawless && dateFlawless === currentGameDay;
+
     const readOnlyRoaming = document.getElementById("uploads-roaming-oak");
     const readOnlyFlawless = document.getElementById("uploads-flawless-flouride");
     const roamingValueEl = document.getElementById("roaming-oak-value");
     const flawlessValueEl = document.getElementById("flawless-flouride-value");
+    const roamingImageWrap = document.getElementById("roaming-card-image-wrap");
+    const flawlessImageWrap = document.getElementById("flawless-card-image-wrap");
+
     if (readOnlyRoaming && daily.roamingOak) readOnlyRoaming.value = daily.roamingOak;
     if (readOnlyFlawless && daily.flawlessFlouride) readOnlyFlawless.value = daily.flawlessFlouride;
     if (roamingValueEl) {
@@ -1666,6 +1675,21 @@ window.HatopiaAppVersion = "1.0.17";
     if (flawlessValueEl) {
       const label = FLAWLESS_OPTIONS.find((o) => o.value === daily.flawlessFlouride)?.label || daily.flawlessFlouride || "—";
       flawlessValueEl.textContent = label;
+    }
+
+    const roamingTooltip = "Saved: " + (dateRoaming || "(none)") + ". Current game day (7am GMT+8): " + currentGameDay;
+    const flawlessTooltip = "Saved: " + (dateFlawless || "(none)") + ". Current game day (7am GMT+8): " + currentGameDay;
+    if (roamingImageWrap) {
+      roamingImageWrap.classList.toggle("admin-value-card--valid", roamingCurrent);
+      roamingImageWrap.classList.toggle("admin-value-card--expired", !roamingCurrent);
+      roamingImageWrap.setAttribute("title", roamingTooltip);
+      roamingImageWrap.setAttribute("aria-label", roamingCurrent ? "Current" : "Expired");
+    }
+    if (flawlessImageWrap) {
+      flawlessImageWrap.classList.toggle("admin-value-card--valid", flawlessCurrent);
+      flawlessImageWrap.classList.toggle("admin-value-card--expired", !flawlessCurrent);
+      flawlessImageWrap.setAttribute("title", flawlessTooltip);
+      flawlessImageWrap.setAttribute("aria-label", flawlessCurrent ? "Current" : "Expired");
     }
   }
 

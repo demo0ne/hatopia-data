@@ -1,4 +1,4 @@
-window.HatopiaShellVersion = "1.0.5";
+window.HatopiaShellVersion = "1.0.6";
 window.APP_SHELL_HTML = `
         <div class="app-shell">
             <div class="sticky-top">
@@ -336,14 +336,14 @@ window.APP_SHELL_HTML = `
                     <div class="uploads-admin-cards-row">
                         <div class="uploads-section uploads-section--roaming-card card">
                             <h2 class="roaming-oak-card-title">Roaming Oak</h2>
-                            <div class="admin-value-card-image-wrap">
+                            <div id="roaming-card-image-wrap" class="admin-value-card-image-wrap" title="">
                                 <img src="https://raw.githubusercontent.com/demo0ne/hatopia-data/master/images/info/tree.png" alt="" class="admin-value-card-img" />
                                 <span id="roaming-oak-value" class="admin-value-overlay">—</span>
                             </div>
                         </div>
                         <div class="uploads-section uploads-section--flawless-card card">
                             <h2 class="flawless-flouride-card-title">Flawless Flouride</h2>
-                            <div class="admin-value-card-image-wrap">
+                            <div id="flawless-card-image-wrap" class="admin-value-card-image-wrap" title="">
                                 <img src="https://raw.githubusercontent.com/demo0ne/hatopia-data/master/images/info/stone.png" alt="" class="admin-value-card-img" />
                                 <span id="flawless-flouride-value" class="admin-value-overlay">—</span>
                             </div>
