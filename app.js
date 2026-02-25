@@ -1505,13 +1505,13 @@ window.HatopiaAppVersion = "1.0.19";
     { value: "LOT 1", label: "🏚️ 1" }, { value: "LOT 2", label: "🏚️ 2" }, { value: "LOT 3", label: "🏚️ 3" }, { value: "LOT 4", label: "🏚️ 4" },
     { value: "LOT 5", label: "🏚️ 5" }, { value: "LOT 6", label: "🏚️ 6" }, { value: "LOT 7", label: "🏚️ 7" }, { value: "LOT 8", label: "🏚️ 8" },
     { value: "LOT 9", label: "🏚️ 9" }, { value: "LOT 10", label: "🏚️ 10" }, { value: "LOT 11", label: "🏚️ 11" }, { value: "LOT 12", label: "🏚️ 12" },
-    { value: "🌳🌳", label: "🌳🌳 Spirit-Oak Pine Forest" },
+    { value: "🌳🌳", label: "🌳🌳" },
   ];
   const FLAWLESS_OPTIONS = [
     { value: "LOT 1", label: "🏚️ 1" }, { value: "LOT 2", label: "🏚️ 2" }, { value: "LOT 3", label: "🏚️ 3" }, { value: "LOT 4", label: "🏚️ 4" },
     { value: "LOT 5", label: "🏚️ 5" }, { value: "LOT 6", label: "🏚️ 6" }, { value: "LOT 7", label: "🏚️ 7" }, { value: "LOT 8", label: "🏚️ 8" },
     { value: "LOT 9", label: "🏚️ 9" }, { value: "LOT 10", label: "🏚️ 10" }, { value: "LOT 11", label: "🏚️ 11" }, { value: "LOT 12", label: "🏚️ 12" },
-    { value: "⛰️🗻", label: "⛰️🗻 Onsen Mountain (Near Capybara)" },
+    { value: "⛰️🗻", label: "⛰️🗻" },
   ];
 
   /** Heartopia resets daily at 7:00 GMT+8. Game day = 7:00 D to 6:59:59 D+1 (GMT+8). Returns YYYY-MM-DD of current game day start.
