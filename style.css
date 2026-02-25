@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.22";
+  --hatopia-version: "1.0.23";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -148,6 +148,34 @@ html[data-theme="dark"] {
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/* Global: subtle scrollbars, almost unnoticeable */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+
+html[data-theme="dark"] * {
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+}
+
+html[data-theme="dark"] *::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 html {
@@ -965,8 +993,6 @@ input[type="text"]:focus {
   padding: 0;
   max-height: min(480px, 35vh);
   overflow: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
 .todo-list {
@@ -975,21 +1001,6 @@ input[type="text"]:focus {
   padding: 4px 0 0;
   max-height: none;
   overflow: visible;
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) transparent;
-}
-
-.todo-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.todo-list::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.todo-list::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 999px;
 }
 
 .todo-item {
@@ -1600,33 +1611,6 @@ html[data-theme="light"] .tab-btn:hover {
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
-}
-
-/* Info tab: subtle scrollbar, almost unnoticeable */
-#info-panel-content {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
-}
-
-html[data-theme="dark"] #info-panel-content {
-  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
-}
-
-#info-panel-content::-webkit-scrollbar {
-  width: 6px;
-}
-
-#info-panel-content::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-#info-panel-content::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 999px;
-}
-
-html[data-theme="dark"] #info-panel-content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
 }
 
 /* Info page (card grid) */
