@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.22";
+window.HatopiaAppVersion = "1.0.23";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1566,8 +1566,8 @@ window.HatopiaAppVersion = "1.0.22";
         const dateFlawless = String(sectionData.dateFlawlessFlouride || sectionData.date || "").trim();
         const roamingCurrent = dateRoaming && dateRoaming === currentGameDay;
         const flawlessCurrent = dateFlawless && dateFlawless === currentGameDay;
-        const tooltipRoaming = "Saved: " + (dateRoaming || "(none)") + "\nGame day (7am GMT+8): " + currentGameDay + "\n" + (roamingCurrent ? "✓ Current" : "✗ Expired");
-        const tooltipFlawless = "Saved: " + (dateFlawless || "(none)") + "\nGame day (7am GMT+8): " + currentGameDay + "\n" + (flawlessCurrent ? "✓ Current" : "✗ Expired");
+        const tooltipRoaming = "Data Date: " + (dateRoaming || "(none)") + "\nGame Date: " + currentGameDay + "\n" + (roamingCurrent ? "✅ Valid" : "❌ Expired");
+        const tooltipFlawless = "Data Date: " + (dateFlawless || "(none)") + "\nGame Date: " + currentGameDay + "\n" + (flawlessCurrent ? "✅ Valid" : "❌ Expired");
         const roamingLabel = ROAMING_OPTIONS.find((o) => o.value === sectionData.roamingOak)?.label || sectionData.roamingOak || "—";
         const flawlessLabel = FLAWLESS_OPTIONS.find((o) => o.value === sectionData.flawlessFlouride)?.label || sectionData.flawlessFlouride || "—";
 
@@ -1729,8 +1729,8 @@ window.HatopiaAppVersion = "1.0.22";
       flawlessValueEl.textContent = label;
     }
 
-    const roamingTooltip = "Saved: " + (dateRoaming || "(none)") + "\nGame day (7am GMT+8): " + currentGameDay + "\n" + (roamingCurrent ? "✓ Current" : "✗ Expired");
-    const flawlessTooltip = "Saved: " + (dateFlawless || "(none)") + "\nGame day (7am GMT+8): " + currentGameDay + "\n" + (flawlessCurrent ? "✓ Current" : "✗ Expired");
+    const roamingTooltip = "Data Date: " + (dateRoaming || "(none)") + "\nGame Date: " + currentGameDay + "\n" + (roamingCurrent ? "✅ Valid" : "❌ Expired");
+    const flawlessTooltip = "Data Date: " + (dateFlawless || "(none)") + "\nGame Date: " + currentGameDay + "\n" + (flawlessCurrent ? "✅ Valid" : "❌ Expired");
     if (roamingImageWrap) {
       roamingImageWrap.classList.toggle("admin-value-card--valid", roamingCurrent);
       roamingImageWrap.classList.toggle("admin-value-card--expired", !roamingCurrent);
