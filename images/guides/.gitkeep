@@ -1,2 +1,2 @@
 # Guide images: one subfolder per group (e.g. flowers/, animals/).
-# Run: python tools/move_flowers_to_guides.py to move images from images/flowers/
+

@@ -1123,6 +1123,7 @@ window.HatopiaAppVersion = "1.0.14";
       imgEl.src = (item.image.startsWith("http://") || item.image.startsWith("https://")) ? item.image
         : (groupId != null && groupId !== "") ? (GUIDES_IMAGES_BASE + groupId + "/" + item.image) : item.image;
       imgEl.alt = titleStr;
+      imgEl.classList.remove("guide-lightbox-img--zoomed");
       imgEl.hidden = false;
     } else {
       imgEl.removeAttribute("src");
@@ -1156,20 +1157,29 @@ window.HatopiaAppVersion = "1.0.14";
     lb.hidden = false;
   }
 
-  function closeGuideLightbox() {
-    const lb = document.getElementById("guide-lightbox");
-    if (lb) lb.hidden = true;
-  }
-
   function initGuideLightbox() {
     const lightbox = document.getElementById("guide-lightbox");
     const closeBtn = lightbox?.querySelector(".guide-lightbox-close");
     const backdrop = lightbox?.querySelector(".guide-lightbox-backdrop");
+    const imgEl = lightbox?.querySelector(".guide-lightbox-img");
     if (closeBtn) closeBtn.addEventListener("click", closeGuideLightbox);
     if (backdrop) backdrop.addEventListener("click", closeGuideLightbox);
+    if (imgEl) {
+      imgEl.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (!imgEl.hidden) imgEl.classList.toggle("guide-lightbox-img--zoomed");
+      });
+    }
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeGuideLightbox();
     });
+  }
+
+  function closeGuideLightbox() {
+    const lb = document.getElementById("guide-lightbox");
+    const imgEl = lb?.querySelector(".guide-lightbox-img");
+    if (imgEl) imgEl.classList.remove("guide-lightbox-img--zoomed");
+    if (lb) lb.hidden = true;
   }
 
   function getGuidesOrder(defaultOrder) {
