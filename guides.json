@@ -1,50 +1,1 @@
-{
-  "groups": [
-    {
-      "id": "flowers",
-      "label": "🌻 Flowers",
-      "items": [
-        { "title": "Callalily", "image": "callalily.jpg" },
-        { "title": "Carnation", "image": "carnation.jpg" },
-        { "title": "Daisy", "image": "daisy.webp" },
-        { "title": "Flower Combo 1", "image": "flower_combo_1.png" },
-        { "title": "Flower Combo 2", "image": "flower_combo_2.png" },
-        { "title": "Flower Combo 3", "image": "flower_combo_3.png" },
-        { "title": "Guide 01", "image": "guide_01.png" },
-        { "title": "Guide 02", "image": "guide_02.png" },
-        { "title": "Lanceleaf", "image": "lanceleaf.webp" },
-        { "title": "Pansy", "image": "pansy.webp" },
-        { "title": "Poppy", "image": "poppy.webp" },
-        { "title": "Table 01", "image": "table_01.png" },
-        { "title": "Table 02", "image": "table_02.png" },
-        { "title": "Table 03", "image": "table_03.png" },
-        { "title": "Winterfrost Event", "image": "winterfrost_event.png" }
-      ]
-    },
-    {
-      "id": "animals",
-      "label": "🐰 Animals",
-      "items": [
-        { "title": "🐰 Bunnies", "text": "🌿 Weeds\n🍓 Strawberry\n🥕 Carrot" },
-        { "title": "🦙 Alpaca", "text": "🔵 Blueberries\n🍍 Pineapple\n🌾 Wheat" },
-        { "title": "🐼 Panda", "text": "🎍 Bamboo\n🌽 Corn\n🍎 Apple" },
-        { "title": "🦊 Fox", "text": "🐟 European Perch\n🐠 Largemouth Bass\n🥩 Meat" },
-        { "title": "🦭 Sea Otter", "text": "🍤 Common Shrimp\n🦐 Oriental Shrimp\n🐚 Mussels" },
-        { "title": "🦫 Capybara", "text": "🍒 Raspberry\n🍇 Grape\n🍅 Tomato" },
-        { "title": "🦌 Deer", "text": "🪵 Branches\n🥗 House Salad\n🥬 Lettuce" },
-        { "title": "🦡 Ferret", "text": "🐠 Goby\n🐟 Sea Bass\n🥚 Egg" },
-        { "title": "🐧 Penguin", "text": "🐟 Sardine\n🦐 Common Prawn\n🐟 False Scad" }
-      ]
-    },
-    {
-      "id": "misc",
-      "label": "🎲 Miscellaneous",
-      "items": [
-        {
-          "title": "google sheet",
-          "url": "https://docs.google.com/spreadsheets/d/13zfcylxy7dkd37by8ilpsquin1afwfgqvpy_xoysvs8/edit?usp=sharing"
-        }
-      ]
-    }
-  ]
-}
+﻿{  "groups": [    {      "id": "flowers",      "label": "\uD83C\uDF3B Flowers",      "items": [        {          "title": "Callalily",          "image": "callalily.jpg"        },        {          "title": "Carnation",          "image": "carnation.jpg"        },        {          "title": "Daisy",          "image": "daisy.webp"        },        {          "title": "Flower Combo 1",          "image": "flower_combo_1.png"        },        {          "title": "Flower Combo 2",          "image": "flower_combo_2.png"        },        {          "title": "Flower Combo 3",          "image": "flower_combo_3.png"        },        {          "title": "Guide 01",          "image": "guide_01.png"        },        {          "title": "Guide 02",          "image": "guide_02.png"        },        {          "title": "Lanceleaf",          "image": "lanceleaf.webp"        },        {          "title": "Pansy",          "image": "pansy.webp"        },        {          "title": "Poppy",          "image": "poppy.webp"        },        {          "title": "Table 01",          "image": "table_01.png"        },        {          "title": "Table 02",          "image": "table_02.png"        },        {          "title": "Table 03",          "image": "table_03.png"        },        {          "title": "Winterfrost Event",          "image": "winterfrost_event.png"        }      ]    },    {      "id": "animals",      "label": "\uD83D\uDC30 Animals",      "items": [        {          "title": "\uD83D\uDC30 Bunnies",          "text": "\uD83C\uDF3F Weeds\n\uD83C\uDF53 Strawberry\n\uD83E\uDD55 Carrot"        },        {          "title": "\uD83E\uDD99 Alpaca",          "text": "\uD83D\uDD35 Blueberries\n\uD83C\uDF4D Pineapple\n\uD83C\uDF3E Wheat"        },        {          "title": "\uD83D\uDC3C Panda",          "text": "\uD83C\uDF8D Bamboo\n\uD83C\uDF3D Corn\n\uD83C\uDF4E Apple"        },        {          "title": "\uD83E\uDD8A Fox",          "text": "\uD83D\uDC1F European Perch\n\uD83D\uDC20 Largemouth Bass\n\uD83E\uDD69 Meat"        },        {          "title": "\uD83E\uDDAD Sea Otter",          "text": "\uD83C\uDF64 Common Shrimp\n\uD83E\uDD90 Oriental Shrimp\n\uD83D\uDC1A Mussels"        },        {          "title": "\uD83E\uDDAB Capybara",          "text": "\uD83C\uDF52 Raspberry\n\uD83C\uDF47 Grape\n\uD83C\uDF45 Tomato"        },        {          "title": "\uD83E\uDD8C Deer",          "text": "\uD83E\uDEB5 Branches\n\uD83E\uDD57 House Salad\n\uD83E\uDD6C Lettuce"        },        {          "title": "\uD83E\uDDA1 Ferret",          "text": "\uD83D\uDC20 Goby\n\uD83D\uDC1F Sea Bass\n\uD83E\uDD5A Egg"        },        {          "title": "\uD83D\uDC27 Penguin",          "text": "\uD83D\uDC1F Sardine\n\uD83E\uDD90 Common Prawn\n\uD83D\uDC1F False Scad"        }      ]    },    {      "id": "misc",      "label": "\uD83C\uDFB2 Miscellaneous",      "items": [        {          "title": "google sheet",          "url": "https://docs.google.com/spreadsheets/d/13zfcylxy7dkd37by8ilpsquin1afwfgqvpy_xoysvs8/edit?usp=sharing"        },        {          "title": "test URL",          "image": "url.png",          "text": "just a test url",          "url": "www.google.com"        }      ]    }  ]}
