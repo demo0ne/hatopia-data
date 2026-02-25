@@ -1,4 +1,4 @@
-window.HatopiaShellVersion = "1.0.4";
+window.HatopiaShellVersion = "1.0.5";
 window.APP_SHELL_HTML = `
         <div class="app-shell">
             <div class="sticky-top">
@@ -332,12 +332,21 @@ window.APP_SHELL_HTML = `
                 hidden
             >
                 <section class="uploads-page">
-                    <!-- Row: Roaming Oak card (tree image + value overlay) -->
-                    <div class="uploads-section uploads-section--roaming-card card">
-                        <h2 class="roaming-oak-card-title">Roaming Oak</h2>
-                        <div class="roaming-oak-card-image-wrap">
-                            <img src="https://raw.githubusercontent.com/demo0ne/hatopia-data/master/images/info/tree.png" alt="" class="roaming-oak-card-img" />
-                            <span id="roaming-oak-value" class="roaming-oak-value">—</span>
+                    <!-- Row: Roaming Oak + Flawless Flouride cards (image + value overlay) -->
+                    <div class="uploads-admin-cards-row">
+                        <div class="uploads-section uploads-section--roaming-card card">
+                            <h2 class="roaming-oak-card-title">Roaming Oak</h2>
+                            <div class="admin-value-card-image-wrap">
+                                <img src="https://raw.githubusercontent.com/demo0ne/hatopia-data/master/images/info/tree.png" alt="" class="admin-value-card-img" />
+                                <span id="roaming-oak-value" class="admin-value-overlay">—</span>
+                            </div>
+                        </div>
+                        <div class="uploads-section uploads-section--flawless-card card">
+                            <h2 class="flawless-flouride-card-title">Flawless Flouride</h2>
+                            <div class="admin-value-card-image-wrap">
+                                <img src="https://raw.githubusercontent.com/demo0ne/hatopia-data/master/images/info/stone.png" alt="" class="admin-value-card-img" />
+                                <span id="flawless-flouride-value" class="admin-value-overlay">—</span>
+                            </div>
                         </div>
                     </div>
                     <!-- Row A: Roaming / Flawless (read-only) + Include in Message -->
