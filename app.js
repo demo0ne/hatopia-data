@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.19";
+window.HatopiaAppVersion = "1.0.20";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1950,7 +1950,11 @@ window.HatopiaAppVersion = "1.0.19";
       const styleVer = getComputedStyle(document.documentElement).getPropertyValue("--hatopia-version").trim().replace(/^["']|["']$/g, "") || "—";
       const appVer = window.HatopiaAppVersion || "—";
       const shellVer = window.HatopiaShellVersion || "—";
-      el.textContent = `app ${appVer} · shell ${shellVer} · style ${styleVer}`;
+      const versionText = `app ${appVer} · shell ${shellVer} · style ${styleVer}`;
+      el.textContent = versionText;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(versionText).catch(() => {});
+      }
       el.classList.add("hatopia-version-footnote--visible");
       if (hideTimer) clearTimeout(hideTimer);
       hideTimer = setTimeout(() => {
