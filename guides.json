@@ -136,7 +136,9 @@
         },
         {
           "title": "branch",
-          "image": "a branch.png"
+          "image": "a branch.png",
+          "text": "Test description",
+          "url": ""
         }
       ]
     }
