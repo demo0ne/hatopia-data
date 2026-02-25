@@ -420,9 +420,9 @@ textarea,
 }
 
 .btn-circle--reset {
-  width: 56px;
-  height: 56px;
-  font-size: 12px;
+  width: 72px;
+  height: 72px;
+  font-size: 11px;
   background: linear-gradient(135deg, #ff7aa8, #ffb86c);
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12), 0 2px 10px rgba(255, 122, 168, 0.3);
 }
@@ -439,7 +439,7 @@ textarea,
 }
 
 .btn-circle--reset .btn-circle-label {
-  display: none;
+  display: block;
 }
 
 @media (min-width: 400px) {
