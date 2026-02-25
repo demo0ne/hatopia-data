@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.25";
+  --hatopia-version: "1.0.26";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -2442,11 +2442,11 @@ html[data-theme="light"] .tab-btn:hover {
   margin: 0;
 }
 
-/* Roaming Oak card - standard card size, tree image with value overlay */
+/* Roaming Oak card - standard card size, tree image with value overlay, centered */
 .uploads-section--roaming-card.card {
   padding: 16px;
   width: 180px;
-  align-self: flex-start;
+  align-self: center;
 }
 
 .roaming-oak-card-title {
@@ -2479,8 +2479,8 @@ html[data-theme="light"] .tab-btn:hover {
   transform: translate(-50%, -50%);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-main);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 8px rgba(255, 255, 255, 0.5);
+  color: #1f2937;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
   white-space: nowrap;
   pointer-events: none;
 }
