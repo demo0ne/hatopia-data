@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.26";
+  --hatopia-version: "1.0.28";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -1694,7 +1694,6 @@ html[data-theme="light"] .tab-btn:hover {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--text-main);
-  text-align: center;
 }
 
 .info-field-row {
@@ -1788,6 +1787,7 @@ html[data-theme="light"] .tab-btn:hover {
   font-weight: 600;
   color: var(--text-main);
   line-height: 1.2;
+  text-align: center;
 }
 
 .info-section-card-img {
