@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.33";
+  --hatopia-version: "1.0.35";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -1753,6 +1753,20 @@ html[data-theme="light"] .tab-btn:hover {
   border: 1px solid var(--border-subtle);
 }
 
+/* Info tab: Roaming Oak + Flawless Flouride value cards */
+.info-value-cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.info-value-card.card {
+  padding: 16px;
+  width: 220px;
+}
+
 .info-section-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -2488,6 +2502,12 @@ html[data-theme="light"] .tab-btn:hover {
 .admin-value-card-image-wrap.admin-value-card--expired .admin-value-card-img {
   filter: grayscale(100%);
   opacity: 0.85;
+}
+
+.admin-value-card-image-wrap.admin-value-card--expired .admin-value-overlay {
+  filter: grayscale(100%);
+  opacity: 0.9;
+  color: #6b7280;
 }
 
 .admin-value-card-image-wrap.admin-value-card--expired {
