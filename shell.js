@@ -1,4 +1,4 @@
-window.HatopiaShellVersion = "1.0.2";
+window.HatopiaShellVersion = "1.0.4";
 window.APP_SHELL_HTML = `
         <div class="app-shell">
             <div class="sticky-top">
@@ -28,8 +28,8 @@ window.APP_SHELL_HTML = `
                             <span class="tab-label">Guides</span>
                         </button>
                         <button type="button" class="tab-btn admin-only-tab" role="tab" id="tab-uploads-btn" aria-selected="false" aria-controls="panel-uploads" data-panel="uploads" hidden>
-                            <span class="tab-icon" aria-hidden="true">📲</span>
-                            <span class="tab-label">Uploads</span>
+                            <span class="tab-icon" aria-hidden="true">🧑🏽‍💻</span>
+                            <span class="tab-label">Admin</span>
                         </button>
                     </nav>
                     <div class="header-actions">
@@ -332,6 +332,14 @@ window.APP_SHELL_HTML = `
                 hidden
             >
                 <section class="uploads-page">
+                    <!-- Row: Roaming Oak card (tree image + value overlay) -->
+                    <div class="uploads-section uploads-section--roaming-card card">
+                        <h2 class="roaming-oak-card-title">Roaming Oak</h2>
+                        <div class="roaming-oak-card-image-wrap">
+                            <img src="https://raw.githubusercontent.com/demo0ne/hatopia-data/master/images/info/tree.png" alt="" class="roaming-oak-card-img" />
+                            <span id="roaming-oak-value" class="roaming-oak-value">—</span>
+                        </div>
+                    </div>
                     <!-- Row A: Roaming / Flawless (read-only) + Include in Message -->
                     <div class="uploads-section uploads-section--row-a card">
                         <div class="uploads-row uploads-row--readonly">

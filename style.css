@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.24";
+  --hatopia-version: "1.0.25";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -2431,7 +2431,7 @@ html[data-theme="light"] .tab-btn:hover {
   background: var(--bg-elevated-soft);
 }
 
-/* Uploads (📲) panel */
+/* Uploads (Admin) panel */
 .uploads-page {
   display: flex;
   flex-direction: column;
@@ -2440,6 +2440,49 @@ html[data-theme="light"] .tab-btn:hover {
 
 .uploads-section {
   margin: 0;
+}
+
+/* Roaming Oak card - standard card size, tree image with value overlay */
+.uploads-section--roaming-card.card {
+  padding: 16px;
+  width: 180px;
+  align-self: flex-start;
+}
+
+.roaming-oak-card-title {
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.roaming-oak-card-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--border-subtle);
+}
+
+.roaming-oak-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.roaming-oak-value {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 8px rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .uploads-section--row-a.card,

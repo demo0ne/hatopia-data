@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.15";
+window.HatopiaAppVersion = "1.0.16";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1655,8 +1655,13 @@ window.HatopiaAppVersion = "1.0.15";
     const daily = infoData && infoData.daily ? infoData.daily : {};
     const readOnlyRoaming = document.getElementById("uploads-roaming-oak");
     const readOnlyFlawless = document.getElementById("uploads-flawless-flouride");
+    const roamingValueEl = document.getElementById("roaming-oak-value");
     if (readOnlyRoaming && daily.roamingOak) readOnlyRoaming.value = daily.roamingOak;
     if (readOnlyFlawless && daily.flawlessFlouride) readOnlyFlawless.value = daily.flawlessFlouride;
+    if (roamingValueEl) {
+      const label = ROAMING_OPTIONS.find((o) => o.value === daily.roamingOak)?.label || daily.roamingOak || "—";
+      roamingValueEl.textContent = label;
+    }
   }
 
   function removeUploadedItem(id) {
