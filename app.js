@@ -1103,7 +1103,7 @@ window.HatopiaAppVersion = "1.0.14";
     return "";
   }
 
-  function openGuideLightbox(item) {
+  function openGuideLightbox(item, groupId) {
     const lb = document.getElementById("guide-lightbox");
     const imgEl = lb?.querySelector(".guide-lightbox-img");
     const titleEl = lb?.querySelector(".guide-lightbox-title");
@@ -1120,7 +1120,8 @@ window.HatopiaAppVersion = "1.0.14";
     titleEl.hidden = !titleStr;
 
     if (hasImage) {
-      imgEl.src = item.image.indexOf("/") >= 0 ? item.image : GUIDES_IMAGES_BASE + item.image;
+      imgEl.src = (item.image.startsWith("http://") || item.image.startsWith("https://")) ? item.image
+        : (groupId != null && groupId !== "") ? (GUIDES_IMAGES_BASE + groupId + "/" + item.image) : item.image;
       imgEl.alt = titleStr;
       imgEl.hidden = false;
     } else {
@@ -1219,12 +1220,12 @@ window.HatopiaAppVersion = "1.0.14";
     });
   }
 
-  function buildGuideCard(item, grid) {
+  function buildGuideCard(item, grid, groupId) {
     const hasImage = !!(item.image && String(item.image).trim());
     const hasText = !!(item.text != null && String(item.text).trim() !== "");
     const hasLink = !!(item.url && String(item.url).trim());
     const titleStr = getGuideItemTitle(item);
-    const imgSrc = hasImage ? (item.image.indexOf("/") >= 0 ? item.image : GUIDES_IMAGES_BASE + item.image) : "";
+    const imgSrc = hasImage ? ((item.image.startsWith("http://") || item.image.startsWith("https://")) ? item.image : (groupId != null && groupId !== "") ? (GUIDES_IMAGES_BASE + groupId + "/" + item.image) : item.image) : "";
 
     if (hasLink && !hasImage && !hasText) {
       const card = document.createElement("div");
@@ -1271,7 +1272,7 @@ window.HatopiaAppVersion = "1.0.14";
     }
     card.addEventListener("click", (e) => {
       e.preventDefault();
-      openGuideLightbox(item);
+      openGuideLightbox(item, groupId);
     });
     grid.appendChild(card);
   }
@@ -1404,7 +1405,7 @@ window.HatopiaAppVersion = "1.0.14";
         e.preventDefault();
         toggleGroup(group.id);
       });
-      (group.items || []).forEach((item) => buildGuideCard(item, grid));
+      (group.items || []).forEach((item) => buildGuideCard(item, grid, group.id));
     });
 
     let draggedGuideId = null;
