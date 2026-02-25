@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.18";
+  --hatopia-version: "1.0.19";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -209,6 +209,11 @@ textarea,
   background: var(--bg-body);
   padding-bottom: 4px;
   margin-bottom: -4px;
+  /* Full-width breakout */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding-left: calc(50vw - 50% + 16px);
+  padding-right: calc(50vw - 50% + 16px);
 }
 
 .app-header {
@@ -1547,7 +1552,7 @@ html[data-theme="light"] .tab-btn:hover {
 .tab-panel {
   margin-top: 0;
   flex: 1 1 0;
-  min-height: 0;
+  min-height: min(480px, 58vh);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -1559,6 +1564,14 @@ html[data-theme="light"] .tab-btn:hover {
 
 .tab-panel > .sticky-top-fields {
   flex-shrink: 0;
+}
+
+.tab-panel > .app-main {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .tab-panel > .app-footer {
@@ -1575,7 +1588,7 @@ html[data-theme="light"] .tab-btn:hover {
 .tab-panel > #animals-panel-content,
 .tab-panel > #guides-panel-content,
 .tab-panel > #info-panel-content,
-.tab-panel > #uploads-panel-content {
+.tab-panel > .uploads-page {
   flex: 1 1 0;
   min-height: 0;
   overflow-y: auto;
@@ -2060,11 +2073,20 @@ html[data-theme="light"] .tab-btn:hover {
   object-fit: contain;
   border-radius: 10px;
   cursor: zoom-in;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 .guide-lightbox-img.guide-lightbox-img--zoomed {
-  transform: scale(2);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
   cursor: zoom-out;
+  z-index: 101;
+  transform: none;
 }
 
 .guide-lightbox-has-text:not(.guide-lightbox-half) .guide-lightbox-img {
@@ -2121,7 +2143,7 @@ html[data-theme="light"] .tab-btn:hover {
   position: absolute;
   top: 16px;
   right: 16px;
-  z-index: 3;
+  z-index: 102;
   width: 44px;
   height: 44px;
   border: none;
