@@ -664,15 +664,19 @@ window.APP_SHELL_HTML = `
             <h2 id="date-changed-dialog-title">Date changed. Reset Tasks?</h2>
             <p class="data-dialog-desc">Select which to reset:</p>
             <div class="reset-dialog-checkboxes">
-                <label class="reset-dialog-row">
+                <label class="reset-dialog-row" id="date-changed-row-daily">
                     <input type="checkbox" id="date-changed-check-daily" aria-label="Daily" />
                     <span>Daily</span>
                 </label>
-                <label class="reset-dialog-row">
+                <label class="reset-dialog-row" id="date-changed-row-weekly">
                     <input type="checkbox" id="date-changed-check-weekly" aria-label="Weekly" />
                     <span>Weekly</span>
                 </label>
             </div>
+            <label class="reset-dialog-dont-ask" id="date-changed-row-dont-ask">
+                <input type="checkbox" id="date-changed-check-dont-ask" aria-label="Don't ask again today" />
+                <span>Don't ask again today</span>
+            </label>
             <div class="data-dialog-actions">
                 <button type="button" id="date-changed-dialog-no" class="btn ghost">No</button>
                 <button type="button" id="date-changed-dialog-yes" class="btn secondary">Yes</button>

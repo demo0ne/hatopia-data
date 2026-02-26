@@ -13,6 +13,7 @@ window.HatopiaAppVersion = "1.0.26";
   const SETUP_RESET_WEEKLY_KEY = "hatopia_reset_weekly";
   const LAST_DAILY_RESET_KEY = "hatopia_last_daily_reset";
   const LAST_WEEKLY_RESET_KEY = "hatopia_last_weekly_reset";
+  const DONT_ASK_RESET_MODAL_GAME_DAY_KEY = "hatopia_dont_ask_reset_modal_game_day";
 
   /**
    * Get Discord webhook URL from localStorage, or prompt once and store. Returns null if user cancels.
@@ -2050,15 +2051,21 @@ window.HatopiaAppVersion = "1.0.26";
     };
   }
 
-  function showDateChangedModal(needAskDaily, needAskWeekly, currentGameDay, currentWeekly) {
+  function showDateChangedModal(showDaily, showWeekly, currentGameDay, currentWeekly) {
     const d = document.getElementById("date-changed-dialog");
+    const rowDaily = document.getElementById("date-changed-row-daily");
+    const rowWeekly = document.getElementById("date-changed-row-weekly");
     const chkDaily = document.getElementById("date-changed-check-daily");
     const chkWeekly = document.getElementById("date-changed-check-weekly");
+    const chkDontAsk = document.getElementById("date-changed-check-dont-ask");
     const btnYes = document.getElementById("date-changed-dialog-yes");
     const btnNo = document.getElementById("date-changed-dialog-no");
     if (!d || !chkDaily || !chkWeekly || !btnYes || !btnNo) return;
-    chkDaily.checked = !!needAskDaily;
-    chkWeekly.checked = !!needAskWeekly;
+    if (rowDaily) rowDaily.style.display = showDaily ? "" : "none";
+    if (rowWeekly) rowWeekly.style.display = showWeekly ? "" : "none";
+    chkDaily.checked = !!showDaily;
+    chkWeekly.checked = !!showWeekly;
+    if (chkDontAsk) chkDontAsk.checked = false;
     d.showModal();
     const preventClose = (e) => e.preventDefault();
     d.addEventListener("cancel", preventClose);
@@ -2066,22 +2073,32 @@ window.HatopiaAppVersion = "1.0.26";
       d.removeEventListener("cancel", preventClose);
       d.close();
     }
+    function onDismiss(resetTypes) {
+      if (chkDontAsk?.checked) {
+        localStorage.setItem(DONT_ASK_RESET_MODAL_GAME_DAY_KEY, currentGameDay);
+      }
+      if (resetTypes.length > 0) {
+        resetAllToActive(resetTypes);
+        if (resetTypes.includes("daily")) localStorage.setItem(LAST_DAILY_RESET_KEY, currentGameDay);
+        if (resetTypes.includes("weekly")) localStorage.setItem(LAST_WEEKLY_RESET_KEY, currentWeekly);
+      }
+      cleanup();
+    }
     btnYes.addEventListener(
       "click",
       () => {
         const types = [];
-        if (chkDaily.checked) types.push("daily");
-        if (chkWeekly.checked) types.push("weekly");
-        if (types.length > 0) {
-          resetAllToActive(types);
-          if (types.includes("daily")) localStorage.setItem(LAST_DAILY_RESET_KEY, currentGameDay);
-          if (types.includes("weekly")) localStorage.setItem(LAST_WEEKLY_RESET_KEY, currentWeekly);
-        }
-        cleanup();
+        if (showDaily && chkDaily.checked) types.push("daily");
+        if (showWeekly && chkWeekly.checked) types.push("weekly");
+        onDismiss(types);
       },
       { once: true }
     );
-    btnNo.addEventListener("click", cleanup, { once: true });
+    btnNo.addEventListener(
+      "click",
+      () => onDismiss([]),
+      { once: true }
+    );
   }
 
   function runAutoResetOnLoad() {
@@ -2095,8 +2112,23 @@ window.HatopiaAppVersion = "1.0.26";
     const weeklyDue = lastWeekly !== currentWeekly;
     const needAskDaily = resetDaily === "ask" && dailyDue;
     const needAskWeekly = resetWeekly === "ask" && weeklyDue;
+    const skipModal = localStorage.getItem(DONT_ASK_RESET_MODAL_GAME_DAY_KEY) === currentGameDay;
     if (needAskDaily || needAskWeekly) {
-      showDateChangedModal(needAskDaily, needAskWeekly, currentGameDay, currentWeekly);
+      if (!skipModal) {
+        const showDaily = resetDaily !== "never" && dailyDue;
+        const showWeekly = resetWeekly !== "never" && weeklyDue;
+        showDateChangedModal(showDaily, showWeekly, currentGameDay, currentWeekly);
+      } else {
+        if (resetDaily === "always" && dailyDue) {
+          resetAllToActive(["daily"]);
+          localStorage.setItem(LAST_DAILY_RESET_KEY, currentGameDay);
+        }
+        if (resetWeekly === "always" && weeklyDue) {
+          resetAllToActive(["weekly"]);
+          localStorage.setItem(LAST_WEEKLY_RESET_KEY, currentWeekly);
+        }
+      }
+      return;
     }
     if (resetDaily === "always" && dailyDue) {
       resetAllToActive(["daily"]);
