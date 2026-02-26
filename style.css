@@ -1,7 +1,7 @@
 /* Light theme default (white/light gray) - used as :root fallback and data-theme="light-default" */
 :root,
 html[data-theme="light-default"] {
-  --hatopia-version: "1.0.42";
+  --hatopia-version: "1.0.46";
   --bg: #f8fafc;
   --bg-elevated: #f1f5f9;
   --bg-elevated-soft: #e2e8f0;
@@ -481,6 +481,10 @@ body {
   justify-content: center;
 }
 
+#root {
+  width: 100%;
+}
+
 input,
 select,
 button,
@@ -492,10 +496,10 @@ textarea,
 
 .app-shell {
   width: 100%;
-  max-width: min(1600px, 96vw);
+  max-width: min(1600px, 98vw);
   min-width: 50%;
   margin: 0 auto 0;
-  padding: 0 8px 12px;
+  padding: 0 4px 12px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -506,7 +510,7 @@ textarea,
 @media (min-width: 768px) {
   .app-shell {
     margin: 0 auto 0;
-    padding: 0 16px 16px;
+    padding: 0 8px 16px;
   }
 }
 
