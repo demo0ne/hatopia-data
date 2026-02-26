@@ -1705,17 +1705,20 @@ window.HatopiaAppVersion = "1.0.30";
         sectionEl.appendChild(cardsRow);
       }
 
-      const notesRow = document.createElement("div");
-      notesRow.className = "info-notes-row";
-      const notesLabel = document.createElement("label");
-      notesLabel.className = "info-notes-label";
-      notesLabel.textContent = "Notes:";
-      const notesContent = document.createElement("div");
-      notesContent.className = "info-notes-value";
-      notesContent.textContent = sectionData.notes || "";
-      notesRow.appendChild(notesLabel);
-      notesRow.appendChild(notesContent);
-      sectionEl.appendChild(notesRow);
+      const notesText = (sectionData.notes || "").trim();
+      if (notesText) {
+        const notesRow = document.createElement("div");
+        notesRow.className = "info-notes-row";
+        const notesLabel = document.createElement("label");
+        notesLabel.className = "info-notes-label";
+        notesLabel.textContent = "Notes:";
+        const notesContent = document.createElement("div");
+        notesContent.className = "info-notes-value";
+        notesContent.textContent = notesText;
+        notesRow.appendChild(notesLabel);
+        notesRow.appendChild(notesContent);
+        sectionEl.appendChild(notesRow);
+      }
 
       const grid = document.createElement("div");
       grid.className = "info-section-grid";
