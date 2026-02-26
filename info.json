@@ -7,7 +7,7 @@
     "weather": {
       "dawn": "",
       "day": "",
-      "dusk": "",
+      "dusk": "aurora",
       "night": ""
     },
     "notes": "\uD83D\uDE0E",
