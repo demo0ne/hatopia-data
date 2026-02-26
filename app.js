@@ -331,12 +331,12 @@ window.HatopiaAppVersion = "1.0.30";
     input.focus();
   }
 
-  const COMPLETE_SOUND_URL =
-    "https://raw.githubusercontent.com/demo0ne/hatopia-data/master/sound/complete.mp3";
+  const SUBTASK_SOUND_URL = DATA_BASE + "sound/subtask.wav";
+  const TADA_SOUND_URL = DATA_BASE + "sound/tada.wav";
 
-  function playCompleteSound() {
+  function playSound(url) {
     try {
-      const audio = new Audio(COMPLETE_SOUND_URL);
+      const audio = new Audio(url);
       audio.volume = 0.5;
       audio.play().catch(() => {});
     } catch (_) {}
@@ -348,10 +348,15 @@ window.HatopiaAppVersion = "1.0.30";
   function toggleTodo(id) {
     const task = todos.find((t) => t.id === id);
     const wasIncomplete = task && !task.completed;
+    const groupId = task?.group || "SEA";
     todos = todos.map((t) =>
       t.id === id ? { ...t, completed: !t.completed } : t
     );
-    if (wasIncomplete) playCompleteSound();
+    if (wasIncomplete) {
+      const groupTodos = todos.filter((t) => (t.group || "SEA") === groupId);
+      const allComplete = groupTodos.length > 0 && groupTodos.every((t) => t.completed);
+      if (allComplete) playSound(TADA_SOUND_URL);
+    }
     saveToStorage();
     renderTodos();
   }
@@ -998,8 +1003,11 @@ window.HatopiaAppVersion = "1.0.30";
    * @param {string} subId
    */
   function toggleSubtask(todoId, subId) {
+    let subtaskWasIncomplete = false;
     todos = todos.map((t) => {
       if (t.id !== todoId) return t;
+      const sub = (t.subtasks || []).find((s) => s.id === subId);
+      if (sub && !sub.completed) subtaskWasIncomplete = true;
       return {
         ...t,
         subtasks: (t.subtasks || []).map((s) =>
@@ -1007,6 +1015,7 @@ window.HatopiaAppVersion = "1.0.30";
         ),
       };
     });
+    if (subtaskWasIncomplete) playSound(SUBTASK_SOUND_URL);
     saveToStorage();
     renderTodos();
   }
