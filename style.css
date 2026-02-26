@@ -144,6 +144,76 @@ html[data-theme="dark"] {
   --font-family: "Manrope", system-ui, sans-serif;
 }
 
+/* Dark theme (pink accents) – when "Enable pink dark mode" is checked */
+html[data-theme="dark-pink"] {
+  --bg: #050816;
+  --bg-elevated: #090f22;
+  --bg-elevated-soft: #101936;
+  --accent: #db2777;
+  --accent-soft: rgba(219, 39, 119, 0.18);
+  --accent-strong: #ec4899;
+  --danger: #ff5c7a;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --text-main: #f9f9ff;
+  --text-muted: #9aa0ba;
+  --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.6);
+  --bg-body: radial-gradient(circle at top left, #1a0a12, #050816 55%);
+  --header-bg: linear-gradient(135deg, rgba(219, 39, 119, 0.12), rgba(236, 72, 153, 0.12));
+  --header-border: rgba(255, 255, 255, 0.12);
+  --header-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
+  --card-bg: radial-gradient(circle at top left, #171f3f, #080d1f 55%);
+  --todo-item-bg: radial-gradient(circle at top left, #111830, #060b18 56%);
+  --todo-item-border: rgba(255, 255, 255, 0.04);
+  --todo-item-hover-shadow: 0 10px 22px rgba(0, 0, 0, 0.6);
+  --todo-item-hover-border: rgba(219, 39, 119, 0.6);
+  --todo-item-completed-bg: radial-gradient(circle at bottom right, #111826, #050816 60%);
+  --todo-item-completed-text: rgba(154, 160, 186, 0.9);
+  --todo-check-border: rgba(255, 255, 255, 0.24);
+  --todo-check-bg: radial-gradient(circle at top left, rgba(255, 255, 255, 0.12), transparent);
+  --todo-check-completed-border: rgba(219, 39, 119, 0.95);
+  --todo-check-completed-bg: radial-gradient(circle at 20% 0, #ffffff, #fbcfe8);
+  --todo-check-completed-shadow: 0 0 16px rgba(219, 39, 119, 0.75);
+  --input-bg: #050816;
+  --input-border: rgba(255, 255, 255, 0.14);
+  --placeholder-color: rgba(154, 160, 186, 0.8);
+  --input-focus-ring: rgba(219, 39, 119, 0.6);
+  --btn-primary-text: #050816;
+  --focus-ring: rgba(219, 39, 119, 0.85);
+  --scrollbar-thumb: rgba(219, 39, 119, 0.5);
+  --brand-mark-bg: radial-gradient(circle at 20% 0, #ffffff, #fbcfe8);
+  --brand-mark-shadow: 0 10px 24px rgba(0, 0, 0, 0.65);
+  --dialog-backdrop: rgba(5, 8, 22, 0.75);
+  --badge-daily-color: #f87171;
+  --badge-weekly-color: #34d399;
+  --badge-seasonal-color: #fbbf24;
+  --badge-other-color: #94a3b8;
+  --category-daily-border: #ec4899;
+  --category-daily-row: rgba(219, 39, 119, 0.14);
+  --category-daily-row-completed: rgba(219, 39, 119, 0.08);
+  --category-weekly-border: #34d399;
+  --category-weekly-row: rgba(52, 211, 153, 0.12);
+  --category-weekly-row-completed: rgba(52, 211, 153, 0.06);
+  --category-seasonal-border: #f59e0b;
+  --category-seasonal-row: rgba(245, 158, 11, 0.12);
+  --category-seasonal-row-completed: rgba(245, 158, 11, 0.06);
+  --category-other-border: #94a3b8;
+  --category-other-row: rgba(148, 163, 184, 0.1);
+  --category-other-row-completed: rgba(148, 163, 184, 0.05);
+  --btn-export-bg: linear-gradient(135deg, #60a5fa, #22d3ee);
+  --btn-export-shadow: 0 14px 32px rgba(96, 165, 250, 0.5);
+  --btn-export-shadow-hover: 0 18px 40px rgba(96, 165, 250, 0.65);
+  --btn-export-shadow-active: 0 8px 20px rgba(96, 165, 250, 0.5);
+  --btn-import-bg: linear-gradient(135deg, #34d399, #6ee7b7);
+  --btn-import-shadow: 0 14px 32px rgba(52, 211, 153, 0.5);
+  --btn-import-shadow-hover: 0 18px 40px rgba(52, 211, 153, 0.65);
+  --btn-import-shadow-active: 0 8px 20px rgba(52, 211, 153, 0.5);
+  --btn-discord-bg: linear-gradient(135deg, #7289da, #5865f2);
+  --btn-discord-shadow: 0 14px 32px rgba(114, 137, 218, 0.5);
+  --btn-discord-shadow-hover: 0 18px 40px rgba(114, 137, 218, 0.6);
+  --btn-discord-shadow-active: 0 8px 20px rgba(114, 137, 218, 0.5);
+  --font-family: "Manrope", system-ui, sans-serif;
+}
+
 *,
 *::before,
 *::after {
@@ -156,7 +226,8 @@ html[data-theme="dark"] {
   scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
 }
 
-html[data-theme="dark"] * {
+html[data-theme="dark"] *,
+html[data-theme="dark-pink"] * {
   scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
 }
 
@@ -174,7 +245,8 @@ html[data-theme="dark"] * {
   border-radius: 999px;
 }
 
-html[data-theme="dark"] *::-webkit-scrollbar-thumb {
+html[data-theme="dark"] *::-webkit-scrollbar-thumb,
+html[data-theme="dark-pink"] *::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.12);
 }
 
@@ -489,11 +561,24 @@ html[data-theme="dark"] .btn-circle:hover {
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 32px rgba(124, 92, 255, 0.4);
 }
 
+html[data-theme="dark-pink"] .btn-circle {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(219, 39, 119, 0.3);
+}
+
+html[data-theme="dark-pink"] .btn-circle:hover {
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 32px rgba(219, 39, 119, 0.4);
+}
+
 html[data-theme="dark"] .btn-circle--reset {
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5), 0 2px 12px rgba(255, 122, 168, 0.35);
 }
 
-html[data-theme="dark"] .btn-circle--reset:hover {
+html[data-theme="dark-pink"] .btn-circle--reset {
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5), 0 2px 12px rgba(255, 122, 168, 0.35);
+}
+
+html[data-theme="dark"] .btn-circle--reset:hover,
+html[data-theme="dark-pink"] .btn-circle--reset:hover {
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 122, 168, 0.45);
 }
 
@@ -580,6 +665,19 @@ html[data-theme="dark"] .btn-circle--reset:hover {
   font-weight: 500;
 }
 
+.setup-dialog-row--checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.setup-dialog-row--checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
 .setup-dialog-row select {
   padding: 8px 12px;
   font-size: 14px;
@@ -597,6 +695,11 @@ html[data-theme="dark"] .btn-circle--reset:hover {
   background: transparent;
   color: var(--text-muted);
   border-color: var(--border-subtle);
+}
+
+.btn-settings-icon {
+  display: block;
+  color: inherit;
 }
 
 .btn-settings:hover {
@@ -1225,13 +1328,16 @@ input[type="text"]:focus {
   color: var(--badge-other-color);
 }
 
-html[data-theme="dark"] .todo-type-badge--weekly {
+html[data-theme="dark"] .todo-type-badge--weekly,
+html[data-theme="dark-pink"] .todo-type-badge--weekly {
   background: rgba(52, 211, 153, 0.15);
 }
-html[data-theme="dark"] .todo-type-badge--seasonal {
+html[data-theme="dark"] .todo-type-badge--seasonal,
+html[data-theme="dark-pink"] .todo-type-badge--seasonal {
   background: rgba(245, 158, 11, 0.18);
 }
-html[data-theme="dark"] .todo-type-badge--other {
+html[data-theme="dark"] .todo-type-badge--other,
+html[data-theme="dark-pink"] .todo-type-badge--other {
   background: rgba(148, 163, 184, 0.15);
 }
 
@@ -1240,7 +1346,8 @@ html[data-theme="dark"] .todo-type-badge--other {
   color: #d97706;
 }
 
-html[data-theme="dark"] .todo-type-badge--important {
+html[data-theme="dark"] .todo-type-badge--important,
+html[data-theme="dark-pink"] .todo-type-badge--important {
   background: rgba(251, 191, 36, 0.2);
   color: #fbbf24;
 }
@@ -1579,7 +1686,8 @@ input:focus-visible {
   transition: transform var(--transition-med);
 }
 
-html[data-theme="dark"] .theme-toggle-thumb {
+html[data-theme="dark"] .theme-toggle-thumb,
+html[data-theme="dark-pink"] .theme-toggle-thumb {
   transform: translateX(20px);
 }
 

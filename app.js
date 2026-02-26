@@ -14,6 +14,14 @@ window.HatopiaAppVersion = "1.0.27";
   const LAST_DAILY_RESET_KEY = "hatopia_last_daily_reset";
   const LAST_WEEKLY_RESET_KEY = "hatopia_last_weekly_reset";
   const DONT_ASK_RESET_MODAL_GAME_DAY_KEY = "hatopia_dont_ask_reset_modal_game_day";
+  const PINK_DARK_MODE_KEY = "hatopia_pink_dark_mode";
+
+  function applyTheme() {
+    const theme = localStorage.getItem(THEME_KEY) || "light";
+    const pinkDark = localStorage.getItem(PINK_DARK_MODE_KEY) === "1";
+    const resolved = theme === "dark" && pinkDark ? "dark-pink" : theme === "dark" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", resolved);
+  }
 
   /**
    * Get Discord webhook URL from localStorage, or prompt once and store. Returns null if user cancels.
@@ -32,8 +40,7 @@ window.HatopiaAppVersion = "1.0.27";
   }
 
   (function () {
-    var t = localStorage.getItem("hatopia_theme");
-    document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
+    applyTheme();
   })();
   const APP_SHELL_HTML = window.APP_SHELL_HTML;
   function buildShell() {
@@ -2065,17 +2072,25 @@ window.HatopiaAppVersion = "1.0.27";
     const resetDaily = document.getElementById("setup-reset-daily");
     const resetWeekly = document.getElementById("setup-reset-weekly");
     const themeToggle = document.getElementById("settings-theme-toggle");
+    const pinkDarkCheck = document.getElementById("setup-pink-dark-mode");
     if (!d || !doneBtn) return;
     const daily = (localStorage.getItem(SETUP_RESET_DAILY_KEY) || "never").toLowerCase();
     const weekly = (localStorage.getItem(SETUP_RESET_WEEKLY_KEY) || "never").toLowerCase();
     if (resetDaily) resetDaily.value = ["never", "always", "ask"].includes(daily) ? daily : "never";
     if (resetWeekly) resetWeekly.value = ["never", "always", "ask"].includes(weekly) ? weekly : "never";
+    if (pinkDarkCheck) pinkDarkCheck.checked = localStorage.getItem(PINK_DARK_MODE_KEY) === "1";
     if (themeToggle) {
       themeToggle.onclick = () => {
         const cur = document.documentElement.getAttribute("data-theme") || "light";
-        const next = cur === "dark" ? "light" : "dark";
-        document.documentElement.setAttribute("data-theme", next);
+        const next = cur === "light" ? "dark" : "light";
         localStorage.setItem(THEME_KEY, next);
+        applyTheme();
+      };
+    }
+    if (pinkDarkCheck) {
+      pinkDarkCheck.onchange = () => {
+        localStorage.setItem(PINK_DARK_MODE_KEY, pinkDarkCheck.checked ? "1" : "");
+        applyTheme();
       };
     }
     d.showModal();
@@ -2086,6 +2101,8 @@ window.HatopiaAppVersion = "1.0.27";
       localStorage.setItem(SETUP_DONE_KEY, "1");
       localStorage.setItem(SETUP_RESET_DAILY_KEY, dVal);
       localStorage.setItem(SETUP_RESET_WEEKLY_KEY, wVal);
+      if (pinkDarkCheck) localStorage.setItem(PINK_DARK_MODE_KEY, pinkDarkCheck.checked ? "1" : "");
+      applyTheme();
       d.close();
       if (isFirstTime) runRestOfInit();
     };
@@ -2227,9 +2244,9 @@ window.HatopiaAppVersion = "1.0.27";
     if (themeToggle) {
       themeToggle.addEventListener("click", () => {
         const current = document.documentElement.getAttribute("data-theme") || "light";
-        const next = current === "dark" ? "light" : "dark";
-        document.documentElement.setAttribute("data-theme", next);
+        const next = current === "light" ? "dark" : "light";
         window.localStorage.setItem(THEME_KEY, next);
+        applyTheme();
       });
     }
 
