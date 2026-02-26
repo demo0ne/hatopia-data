@@ -1,4 +1,4 @@
-window.HatopiaShellVersion = "1.0.9";
+window.HatopiaShellVersion = "1.0.10";
 window.APP_SHELL_HTML = `
         <div class="app-shell">
             <div class="sticky-top">
@@ -55,6 +55,15 @@ window.APP_SHELL_HTML = `
                             accept=".json"
                             style="display: none"
                         />
+                        <button
+                            type="button"
+                            id="btn-settings"
+                            class="btn btn-settings"
+                            aria-label="Settings"
+                            title="Settings"
+                        >
+                            <span aria-hidden="true">⚙️</span>
+                        </button>
                         <div class="theme-toggle-wrap">
                             <span class="theme-toggle-label" aria-hidden="true">☀️</span>
                             <button
@@ -613,12 +622,12 @@ window.APP_SHELL_HTML = `
             </div>
         </dialog>
 
-        <dialog id="setup-dialog" class="data-dialog data-dialog--setup" aria-labelledby="setup-dialog-title">
-            <h2 id="setup-dialog-title">Set Up</h2>
-            <p class="data-dialog-desc">Complete setup to use the site.</p>
+        <dialog id="settings-dialog" class="data-dialog data-dialog--setup" aria-labelledby="settings-dialog-title">
+            <h2 id="settings-dialog-title">Settings</h2>
+            <p class="data-dialog-desc">Configure your preferences.</p>
             <div class="setup-dialog-fields">
                 <label class="setup-dialog-row">
-                    <span class="setup-dialog-label">(Beta) Reset Daily Tasks at Daily 7am</span>
+                    <span class="setup-dialog-label">(Beta) Reset Daily Tasks Daily @7am</span>
                     <select id="setup-reset-daily" aria-label="Reset Daily Tasks">
                         <option value="never">Never</option>
                         <option value="always">Always</option>
@@ -626,16 +635,47 @@ window.APP_SHELL_HTML = `
                     </select>
                 </label>
                 <label class="setup-dialog-row">
-                    <span class="setup-dialog-label">(Beta) Reset Weekly Tasks every Saturday 7am</span>
+                    <span class="setup-dialog-label">(Beta) Reset Weekly Tasks Saturday @7am</span>
                     <select id="setup-reset-weekly" aria-label="Reset Weekly Tasks">
                         <option value="never">Never</option>
                         <option value="always">Always</option>
                         <option value="ask">Ask first</option>
                     </select>
                 </label>
+                <label class="setup-dialog-row setup-dialog-row--theme">
+                    <span class="setup-dialog-label">Theme</span>
+                    <div class="theme-toggle-wrap">
+                        <span class="theme-toggle-label" aria-hidden="true">☀️</span>
+                        <button type="button" id="settings-theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark / light mode">
+                            <span class="theme-toggle-track">
+                                <span class="theme-toggle-thumb"></span>
+                            </span>
+                        </button>
+                        <span class="theme-toggle-label" aria-hidden="true">🌙</span>
+                    </div>
+                </label>
             </div>
             <div class="data-dialog-actions">
-                <button type="button" id="setup-dialog-done" class="btn primary">Done</button>
+                <button type="button" id="settings-dialog-done" class="btn primary">Done</button>
+            </div>
+        </dialog>
+
+        <dialog id="date-changed-dialog" class="data-dialog" aria-labelledby="date-changed-dialog-title">
+            <h2 id="date-changed-dialog-title">Date changed. Reset Tasks?</h2>
+            <p class="data-dialog-desc">Select which to reset:</p>
+            <div class="reset-dialog-checkboxes">
+                <label class="reset-dialog-row">
+                    <input type="checkbox" id="date-changed-check-daily" aria-label="Daily" />
+                    <span>Daily</span>
+                </label>
+                <label class="reset-dialog-row">
+                    <input type="checkbox" id="date-changed-check-weekly" aria-label="Weekly" />
+                    <span>Weekly</span>
+                </label>
+            </div>
+            <div class="data-dialog-actions">
+                <button type="button" id="date-changed-dialog-no" class="btn ghost">No</button>
+                <button type="button" id="date-changed-dialog-yes" class="btn secondary">Yes</button>
             </div>
         </dialog>
 

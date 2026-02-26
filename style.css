@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.37";
+  --hatopia-version: "1.0.38";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -571,6 +571,12 @@ html[data-theme="dark"] .btn-circle--reset:hover {
   background: var(--bg);
   color: var(--text-main);
   max-width: 200px;
+}
+
+.btn-settings {
+  padding: 8px 10px;
+  font-size: 1.1rem;
+  min-width: 40px;
 }
 
 .add-task-form {

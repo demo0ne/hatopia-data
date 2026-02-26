@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.24";
+window.HatopiaAppVersion = "1.0.25";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -2017,6 +2017,72 @@ window.HatopiaAppVersion = "1.0.24";
     document.addEventListener("dblclick", show, { passive: true });
   }
 
+  function openSettingsModal(isFirstTime) {
+    const d = document.getElementById("settings-dialog");
+    const doneBtn = document.getElementById("settings-dialog-done");
+    const resetDaily = document.getElementById("setup-reset-daily");
+    const resetWeekly = document.getElementById("setup-reset-weekly");
+    const themeToggle = document.getElementById("settings-theme-toggle");
+    if (!d || !doneBtn) return;
+    const daily = (localStorage.getItem(SETUP_RESET_DAILY_KEY) || "never").toLowerCase();
+    const weekly = (localStorage.getItem(SETUP_RESET_WEEKLY_KEY) || "never").toLowerCase();
+    if (resetDaily) resetDaily.value = ["never", "always", "ask"].includes(daily) ? daily : "never";
+    if (resetWeekly) resetWeekly.value = ["never", "always", "ask"].includes(weekly) ? weekly : "never";
+    if (themeToggle) {
+      themeToggle.onclick = () => {
+        const cur = document.documentElement.getAttribute("data-theme") || "light";
+        const next = cur === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem(THEME_KEY, next);
+      };
+    }
+    d.showModal();
+    d.addEventListener("cancel", (e) => e.preventDefault());
+    doneBtn.onclick = () => {
+      const dVal = (resetDaily?.value || "never").toLowerCase();
+      const wVal = (resetWeekly?.value || "never").toLowerCase();
+      localStorage.setItem(SETUP_DONE_KEY, "1");
+      localStorage.setItem(SETUP_RESET_DAILY_KEY, dVal);
+      localStorage.setItem(SETUP_RESET_WEEKLY_KEY, wVal);
+      d.close();
+      if (isFirstTime) runRestOfInit();
+    };
+  }
+
+  function showDateChangedModal(needAskDaily, needAskWeekly, currentGameDay, currentWeekly) {
+    const d = document.getElementById("date-changed-dialog");
+    const chkDaily = document.getElementById("date-changed-check-daily");
+    const chkWeekly = document.getElementById("date-changed-check-weekly");
+    const btnYes = document.getElementById("date-changed-dialog-yes");
+    const btnNo = document.getElementById("date-changed-dialog-no");
+    if (!d || !chkDaily || !chkWeekly || !btnYes || !btnNo) return;
+    chkDaily.checked = !!needAskDaily;
+    chkWeekly.checked = !!needAskWeekly;
+    d.showModal();
+    const preventClose = (e) => e.preventDefault();
+    d.addEventListener("cancel", preventClose);
+    function cleanup() {
+      d.removeEventListener("cancel", preventClose);
+      d.close();
+    }
+    btnYes.addEventListener(
+      "click",
+      () => {
+        const types = [];
+        if (chkDaily.checked) types.push("daily");
+        if (chkWeekly.checked) types.push("weekly");
+        if (types.length > 0) {
+          resetAllToActive(types);
+          if (types.includes("daily")) localStorage.setItem(LAST_DAILY_RESET_KEY, currentGameDay);
+          if (types.includes("weekly")) localStorage.setItem(LAST_WEEKLY_RESET_KEY, currentWeekly);
+        }
+        cleanup();
+      },
+      { once: true }
+    );
+    btnNo.addEventListener("click", cleanup, { once: true });
+  }
+
   function runAutoResetOnLoad() {
     const resetDaily = (localStorage.getItem(SETUP_RESET_DAILY_KEY) || "never").toLowerCase();
     const resetWeekly = (localStorage.getItem(SETUP_RESET_WEEKLY_KEY) || "never").toLowerCase();
@@ -2029,17 +2095,7 @@ window.HatopiaAppVersion = "1.0.24";
     const needAskDaily = resetDaily === "ask" && dailyDue;
     const needAskWeekly = resetWeekly === "ask" && weeklyDue;
     if (needAskDaily || needAskWeekly) {
-      const ok = window.confirm("Date changed. Reset Tasks?");
-      if (ok) {
-        const types = [];
-        if (resetDaily === "ask" && dailyDue) types.push("daily");
-        if (resetWeekly === "ask" && weeklyDue) types.push("weekly");
-        if (types.length > 0) {
-          resetAllToActive(types);
-          if (types.includes("daily")) localStorage.setItem(LAST_DAILY_RESET_KEY, currentGameDay);
-          if (types.includes("weekly")) localStorage.setItem(LAST_WEEKLY_RESET_KEY, currentWeekly);
-        }
-      }
+      showDateChangedModal(needAskDaily, needAskWeekly, currentGameDay, currentWeekly);
     }
     if (resetDaily === "always" && dailyDue) {
       resetAllToActive(["daily"]);
@@ -2056,29 +2112,7 @@ window.HatopiaAppVersion = "1.0.24";
     initGuideLightbox();
 
     if (localStorage.getItem(SETUP_DONE_KEY) !== "1") {
-      const setupDialog = document.getElementById("setup-dialog");
-      const setupDoneBtn = document.getElementById("setup-dialog-done");
-      const setupResetDaily = document.getElementById("setup-reset-daily");
-      const setupResetWeekly = document.getElementById("setup-reset-weekly");
-      if (setupDialog && setupDoneBtn) {
-        setupDialog.showModal();
-        setupDialog.addEventListener("cancel", (e) => e.preventDefault());
-        setupDoneBtn.addEventListener(
-          "click",
-          () => {
-            const daily = (setupResetDaily?.value || "never").toLowerCase();
-            const weekly = (setupResetWeekly?.value || "never").toLowerCase();
-            localStorage.setItem(SETUP_DONE_KEY, "1");
-            localStorage.setItem(SETUP_RESET_DAILY_KEY, daily);
-            localStorage.setItem(SETUP_RESET_WEEKLY_KEY, weekly);
-            setupDialog.close();
-            runRestOfInit();
-          },
-          { once: true }
-        );
-      } else {
-        runRestOfInit();
-      }
+      openSettingsModal(true);
       return;
     }
 
@@ -2125,6 +2159,9 @@ window.HatopiaAppVersion = "1.0.24";
         window.localStorage.setItem(THEME_KEY, next);
       });
     }
+
+    const btnSettings = document.getElementById("btn-settings");
+    if (btnSettings) btnSettings.addEventListener("click", () => openSettingsModal(false));
 
     initTabsAndFlowers();
     initTodoDrag();
