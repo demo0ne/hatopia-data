@@ -5,18 +5,6 @@
       "label": "\uD83C\uDF3B Flowers",
       "items": [
         {
-          "title": "Callalily",
-          "image": "callalily.jpg"
-        },
-        {
-          "title": "Carnation",
-          "image": "carnation.jpg"
-        },
-        {
-          "title": "Daisy",
-          "image": "daisy.webp"
-        },
-        {
           "title": "Flower Combo 1",
           "image": "flower_combo_1.png"
         },
@@ -27,6 +15,18 @@
         {
           "title": "Flower Combo 3",
           "image": "flower_combo_3.png"
+        },
+        {
+          "title": "Callalily",
+          "image": "callalily.jpg"
+        },
+        {
+          "title": "Carnation",
+          "image": "carnation.jpg"
+        },
+        {
+          "title": "Daisy",
+          "image": "daisy.webp"
         },
         {
           "title": "Guide 01",
@@ -128,19 +128,15 @@
     },
     {
       "id": "testfolder",
-      "label": "testfolder",
+      "label": "\uD83D\uDCC1 TEST",
       "items": [
         {
-          "image": "albert why.png",
-          "title": "albert",
-          "text": "",
-          "url": ""
+          "title": "a branch",
+          "image": "a branch.png"
         },
         {
-          "title": "branch",
-          "image": "a branch.png",
-          "text": "Test description",
-          "url": ""
+          "title": "albert why",
+          "image": "albert why.png"
         }
       ]
     }
