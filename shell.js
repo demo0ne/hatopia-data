@@ -61,7 +61,7 @@ window.APP_SHELL_HTML = `
                             <div id="theme-mode-listbox" class="theme-mode-listbox" role="listbox" aria-label="Theme mode" hidden>
                                 <div role="option" class="theme-mode-opt" data-value="light">☀️ Light</div>
                                 <div role="option" class="theme-mode-opt" data-value="dark">🌙 Dark</div>
-                                <div role="option" class="theme-mode-opt" data-value="system">⚙️ System</div>
+                                <div role="option" class="theme-mode-opt" data-value="system">🖥️ System</div>
                             </div>
                         </div>
                         <button
@@ -635,7 +635,7 @@ window.APP_SHELL_HTML = `
                     <select id="settings-theme-mode" class="theme-mode-select setup-select" aria-label="Theme mode">
                         <option value="light">☀️ Light</option>
                         <option value="dark">🌙 Dark</option>
-                        <option value="system">⚙️ System</option>
+                        <option value="system">🖥️ System</option>
                     </select>
                 </label>
                 <label class="setup-dialog-row">

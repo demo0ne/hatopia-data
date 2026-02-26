@@ -2099,6 +2099,59 @@ window.HatopiaAppVersion = "1.0.28";
     document.addEventListener("dblclick", show, { passive: true });
   }
 
+  let settingsVariantDropdownsInitialized = false;
+  function initSettingsVariantDropdownsOnce() {
+    if (settingsVariantDropdownsInitialized) return;
+    const lightVariantBtn = document.getElementById("settings-light-variant-btn");
+    const lightVariantListbox = document.querySelector("#light-variant-dropdown .theme-variant-listbox");
+    const lightVariantOpts = document.querySelectorAll("#light-variant-dropdown .theme-variant-opt");
+    const darkVariantBtn = document.getElementById("settings-dark-variant-btn");
+    const darkVariantListbox = document.querySelector("#dark-variant-dropdown .theme-variant-listbox");
+    const darkVariantOpts = document.querySelectorAll("#dark-variant-dropdown .theme-variant-opt");
+    const d = document.getElementById("settings-dialog");
+    if (!lightVariantBtn || !lightVariantListbox || !darkVariantBtn || !darkVariantListbox || !d) return;
+    function syncVariantUI(btn, opts, key, defaultColor) {
+      const val = localStorage.getItem(key) || "default";
+      const opt = Array.from(opts).find((o) => o.dataset.value === val);
+      if (btn && opt) {
+        const swatch = btn.querySelector(".theme-variant-swatch");
+        const text = btn.querySelector(".theme-variant-text");
+        if (swatch) swatch.style.background = opt.dataset.color || defaultColor;
+        if (text) text.textContent = opt.dataset.value === "default" ? "Default" : opt.dataset.value.charAt(0).toUpperCase() + opt.dataset.value.slice(1);
+      }
+    }
+    function setupVariantDropdown(btn, listbox, opts, key, defaultColor) {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const open = listbox.hidden;
+        listbox.hidden = !open;
+        btn.setAttribute("aria-expanded", String(open));
+      });
+      opts.forEach((opt) => {
+        opt.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const val = opt.dataset.value;
+          localStorage.setItem(key, val);
+          applyTheme();
+          syncVariantUI(btn, opts, key, defaultColor);
+          listbox.hidden = true;
+          btn.setAttribute("aria-expanded", "false");
+        });
+      });
+    }
+    setupVariantDropdown(lightVariantBtn, lightVariantListbox, lightVariantOpts, LIGHT_VARIANT_KEY, "#e2e8f0");
+    setupVariantDropdown(darkVariantBtn, darkVariantListbox, darkVariantOpts, DARK_VARIANT_KEY, "#334155");
+    d.addEventListener("click", (e) => {
+      if (!e.target.closest(".theme-variant-dropdown")) {
+        if (lightVariantListbox) lightVariantListbox.hidden = true;
+        if (darkVariantListbox) darkVariantListbox.hidden = true;
+        if (lightVariantBtn) lightVariantBtn.setAttribute("aria-expanded", "false");
+        if (darkVariantBtn) darkVariantBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+    settingsVariantDropdownsInitialized = true;
+  }
+
   function openSettingsModal(isFirstTime) {
     const d = document.getElementById("settings-dialog");
     const doneBtn = document.getElementById("settings-dialog-done");
@@ -2106,12 +2159,11 @@ window.HatopiaAppVersion = "1.0.28";
     const resetWeekly = document.getElementById("setup-reset-weekly");
     const themeModeSelect = document.getElementById("settings-theme-mode");
     const lightVariantBtn = document.getElementById("settings-light-variant-btn");
-    const lightVariantListbox = document.querySelector("#light-variant-dropdown .theme-variant-listbox");
     const lightVariantOpts = document.querySelectorAll("#light-variant-dropdown .theme-variant-opt");
     const darkVariantBtn = document.getElementById("settings-dark-variant-btn");
-    const darkVariantListbox = document.querySelector("#dark-variant-dropdown .theme-variant-listbox");
     const darkVariantOpts = document.querySelectorAll("#dark-variant-dropdown .theme-variant-opt");
     if (!d || !doneBtn) return;
+    initSettingsVariantDropdownsOnce();
     const daily = (localStorage.getItem(SETUP_RESET_DAILY_KEY) || "never").toLowerCase();
     const weekly = (localStorage.getItem(SETUP_RESET_WEEKLY_KEY) || "never").toLowerCase();
     if (resetDaily) resetDaily.value = ["never", "always", "ask"].includes(daily) ? daily : "never";
@@ -2122,64 +2174,32 @@ window.HatopiaAppVersion = "1.0.28";
     lightV = ["default", "pink", "blue"].includes(lightV) ? lightV : "default";
     darkV = ["default", "pink", "blue"].includes(darkV) ? darkV : "default";
     if (themeModeSelect) themeModeSelect.value = ["light", "dark", "system"].includes(mode) ? mode : "system";
-    function syncLightVariantUI() {
+    if (lightVariantBtn && lightVariantOpts.length) {
       const opt = Array.from(lightVariantOpts).find((o) => o.dataset.value === lightV);
-      if (lightVariantBtn && opt) {
+      if (opt) {
         const swatch = lightVariantBtn.querySelector(".theme-variant-swatch");
         const text = lightVariantBtn.querySelector(".theme-variant-text");
         if (swatch) swatch.style.background = opt.dataset.color || "#e2e8f0";
         if (text) text.textContent = opt.dataset.value === "default" ? "Default" : opt.dataset.value.charAt(0).toUpperCase() + opt.dataset.value.slice(1);
       }
     }
-    function syncDarkVariantUI() {
+    if (darkVariantBtn && darkVariantOpts.length) {
       const opt = Array.from(darkVariantOpts).find((o) => o.dataset.value === darkV);
-      if (darkVariantBtn && opt) {
+      if (opt) {
         const swatch = darkVariantBtn.querySelector(".theme-variant-swatch");
         const text = darkVariantBtn.querySelector(".theme-variant-text");
         if (swatch) swatch.style.background = opt.dataset.color || "#334155";
         if (text) text.textContent = opt.dataset.value === "default" ? "Default" : opt.dataset.value.charAt(0).toUpperCase() + opt.dataset.value.slice(1);
       }
     }
-    syncLightVariantUI();
-    syncDarkVariantUI();
     if (themeModeSelect) {
       themeModeSelect.onchange = () => {
         localStorage.setItem(THEME_MODE_KEY, themeModeSelect.value);
         applyTheme();
       };
     }
-    function initVariantDropdown(btn, listbox, opts, isLight, syncFn) {
-      if (!btn || !listbox || !opts.length) return;
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const open = listbox.hidden;
-        listbox.hidden = !open;
-        btn.setAttribute("aria-expanded", String(open));
-      });
-      opts.forEach((opt) => {
-        opt.addEventListener("click", () => {
-          const val = opt.dataset.value;
-          if (isLight) lightV = val; else darkV = val;
-          localStorage.setItem(isLight ? LIGHT_VARIANT_KEY : DARK_VARIANT_KEY, val);
-          applyTheme();
-          syncFn();
-          listbox.hidden = true;
-          btn.setAttribute("aria-expanded", "false");
-        });
-      });
-    }
-    initVariantDropdown(lightVariantBtn, lightVariantListbox, lightVariantOpts, true, syncLightVariantUI);
-    initVariantDropdown(darkVariantBtn, darkVariantListbox, darkVariantOpts, false, syncDarkVariantUI);
     d.showModal();
     d.addEventListener("cancel", (e) => e.preventDefault());
-    d.addEventListener("click", (e) => {
-      if (!e.target.closest(".theme-variant-dropdown")) {
-        if (lightVariantListbox) lightVariantListbox.hidden = true;
-        if (darkVariantListbox) darkVariantListbox.hidden = true;
-        if (lightVariantBtn) lightVariantBtn.setAttribute("aria-expanded", "false");
-        if (darkVariantBtn) darkVariantBtn.setAttribute("aria-expanded", "false");
-      }
-    });
     doneBtn.onclick = () => {
       const dVal = (resetDaily?.value || "never").toLowerCase();
       const wVal = (resetWeekly?.value || "never").toLowerCase();
@@ -2187,8 +2207,8 @@ window.HatopiaAppVersion = "1.0.28";
       localStorage.setItem(SETUP_RESET_DAILY_KEY, dVal);
       localStorage.setItem(SETUP_RESET_WEEKLY_KEY, wVal);
       if (themeModeSelect) localStorage.setItem(THEME_MODE_KEY, themeModeSelect.value);
-      localStorage.setItem(LIGHT_VARIANT_KEY, lightV);
-      localStorage.setItem(DARK_VARIANT_KEY, darkV);
+      localStorage.setItem(LIGHT_VARIANT_KEY, localStorage.getItem(LIGHT_VARIANT_KEY) || "default");
+      localStorage.setItem(DARK_VARIANT_KEY, localStorage.getItem(DARK_VARIANT_KEY) || "default");
       applyTheme();
       d.close();
       if (isFirstTime) runRestOfInit();
