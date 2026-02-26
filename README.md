@@ -4,13 +4,11 @@ JSON and images for the Hatopia site. Use this as a **separate** GitHub repo so 
 
 ## Last stable version
 
-| Component | Version |
-|-----------|---------|
-| App       | 1.0.29  |
-| Shell     | 1.0.13  |
-| Style     | 1.0.42  |
-
-*Versions in: `app.js`, `shell.js`, `style.css` (--hatopia-version).*
+| Component | Version | File |
+|-----------|---------|------|
+| App       | 1.0.29  | `app.js` (HatopiaAppVersion) |
+| Shell     | 1.0.13  | `shell.js` (HatopiaShellVersion) |
+| Style     | 1.0.42  | `style.css` (--hatopia-version) |
 
 ## Contents
 
