@@ -29,24 +29,24 @@
           "image": "daisy.webp"
         },
         {
-          "title": "Guide 01",
-          "image": "guide_01.png"
-        },
-        {
-          "title": "Guide 02",
-          "image": "guide_02.png"
-        },
-        {
-          "title": "Lanceleaf",
-          "image": "lanceleaf.webp"
-        },
-        {
           "title": "Pansy",
           "image": "pansy.webp"
         },
         {
           "title": "Poppy",
           "image": "poppy.webp"
+        },
+        {
+          "title": "Lanceleaf",
+          "image": "lanceleaf.webp"
+        },
+        {
+          "title": "Guide 01",
+          "image": "guide_01.png"
+        },
+        {
+          "title": "Guide 02",
+          "image": "guide_02.png"
         },
         {
           "title": "Table 01",
