@@ -1765,12 +1765,12 @@ window.HatopiaAppVersion = "1.0.29";
     return "night"; // 1–6
   }
 
-  /** Resolve weather image name: daily.weather[slot] overrides with meteor/rain/rainbow; else use slot (dawn/day/dusk/night). */
+  /** Resolve weather image name: daily.weather[slot] overrides with meteor/rain/rainbow/aurora; else use slot (dawn/day/dusk/night). */
   function getResolvedWeatherImage() {
     const slot = getCurrentWeatherTimeSlotGMT8();
     const weather = infoData && infoData.daily && infoData.daily.weather ? infoData.daily.weather : {};
     const override = String(weather[slot] || "").trim().toLowerCase();
-    if (override === "meteor" || override === "rain" || override === "rainbow") return override;
+    if (override === "meteor" || override === "rain" || override === "rainbow" || override === "aurora") return override;
     return slot; // default: dawn, day, dusk, night
   }
 
