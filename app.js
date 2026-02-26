@@ -1,11 +1,13 @@
-window.HatopiaAppVersion = "1.0.27";
+window.HatopiaAppVersion = "1.0.28";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
   const DISABLE_ASIA_KEY = "hatopia_disable_asia";
   const GROUP_ORDER_KEY = "hatopia_group_order";
   const DEFAULT_GROUP_ORDER = ["SEA", "ASIA", "TW"];
-  const THEME_KEY = "hatopia_theme";
+  const THEME_MODE_KEY = "hatopia_theme_mode";
+  const LIGHT_VARIANT_KEY = "hatopia_light_variant";
+  const DARK_VARIANT_KEY = "hatopia_dark_variant";
   const ADMIN_KEY = "hatopia_admin";
   const DISCORD_WEBHOOK_STORAGE_KEY = "hatopia_discord_webhook";
   const SETUP_DONE_KEY = "hatopia_setup_done";
@@ -14,13 +16,43 @@ window.HatopiaAppVersion = "1.0.27";
   const LAST_DAILY_RESET_KEY = "hatopia_last_daily_reset";
   const LAST_WEEKLY_RESET_KEY = "hatopia_last_weekly_reset";
   const DONT_ASK_RESET_MODAL_GAME_DAY_KEY = "hatopia_dont_ask_reset_modal_game_day";
-  const PINK_DARK_MODE_KEY = "hatopia_pink_dark_mode";
+  function getResolvedMode() {
+    const mode = localStorage.getItem(THEME_MODE_KEY) || "system";
+    if (mode === "light" || mode === "dark") return mode;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+
+  function migrateThemeStorage() {
+    const oldTheme = localStorage.getItem("hatopia_theme");
+    const oldPink = localStorage.getItem("hatopia_pink_dark_mode") === "1";
+    const oldBlue = localStorage.getItem("hatopia_blue_light_mode") === "1";
+    if (oldTheme && !localStorage.getItem(THEME_MODE_KEY)) {
+      localStorage.setItem(THEME_MODE_KEY, oldTheme === "dark" || oldTheme === "light" ? oldTheme : "light");
+      if (!localStorage.getItem(LIGHT_VARIANT_KEY)) {
+        localStorage.setItem(LIGHT_VARIANT_KEY, oldBlue ? "blue" : "default");
+      }
+      if (!localStorage.getItem(DARK_VARIANT_KEY)) {
+        localStorage.setItem(DARK_VARIANT_KEY, oldPink ? "pink" : "blue");
+      }
+    }
+  }
 
   function applyTheme() {
-    const theme = localStorage.getItem(THEME_KEY) || "light";
-    const pinkDark = localStorage.getItem(PINK_DARK_MODE_KEY) === "1";
-    const resolved = theme === "dark" && pinkDark ? "dark-pink" : theme === "dark" ? "dark" : "light";
-    document.documentElement.setAttribute("data-theme", resolved);
+    migrateThemeStorage();
+    const mode = getResolvedMode();
+    const lightVariant = localStorage.getItem(LIGHT_VARIANT_KEY) || "default";
+    const darkVariant = localStorage.getItem(DARK_VARIANT_KEY) || "default";
+    const variant = mode === "light" ? lightVariant : darkVariant;
+    const dataTheme = mode === "light"
+      ? (variant === "pink" ? "light-pink" : variant === "blue" ? "light-blue" : "light-default")
+      : (variant === "pink" ? "dark-pink" : variant === "blue" ? "dark-blue" : "dark-default");
+    document.documentElement.setAttribute("data-theme", dataTheme);
+  }
+
+  function initThemeSystemPrefListener() {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+      if (localStorage.getItem(THEME_MODE_KEY) === "system") applyTheme();
+    });
   }
 
   /**
@@ -41,6 +73,7 @@ window.HatopiaAppVersion = "1.0.27";
 
   (function () {
     applyTheme();
+    initThemeSystemPrefListener();
   })();
   const APP_SHELL_HTML = window.APP_SHELL_HTML;
   function buildShell() {
@@ -2071,37 +2104,91 @@ window.HatopiaAppVersion = "1.0.27";
     const doneBtn = document.getElementById("settings-dialog-done");
     const resetDaily = document.getElementById("setup-reset-daily");
     const resetWeekly = document.getElementById("setup-reset-weekly");
-    const themeToggle = document.getElementById("settings-theme-toggle");
-    const pinkDarkCheck = document.getElementById("setup-pink-dark-mode");
+    const themeModeSelect = document.getElementById("settings-theme-mode");
+    const lightVariantBtn = document.getElementById("settings-light-variant-btn");
+    const lightVariantListbox = document.querySelector("#light-variant-dropdown .theme-variant-listbox");
+    const lightVariantOpts = document.querySelectorAll("#light-variant-dropdown .theme-variant-opt");
+    const darkVariantBtn = document.getElementById("settings-dark-variant-btn");
+    const darkVariantListbox = document.querySelector("#dark-variant-dropdown .theme-variant-listbox");
+    const darkVariantOpts = document.querySelectorAll("#dark-variant-dropdown .theme-variant-opt");
     if (!d || !doneBtn) return;
     const daily = (localStorage.getItem(SETUP_RESET_DAILY_KEY) || "never").toLowerCase();
     const weekly = (localStorage.getItem(SETUP_RESET_WEEKLY_KEY) || "never").toLowerCase();
     if (resetDaily) resetDaily.value = ["never", "always", "ask"].includes(daily) ? daily : "never";
     if (resetWeekly) resetWeekly.value = ["never", "always", "ask"].includes(weekly) ? weekly : "never";
-    if (pinkDarkCheck) pinkDarkCheck.checked = localStorage.getItem(PINK_DARK_MODE_KEY) === "1";
-    if (themeToggle) {
-      themeToggle.onclick = () => {
-        const cur = document.documentElement.getAttribute("data-theme") || "light";
-        const next = cur === "light" ? "dark" : "light";
-        localStorage.setItem(THEME_KEY, next);
+    const mode = localStorage.getItem(THEME_MODE_KEY) || "system";
+    let lightV = localStorage.getItem(LIGHT_VARIANT_KEY) || "default";
+    let darkV = localStorage.getItem(DARK_VARIANT_KEY) || "default";
+    lightV = ["default", "pink", "blue"].includes(lightV) ? lightV : "default";
+    darkV = ["default", "pink", "blue"].includes(darkV) ? darkV : "default";
+    if (themeModeSelect) themeModeSelect.value = ["light", "dark", "system"].includes(mode) ? mode : "system";
+    function syncLightVariantUI() {
+      const opt = Array.from(lightVariantOpts).find((o) => o.dataset.value === lightV);
+      if (lightVariantBtn && opt) {
+        const swatch = lightVariantBtn.querySelector(".theme-variant-swatch");
+        const text = lightVariantBtn.querySelector(".theme-variant-text");
+        if (swatch) swatch.style.background = opt.dataset.color || "#e2e8f0";
+        if (text) text.textContent = opt.dataset.value === "default" ? "Default" : opt.dataset.value.charAt(0).toUpperCase() + opt.dataset.value.slice(1);
+      }
+    }
+    function syncDarkVariantUI() {
+      const opt = Array.from(darkVariantOpts).find((o) => o.dataset.value === darkV);
+      if (darkVariantBtn && opt) {
+        const swatch = darkVariantBtn.querySelector(".theme-variant-swatch");
+        const text = darkVariantBtn.querySelector(".theme-variant-text");
+        if (swatch) swatch.style.background = opt.dataset.color || "#334155";
+        if (text) text.textContent = opt.dataset.value === "default" ? "Default" : opt.dataset.value.charAt(0).toUpperCase() + opt.dataset.value.slice(1);
+      }
+    }
+    syncLightVariantUI();
+    syncDarkVariantUI();
+    if (themeModeSelect) {
+      themeModeSelect.onchange = () => {
+        localStorage.setItem(THEME_MODE_KEY, themeModeSelect.value);
         applyTheme();
       };
     }
-    if (pinkDarkCheck) {
-      pinkDarkCheck.onchange = () => {
-        localStorage.setItem(PINK_DARK_MODE_KEY, pinkDarkCheck.checked ? "1" : "");
-        applyTheme();
-      };
+    function initVariantDropdown(btn, listbox, opts, isLight, syncFn) {
+      if (!btn || !listbox || !opts.length) return;
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const open = listbox.hidden;
+        listbox.hidden = !open;
+        btn.setAttribute("aria-expanded", String(open));
+      });
+      opts.forEach((opt) => {
+        opt.addEventListener("click", () => {
+          const val = opt.dataset.value;
+          if (isLight) lightV = val; else darkV = val;
+          localStorage.setItem(isLight ? LIGHT_VARIANT_KEY : DARK_VARIANT_KEY, val);
+          applyTheme();
+          syncFn();
+          listbox.hidden = true;
+          btn.setAttribute("aria-expanded", "false");
+        });
+      });
     }
+    initVariantDropdown(lightVariantBtn, lightVariantListbox, lightVariantOpts, true, syncLightVariantUI);
+    initVariantDropdown(darkVariantBtn, darkVariantListbox, darkVariantOpts, false, syncDarkVariantUI);
     d.showModal();
     d.addEventListener("cancel", (e) => e.preventDefault());
+    d.addEventListener("click", (e) => {
+      if (!e.target.closest(".theme-variant-dropdown")) {
+        if (lightVariantListbox) lightVariantListbox.hidden = true;
+        if (darkVariantListbox) darkVariantListbox.hidden = true;
+        if (lightVariantBtn) lightVariantBtn.setAttribute("aria-expanded", "false");
+        if (darkVariantBtn) darkVariantBtn.setAttribute("aria-expanded", "false");
+      }
+    });
     doneBtn.onclick = () => {
       const dVal = (resetDaily?.value || "never").toLowerCase();
       const wVal = (resetWeekly?.value || "never").toLowerCase();
       localStorage.setItem(SETUP_DONE_KEY, "1");
       localStorage.setItem(SETUP_RESET_DAILY_KEY, dVal);
       localStorage.setItem(SETUP_RESET_WEEKLY_KEY, wVal);
-      if (pinkDarkCheck) localStorage.setItem(PINK_DARK_MODE_KEY, pinkDarkCheck.checked ? "1" : "");
+      if (themeModeSelect) localStorage.setItem(THEME_MODE_KEY, themeModeSelect.value);
+      localStorage.setItem(LIGHT_VARIANT_KEY, lightV);
+      localStorage.setItem(DARK_VARIANT_KEY, darkV);
       applyTheme();
       d.close();
       if (isFirstTime) runRestOfInit();
@@ -2240,14 +2327,36 @@ window.HatopiaAppVersion = "1.0.27";
     renderDraftSubtasks();
     applyGroupOrder();
 
-    const themeToggle = document.getElementById("theme-toggle");
-    if (themeToggle) {
-      themeToggle.addEventListener("click", () => {
-        const current = document.documentElement.getAttribute("data-theme") || "light";
-        const next = current === "light" ? "dark" : "light";
-        window.localStorage.setItem(THEME_KEY, next);
+    const themeModeBtn = document.getElementById("theme-mode-btn");
+    const themeModeListbox = document.getElementById("theme-mode-listbox");
+    const themeOpts = document.querySelectorAll(".theme-mode-opt");
+    if (themeModeBtn && themeModeListbox && themeOpts.length) {
+      function setThemeMode(val) {
+        localStorage.setItem(THEME_MODE_KEY, val);
         applyTheme();
+        themeOpts.forEach((o) => o.setAttribute("aria-selected", o.dataset.value === val ? "true" : "false"));
+      }
+      themeModeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const open = themeModeListbox.hidden;
+        themeModeListbox.hidden = !open;
+        themeModeBtn.setAttribute("aria-expanded", String(open));
       });
+      themeOpts.forEach((opt) => {
+        opt.addEventListener("click", () => {
+          setThemeMode(opt.dataset.value);
+          themeModeListbox.hidden = true;
+          themeModeBtn.setAttribute("aria-expanded", "false");
+        });
+      });
+      document.addEventListener("click", (e) => {
+        if (!themeModeListbox.hidden && !themeModeBtn.contains(e.target) && !themeModeListbox.contains(e.target)) {
+          themeModeListbox.hidden = true;
+          themeModeBtn.setAttribute("aria-expanded", "false");
+        }
+      });
+      const currentMode = localStorage.getItem(THEME_MODE_KEY) || "system";
+      themeOpts.forEach((o) => o.setAttribute("aria-selected", o.dataset.value === currentMode ? "true" : "false"));
     }
 
     const btnSettings = document.getElementById("btn-settings");

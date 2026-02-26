@@ -1,6 +1,81 @@
-/* Light theme (pink) - default */
-:root {
-  --hatopia-version: "1.0.40";
+/* Light theme default (white/light gray) - used as :root fallback and data-theme="light-default" */
+:root,
+html[data-theme="light-default"] {
+  --hatopia-version: "1.0.41";
+  --bg: #f8fafc;
+  --bg-elevated: #f1f5f9;
+  --bg-elevated-soft: #e2e8f0;
+  --accent: #475569;
+  --accent-soft: rgba(71, 85, 105, 0.18);
+  --accent-strong: #64748b;
+  --danger: #e11d48;
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.08);
+  --radius-lg: 18px;
+  --radius-pill: 999px;
+  --transition-fast: 0.18s ease-out;
+  --transition-med: 0.22s ease-out;
+  --bg-body: radial-gradient(circle at top left, #e2e8f0, #f8fafc 55%);
+  --header-bg: linear-gradient(135deg, rgba(100, 116, 139, 0.12), rgba(148, 163, 184, 0.12));
+  --header-border: rgba(0, 0, 0, 0.08);
+  --header-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
+  --card-bg: radial-gradient(circle at top left, #f1f5f9, #f8fafc 55%);
+  --todo-item-bg: radial-gradient(circle at top left, #f1f5f9, #f8fafc 56%);
+  --todo-item-border: rgba(0, 0, 0, 0.06);
+  --todo-item-hover-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+  --todo-item-hover-border: rgba(100, 116, 139, 0.5);
+  --todo-item-completed-bg: radial-gradient(circle at bottom right, #f1f5f9, #f8fafc 60%);
+  --todo-item-completed-text: rgba(100, 116, 139, 0.9);
+  --todo-check-border: rgba(0, 0, 0, 0.2);
+  --todo-check-bg: radial-gradient(circle at top left, rgba(0, 0, 0, 0.06), transparent);
+  --todo-check-completed-border: rgba(100, 116, 139, 0.9);
+  --todo-check-completed-bg: radial-gradient(circle at 20% 0, #fff, #e2e8f0);
+  --todo-check-completed-shadow: 0 0 16px rgba(100, 116, 139, 0.4);
+  --input-bg: #f8fafc;
+  --input-border: rgba(0, 0, 0, 0.12);
+  --placeholder-color: rgba(100, 116, 139, 0.8);
+  --input-focus-ring: rgba(100, 116, 139, 0.6);
+  --btn-primary-text: #fff;
+  --focus-ring: rgba(100, 116, 139, 0.85);
+  --scrollbar-thumb: rgba(100, 116, 139, 0.5);
+  --brand-mark-bg: radial-gradient(circle at 20% 0, #fff, #e2e8f0);
+  --brand-mark-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  --dialog-backdrop: rgba(248, 250, 252, 0.85);
+  --badge-daily-color: #b91c1c;
+  --badge-weekly-color: #15803d;
+  --badge-seasonal-color: #b45309;
+  --badge-other-color: #475569;
+  --category-daily-border: #64748b;
+  --category-daily-row: #f1f5f9;
+  --category-daily-row-completed: #f8fafc;
+  --category-weekly-border: #059669;
+  --category-weekly-row: #ecfdf5;
+  --category-weekly-row-completed: #f0fdf4;
+  --category-seasonal-border: #d97706;
+  --category-seasonal-row: #fffbeb;
+  --category-seasonal-row-completed: #fefce8;
+  --category-other-border: #64748b;
+  --category-other-row: #f1f5f9;
+  --category-other-row-completed: #f8fafc;
+  --btn-export-bg: linear-gradient(135deg, #3b82f6, #06b6d4);
+  --btn-export-shadow: 0 14px 32px rgba(59, 130, 246, 0.5);
+  --btn-export-shadow-hover: 0 18px 40px rgba(59, 130, 246, 0.65);
+  --btn-export-shadow-active: 0 8px 20px rgba(59, 130, 246, 0.5);
+  --btn-import-bg: linear-gradient(135deg, #10b981, #34d399);
+  --btn-import-shadow: 0 14px 32px rgba(16, 185, 129, 0.5);
+  --btn-import-shadow-hover: 0 18px 40px rgba(16, 185, 129, 0.65);
+  --btn-import-shadow-active: 0 8px 20px rgba(16, 185, 129, 0.5);
+  --btn-discord-bg: linear-gradient(135deg, #5865f2, #7289da);
+  --btn-discord-shadow: 0 14px 32px rgba(88, 101, 242, 0.45);
+  --btn-discord-shadow-hover: 0 18px 40px rgba(88, 101, 242, 0.55);
+  --btn-discord-shadow-active: 0 8px 20px rgba(88, 101, 242, 0.45);
+  --font-family: "Nunito", system-ui, sans-serif;
+}
+
+/* Light theme (pink) */
+html[data-theme="light-pink"] {
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -12,10 +87,6 @@
   --text-main: #1f2937;
   --text-muted: #6b7280;
   --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.08);
-  --radius-lg: 18px;
-  --radius-pill: 999px;
-  --transition-fast: 0.18s ease-out;
-  --transition-med: 0.22s ease-out;
   --bg-body: radial-gradient(circle at top left, #fbcfe8, #fdf2f8 55%);
   --header-bg: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(244, 114, 182, 0.15));
   --header-border: rgba(0, 0, 0, 0.08);
@@ -46,7 +117,6 @@
   --badge-weekly-color: #15803d;
   --badge-seasonal-color: #b45309;
   --badge-other-color: #475569;
-  /* Category row colors (full row background, data-table style) */
   --category-daily-border: #db2777;
   --category-daily-row: #fce7f3;
   --category-daily-row-completed: #fdf2f7;
@@ -74,8 +144,148 @@
   --font-family: "Nunito", system-ui, sans-serif;
 }
 
-/* Dark theme */
-html[data-theme="dark"] {
+/* Light theme (blue/purple accents) – when "Enable Blue/Purple light mode" is checked */
+html[data-theme="light-blue"] {
+  --bg: #eef2ff;
+  --bg-elevated: #e0e7ff;
+  --bg-elevated-soft: #c7d2fe;
+  --accent: #7c5cff;
+  --accent-soft: rgba(124, 92, 255, 0.18);
+  --accent-strong: #a586ff;
+  --danger: #e11d48;
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --text-main: #1e1b4b;
+  --text-muted: #4c4a6a;
+  --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.08);
+  --bg-body: radial-gradient(circle at top left, #c7d2fe, #eef2ff 55%);
+  --header-bg: linear-gradient(135deg, rgba(124, 92, 255, 0.12), rgba(99, 102, 241, 0.12));
+  --header-border: rgba(0, 0, 0, 0.08);
+  --header-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
+  --card-bg: radial-gradient(circle at top left, #e0e7ff, #eef2ff 55%);
+  --todo-item-bg: radial-gradient(circle at top left, #e0e7ff, #eef2ff 56%);
+  --todo-item-border: rgba(0, 0, 0, 0.06);
+  --todo-item-hover-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+  --todo-item-hover-border: rgba(124, 92, 255, 0.5);
+  --todo-item-completed-bg: radial-gradient(circle at bottom right, #e0e7ff, #eef2ff 60%);
+  --todo-item-completed-text: rgba(76, 74, 106, 0.9);
+  --todo-check-border: rgba(0, 0, 0, 0.2);
+  --todo-check-bg: radial-gradient(circle at top left, rgba(0, 0, 0, 0.06), transparent);
+  --todo-check-completed-border: rgba(124, 92, 255, 0.9);
+  --todo-check-completed-bg: radial-gradient(circle at 20% 0, #fff, #c7d2fe);
+  --todo-check-completed-shadow: 0 0 16px rgba(124, 92, 255, 0.4);
+  --input-bg: #eef2ff;
+  --input-border: rgba(0, 0, 0, 0.12);
+  --placeholder-color: rgba(76, 74, 106, 0.8);
+  --input-focus-ring: rgba(124, 92, 255, 0.6);
+  --btn-primary-text: #fff;
+  --focus-ring: rgba(124, 92, 255, 0.85);
+  --scrollbar-thumb: rgba(124, 92, 255, 0.5);
+  --brand-mark-bg: radial-gradient(circle at 20% 0, #fff, #c7d2fe);
+  --brand-mark-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  --dialog-backdrop: rgba(238, 242, 255, 0.85);
+  --badge-daily-color: #b91c1c;
+  --badge-weekly-color: #15803d;
+  --badge-seasonal-color: #b45309;
+  --badge-other-color: #475569;
+  --category-daily-border: #7c5cff;
+  --category-daily-row: #ede9fe;
+  --category-daily-row-completed: #f5f3ff;
+  --category-weekly-border: #059669;
+  --category-weekly-row: #ecfdf5;
+  --category-weekly-row-completed: #f0fdf4;
+  --category-seasonal-border: #d97706;
+  --category-seasonal-row: #fffbeb;
+  --category-seasonal-row-completed: #fefce8;
+  --category-other-border: #64748b;
+  --category-other-row: #f1f5f9;
+  --category-other-row-completed: #f8fafc;
+  --btn-export-bg: linear-gradient(135deg, #3b82f6, #6366f1);
+  --btn-export-shadow: 0 14px 32px rgba(99, 102, 241, 0.5);
+  --btn-export-shadow-hover: 0 18px 40px rgba(99, 102, 241, 0.65);
+  --btn-export-shadow-active: 0 8px 20px rgba(99, 102, 241, 0.5);
+  --btn-import-bg: linear-gradient(135deg, #10b981, #34d399);
+  --btn-import-shadow: 0 14px 32px rgba(16, 185, 129, 0.5);
+  --btn-import-shadow-hover: 0 18px 40px rgba(16, 185, 129, 0.65);
+  --btn-import-shadow-active: 0 8px 20px rgba(16, 185, 129, 0.5);
+  --btn-discord-bg: linear-gradient(135deg, #5865f2, #7289da);
+  --btn-discord-shadow: 0 14px 32px rgba(88, 101, 242, 0.45);
+  --btn-discord-shadow-hover: 0 18px 40px rgba(88, 101, 242, 0.55);
+  --btn-discord-shadow-active: 0 8px 20px rgba(88, 101, 242, 0.45);
+  --font-family: "Nunito", system-ui, sans-serif;
+}
+
+/* Dark theme (default: black/dark gray) */
+html[data-theme="dark-default"] {
+  --bg: #0f172a;
+  --bg-elevated: #1e293b;
+  --bg-elevated-soft: #334155;
+  --accent: #94a3b8;
+  --accent-soft: rgba(148, 163, 184, 0.18);
+  --accent-strong: #cbd5e1;
+  --danger: #f87171;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.6);
+  --bg-body: radial-gradient(circle at top left, #1e293b, #0f172a 55%);
+  --header-bg: linear-gradient(135deg, rgba(100, 116, 139, 0.12), rgba(148, 163, 184, 0.12));
+  --header-border: rgba(255, 255, 255, 0.12);
+  --header-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
+  --card-bg: radial-gradient(circle at top left, #1e293b, #0f172a 55%);
+  --todo-item-bg: radial-gradient(circle at top left, #1e293b, #0f172a 56%);
+  --todo-item-border: rgba(255, 255, 255, 0.06);
+  --todo-item-hover-shadow: 0 10px 22px rgba(0, 0, 0, 0.6);
+  --todo-item-hover-border: rgba(148, 163, 184, 0.5);
+  --todo-item-completed-bg: radial-gradient(circle at bottom right, #1e293b, #0f172a 60%);
+  --todo-item-completed-text: rgba(148, 163, 184, 0.9);
+  --todo-check-border: rgba(255, 255, 255, 0.24);
+  --todo-check-bg: radial-gradient(circle at top left, rgba(255, 255, 255, 0.12), transparent);
+  --todo-check-completed-border: rgba(148, 163, 184, 0.95);
+  --todo-check-completed-bg: radial-gradient(circle at 20% 0, #ffffff, #cbd5e1);
+  --todo-check-completed-shadow: 0 0 16px rgba(148, 163, 184, 0.5);
+  --input-bg: #0f172a;
+  --input-border: rgba(255, 255, 255, 0.14);
+  --placeholder-color: rgba(148, 163, 184, 0.8);
+  --input-focus-ring: rgba(148, 163, 184, 0.6);
+  --btn-primary-text: #0f172a;
+  --focus-ring: rgba(148, 163, 184, 0.85);
+  --scrollbar-thumb: rgba(148, 163, 184, 0.5);
+  --brand-mark-bg: radial-gradient(circle at 20% 0, #ffffff, #cbd5e1);
+  --brand-mark-shadow: 0 10px 24px rgba(0, 0, 0, 0.65);
+  --dialog-backdrop: rgba(15, 23, 42, 0.85);
+  --badge-daily-color: #f87171;
+  --badge-weekly-color: #34d399;
+  --badge-seasonal-color: #fbbf24;
+  --badge-other-color: #94a3b8;
+  --category-daily-border: #94a3b8;
+  --category-daily-row: rgba(148, 163, 184, 0.12);
+  --category-daily-row-completed: rgba(148, 163, 184, 0.06);
+  --category-weekly-border: #34d399;
+  --category-weekly-row: rgba(52, 211, 153, 0.12);
+  --category-weekly-row-completed: rgba(52, 211, 153, 0.06);
+  --category-seasonal-border: #f59e0b;
+  --category-seasonal-row: rgba(245, 158, 11, 0.12);
+  --category-seasonal-row-completed: rgba(245, 158, 11, 0.06);
+  --category-other-border: #94a3b8;
+  --category-other-row: rgba(148, 163, 184, 0.1);
+  --category-other-row-completed: rgba(148, 163, 184, 0.05);
+  --btn-export-bg: linear-gradient(135deg, #3b82f6, #06b6d4);
+  --btn-export-shadow: 0 14px 32px rgba(59, 130, 246, 0.5);
+  --btn-export-shadow-hover: 0 18px 40px rgba(59, 130, 246, 0.65);
+  --btn-export-shadow-active: 0 8px 20px rgba(59, 130, 246, 0.5);
+  --btn-import-bg: linear-gradient(135deg, #10b981, #34d399);
+  --btn-import-shadow: 0 14px 32px rgba(16, 185, 129, 0.5);
+  --btn-import-shadow-hover: 0 18px 40px rgba(16, 185, 129, 0.65);
+  --btn-import-shadow-active: 0 8px 20px rgba(16, 185, 129, 0.5);
+  --btn-discord-bg: linear-gradient(135deg, #5865f2, #7289da);
+  --btn-discord-shadow: 0 14px 32px rgba(88, 101, 242, 0.45);
+  --btn-discord-shadow-hover: 0 18px 40px rgba(88, 101, 242, 0.55);
+  --btn-discord-shadow-active: 0 8px 20px rgba(88, 101, 242, 0.45);
+  --font-family: "Manrope", system-ui, sans-serif;
+}
+
+/* Dark theme (blue/purple accents) */
+html[data-theme="dark-blue"] {
   --bg: #050816;
   --bg-elevated: #090f22;
   --bg-elevated-soft: #101936;
@@ -146,43 +356,43 @@ html[data-theme="dark"] {
 
 /* Dark theme (pink accents) – when "Enable pink dark mode" is checked */
 html[data-theme="dark-pink"] {
-  --bg: #050816;
-  --bg-elevated: #090f22;
-  --bg-elevated-soft: #101936;
+  --bg: #0a0608;
+  --bg-elevated: #140e12;
+  --bg-elevated-soft: #1a1418;
   --accent: #db2777;
   --accent-soft: rgba(219, 39, 119, 0.18);
   --accent-strong: #ec4899;
   --danger: #ff5c7a;
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --text-main: #f9f9ff;
-  --text-muted: #9aa0ba;
-  --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.6);
-  --bg-body: radial-gradient(circle at top left, #1a0a12, #050816 55%);
+  --border-subtle: rgba(255, 255, 255, 0.14);
+  --text-main: #f9f5f7;
+  --text-muted: #b8a8b0;
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  --bg-body: radial-gradient(circle at top left, #1e0a14, #0c080a 55%);
   --header-bg: linear-gradient(135deg, rgba(219, 39, 119, 0.12), rgba(236, 72, 153, 0.12));
-  --header-border: rgba(255, 255, 255, 0.12);
+  --header-border: rgba(255, 255, 255, 0.14);
   --header-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
-  --card-bg: radial-gradient(circle at top left, #171f3f, #080d1f 55%);
-  --todo-item-bg: radial-gradient(circle at top left, #111830, #060b18 56%);
-  --todo-item-border: rgba(255, 255, 255, 0.04);
+  --card-bg: radial-gradient(circle at top left, #1e161a, #120c10 55%);
+  --todo-item-bg: radial-gradient(circle at top left, #160e12, #0c0808 56%);
+  --todo-item-border: rgba(255, 255, 255, 0.1);
   --todo-item-hover-shadow: 0 10px 22px rgba(0, 0, 0, 0.6);
   --todo-item-hover-border: rgba(219, 39, 119, 0.6);
-  --todo-item-completed-bg: radial-gradient(circle at bottom right, #111826, #050816 60%);
-  --todo-item-completed-text: rgba(154, 160, 186, 0.9);
-  --todo-check-border: rgba(255, 255, 255, 0.24);
-  --todo-check-bg: radial-gradient(circle at top left, rgba(255, 255, 255, 0.12), transparent);
+  --todo-item-completed-bg: radial-gradient(circle at bottom right, #140c10, #0a0608 60%);
+  --todo-item-completed-text: rgba(184, 168, 176, 0.9);
+  --todo-check-border: rgba(255, 255, 255, 0.28);
+  --todo-check-bg: radial-gradient(circle at top left, rgba(255, 255, 255, 0.14), transparent);
   --todo-check-completed-border: rgba(219, 39, 119, 0.95);
   --todo-check-completed-bg: radial-gradient(circle at 20% 0, #ffffff, #fbcfe8);
   --todo-check-completed-shadow: 0 0 16px rgba(219, 39, 119, 0.75);
-  --input-bg: #050816;
-  --input-border: rgba(255, 255, 255, 0.14);
-  --placeholder-color: rgba(154, 160, 186, 0.8);
+  --input-bg: #0e0a0c;
+  --input-border: rgba(255, 255, 255, 0.18);
+  --placeholder-color: rgba(184, 168, 176, 0.8);
   --input-focus-ring: rgba(219, 39, 119, 0.6);
-  --btn-primary-text: #050816;
+  --btn-primary-text: #f9f5f7;
   --focus-ring: rgba(219, 39, 119, 0.85);
   --scrollbar-thumb: rgba(219, 39, 119, 0.5);
   --brand-mark-bg: radial-gradient(circle at 20% 0, #ffffff, #fbcfe8);
   --brand-mark-shadow: 0 10px 24px rgba(0, 0, 0, 0.65);
-  --dialog-backdrop: rgba(5, 8, 22, 0.75);
+  --dialog-backdrop: rgba(8, 5, 8, 0.75);
   --badge-daily-color: #f87171;
   --badge-weekly-color: #34d399;
   --badge-seasonal-color: #fbbf24;
@@ -226,7 +436,8 @@ html[data-theme="dark-pink"] {
   scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
 }
 
-html[data-theme="dark"] *,
+html[data-theme="dark-default"] *,
+html[data-theme="dark-blue"] *,
 html[data-theme="dark-pink"] * {
   scrollbar-color: var(--scrollbar-thumb) transparent;
 }
@@ -245,7 +456,8 @@ html[data-theme="dark-pink"] * {
   border-radius: 999px;
 }
 
-html[data-theme="dark"] *::-webkit-scrollbar-thumb,
+html[data-theme="dark-default"] *::-webkit-scrollbar-thumb,
+html[data-theme="dark-blue"] *::-webkit-scrollbar-thumb,
 html[data-theme="dark-pink"] *::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
 }
@@ -553,12 +765,20 @@ textarea,
   }
 }
 
-html[data-theme="dark"] .btn-circle {
+html[data-theme="dark-blue"] .btn-circle {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(124, 92, 255, 0.3);
 }
 
-html[data-theme="dark"] .btn-circle:hover {
+html[data-theme="dark-blue"] .btn-circle:hover {
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 32px rgba(124, 92, 255, 0.4);
+}
+
+html[data-theme="dark-default"] .btn-circle {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(148, 163, 184, 0.3);
+}
+
+html[data-theme="dark-default"] .btn-circle:hover {
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 32px rgba(148, 163, 184, 0.4);
 }
 
 html[data-theme="dark-pink"] .btn-circle {
@@ -569,7 +789,8 @@ html[data-theme="dark-pink"] .btn-circle:hover {
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 32px rgba(219, 39, 119, 0.4);
 }
 
-html[data-theme="dark"] .btn-circle--reset {
+html[data-theme="dark-default"] .btn-circle--reset,
+html[data-theme="dark-blue"] .btn-circle--reset {
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5), 0 2px 12px rgba(255, 122, 168, 0.35);
 }
 
@@ -577,8 +798,9 @@ html[data-theme="dark-pink"] .btn-circle--reset {
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5), 0 2px 12px rgba(255, 122, 168, 0.35);
 }
 
-html[data-theme="dark"] .btn-circle--reset:hover,
-html[data-theme="dark-pink"] .btn-circle--reset:hover {
+html[data-theme="dark-blue"] .btn-circle--reset:hover,
+html[data-theme="dark-pink"] .btn-circle--reset:hover,
+html[data-theme="dark-default"] .btn-circle--reset:hover {
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 122, 168, 0.45);
 }
 
@@ -720,12 +942,16 @@ html[data-theme="dark-pink"] .btn.primary:active {
   border-color: var(--accent);
 }
 
-html[data-theme="light"] .btn-settings {
+html[data-theme="light-default"] .btn-settings,
+html[data-theme="light-pink"] .btn-settings,
+html[data-theme="light-blue"] .btn-settings {
   color: var(--text-main);
   border-color: rgba(0, 0, 0, 0.15);
 }
 
-html[data-theme="light"] .btn-settings:hover {
+html[data-theme="light-default"] .btn-settings:hover,
+html[data-theme="light-pink"] .btn-settings:hover,
+html[data-theme="light-blue"] .btn-settings:hover {
   color: var(--accent);
 }
 
@@ -1340,15 +1566,18 @@ input[type="text"]:focus {
   color: var(--badge-other-color);
 }
 
-html[data-theme="dark"] .todo-type-badge--weekly,
+html[data-theme="dark-default"] .todo-type-badge--weekly,
+html[data-theme="dark-blue"] .todo-type-badge--weekly,
 html[data-theme="dark-pink"] .todo-type-badge--weekly {
   background: rgba(52, 211, 153, 0.15);
 }
-html[data-theme="dark"] .todo-type-badge--seasonal,
+html[data-theme="dark-default"] .todo-type-badge--seasonal,
+html[data-theme="dark-blue"] .todo-type-badge--seasonal,
 html[data-theme="dark-pink"] .todo-type-badge--seasonal {
   background: rgba(245, 158, 11, 0.18);
 }
-html[data-theme="dark"] .todo-type-badge--other,
+html[data-theme="dark-default"] .todo-type-badge--other,
+html[data-theme="dark-blue"] .todo-type-badge--other,
 html[data-theme="dark-pink"] .todo-type-badge--other {
   background: rgba(148, 163, 184, 0.15);
 }
@@ -1358,7 +1587,8 @@ html[data-theme="dark-pink"] .todo-type-badge--other {
   color: #d97706;
 }
 
-html[data-theme="dark"] .todo-type-badge--important,
+html[data-theme="dark-default"] .todo-type-badge--important,
+html[data-theme="dark-blue"] .todo-type-badge--important,
 html[data-theme="dark-pink"] .todo-type-badge--important {
   background: rgba(251, 191, 36, 0.2);
   color: #fbbf24;
@@ -1642,13 +1872,143 @@ input:focus-visible {
   padding: 0 20px 20px;
 }
 
-/* Theme toggle */
+/* Theme dropdown (header) */
 .header-actions {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
+.theme-dropdown-wrap {
+  position: relative;
+}
+
+.theme-mode-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  background: var(--bg-elevated);
+  color: var(--text-main);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.theme-mode-btn:hover {
+  background: var(--bg-elevated-soft);
+  border-color: var(--accent-soft);
+}
+
+.theme-mode-listbox {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 140px;
+  padding: 6px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+  z-index: 100;
+}
+
+.theme-mode-opt {
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background var(--transition-fast);
+}
+
+.theme-mode-opt:hover {
+  background: var(--accent-soft);
+}
+
+.theme-mode-opt[aria-selected="true"] {
+  background: var(--accent-soft);
+  font-weight: 600;
+}
+
+/* Theme variant selects (settings) with color swatches */
+.theme-mode-select,
+.theme-variant-select,
+.setup-select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  background: var(--input-bg);
+  color: var(--text-main);
+  min-width: 160px;
+  cursor: pointer;
+}
+
+.theme-variant-dropdown {
+  position: relative;
+}
+
+.theme-variant-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  background: var(--input-bg);
+  color: var(--text-main);
+  min-width: 140px;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.theme-variant-btn:hover {
+  border-color: var(--accent-soft);
+}
+
+.theme-variant-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.theme-variant-listbox {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 100%;
+  padding: 6px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  box-shadow: var(--shadow-soft);
+  z-index: 100;
+}
+
+.theme-variant-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background var(--transition-fast);
+}
+
+.theme-variant-opt:hover {
+  background: var(--accent-soft);
+}
+
+/* Legacy theme toggle (kept for any remaining references) */
 .theme-toggle-wrap {
   display: flex;
   align-items: center;
@@ -1658,49 +2018,6 @@ input:focus-visible {
 .theme-toggle-label {
   font-size: 1rem;
   line-height: 1;
-}
-
-.theme-toggle {
-  display: flex;
-  align-items: center;
-  padding: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
-  border-radius: var(--radius-pill);
-}
-
-.theme-toggle-track {
-  display: block;
-  width: 44px;
-  height: 24px;
-  border-radius: 999px;
-  background: var(--border-subtle);
-  border: 1px solid var(--border-subtle);
-  position: relative;
-  transition: background var(--transition-fast), border-color var(--transition-fast);
-}
-
-.theme-toggle-track:hover {
-  background: var(--bg-elevated-soft);
-  border-color: var(--accent-soft);
-}
-
-.theme-toggle-thumb {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: transform var(--transition-med);
-}
-
-html[data-theme="dark"] .theme-toggle-thumb,
-html[data-theme="dark-pink"] .theme-toggle-thumb {
-  transform: translateX(20px);
 }
 
 /* Tab navigation (Heartopia.Life-style: icon + text, flat) */
@@ -1755,7 +2072,9 @@ html[data-theme="dark-pink"] .theme-toggle-thumb {
   background: rgba(255, 255, 255, 0.06);
 }
 
-html[data-theme="light"] .tab-btn:hover {
+html[data-theme="light-default"] .tab-btn:hover,
+html[data-theme="light-pink"] .tab-btn:hover,
+html[data-theme="light-blue"] .tab-btn:hover {
   background: rgba(0, 0, 0, 0.04);
 }
 

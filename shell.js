@@ -1,4 +1,4 @@
-window.HatopiaShellVersion = "1.0.11";
+window.HatopiaShellVersion = "1.0.12";
 window.APP_SHELL_HTML = `
         <div class="app-shell">
             <div class="sticky-top">
@@ -56,20 +56,13 @@ window.APP_SHELL_HTML = `
                             accept=".json"
                             style="display: none"
                         />
-                        <div class="theme-toggle-wrap">
-                            <span class="theme-toggle-label" aria-hidden="true">☀️</span>
-                            <button
-                                type="button"
-                                id="theme-toggle"
-                                class="theme-toggle"
-                                aria-label="Toggle dark mode"
-                                title="Toggle dark / light mode"
-                            >
-                                <span class="theme-toggle-track">
-                                    <span class="theme-toggle-thumb"></span>
-                                </span>
-                            </button>
-                            <span class="theme-toggle-label" aria-hidden="true">🌙</span>
+                        <div class="theme-dropdown-wrap" id="theme-dropdown-wrap">
+                            <button type="button" id="theme-mode-btn" class="theme-mode-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Theme mode" title="Theme: Light / Dark / System">🎨</button>
+                            <div id="theme-mode-listbox" class="theme-mode-listbox" role="listbox" aria-label="Theme mode" hidden>
+                                <div role="option" class="theme-mode-opt" data-value="light">☀️ Light</div>
+                                <div role="option" class="theme-mode-opt" data-value="dark">🌙 Dark</div>
+                                <div role="option" class="theme-mode-opt" data-value="system">⚙️ System</div>
+                            </div>
                         </div>
                         <button
                             type="button"
@@ -637,21 +630,41 @@ window.APP_SHELL_HTML = `
                         <option value="ask">Ask first</option>
                     </select>
                 </label>
-                <label class="setup-dialog-row setup-dialog-row--theme">
+                <label class="setup-dialog-row">
                     <span class="setup-dialog-label">Theme</span>
-                    <div class="theme-toggle-wrap">
-                        <span class="theme-toggle-label" aria-hidden="true">☀️</span>
-                        <button type="button" id="settings-theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark / light mode">
-                            <span class="theme-toggle-track">
-                                <span class="theme-toggle-thumb"></span>
-                            </span>
+                    <select id="settings-theme-mode" class="theme-mode-select setup-select" aria-label="Theme mode">
+                        <option value="light">☀️ Light</option>
+                        <option value="dark">🌙 Dark</option>
+                        <option value="system">⚙️ System</option>
+                    </select>
+                </label>
+                <label class="setup-dialog-row">
+                    <span class="setup-dialog-label">Light theme variant</span>
+                    <div class="theme-variant-dropdown" id="light-variant-dropdown">
+                        <button type="button" class="theme-variant-btn" id="settings-light-variant-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Light theme variant">
+                            <span class="theme-variant-swatch" data-swatch="default" style="background:#e2e8f0"></span>
+                            <span class="theme-variant-text">Default</span>
                         </button>
-                        <span class="theme-toggle-label" aria-hidden="true">🌙</span>
+                        <div class="theme-variant-listbox" role="listbox" aria-label="Light theme variant" hidden>
+                            <div role="option" class="theme-variant-opt" data-value="default" data-color="#e2e8f0"><span class="theme-variant-swatch" style="background:#e2e8f0"></span> Default</div>
+                            <div role="option" class="theme-variant-opt" data-value="pink" data-color="#db2777"><span class="theme-variant-swatch" style="background:#db2777"></span> Pink</div>
+                            <div role="option" class="theme-variant-opt" data-value="blue" data-color="#7c5cff"><span class="theme-variant-swatch" style="background:#7c5cff"></span> Blue</div>
+                        </div>
                     </div>
                 </label>
-                <label class="setup-dialog-row setup-dialog-row--checkbox">
-                    <input type="checkbox" id="setup-pink-dark-mode" aria-label="Enable pink dark mode" />
-                    <span class="setup-dialog-label">Enable pink dark mode</span>
+                <label class="setup-dialog-row">
+                    <span class="setup-dialog-label">Dark theme variant</span>
+                    <div class="theme-variant-dropdown" id="dark-variant-dropdown">
+                        <button type="button" class="theme-variant-btn" id="settings-dark-variant-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Dark theme variant">
+                            <span class="theme-variant-swatch" data-swatch="default" style="background:#334155"></span>
+                            <span class="theme-variant-text">Default</span>
+                        </button>
+                        <div class="theme-variant-listbox" role="listbox" aria-label="Dark theme variant" hidden>
+                            <div role="option" class="theme-variant-opt" data-value="default" data-color="#334155"><span class="theme-variant-swatch" style="background:#334155"></span> Default</div>
+                            <div role="option" class="theme-variant-opt" data-value="pink" data-color="#db2777"><span class="theme-variant-swatch" style="background:#db2777"></span> Pink</div>
+                            <div role="option" class="theme-variant-opt" data-value="blue" data-color="#7c5cff"><span class="theme-variant-swatch" style="background:#7c5cff"></span> Blue</div>
+                        </div>
+                    </div>
                 </label>
             </div>
             <div class="data-dialog-actions">
