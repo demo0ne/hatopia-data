@@ -199,18 +199,18 @@ html[data-theme="dark-pink"] {
   --category-other-border: #94a3b8;
   --category-other-row: rgba(148, 163, 184, 0.1);
   --category-other-row-completed: rgba(148, 163, 184, 0.05);
-  --btn-export-bg: linear-gradient(135deg, #60a5fa, #22d3ee);
-  --btn-export-shadow: 0 14px 32px rgba(96, 165, 250, 0.5);
-  --btn-export-shadow-hover: 0 18px 40px rgba(96, 165, 250, 0.65);
-  --btn-export-shadow-active: 0 8px 20px rgba(96, 165, 250, 0.5);
+  --btn-export-bg: linear-gradient(135deg, #ec4899, #f472b6);
+  --btn-export-shadow: 0 14px 32px rgba(236, 72, 153, 0.5);
+  --btn-export-shadow-hover: 0 18px 40px rgba(236, 72, 153, 0.65);
+  --btn-export-shadow-active: 0 8px 20px rgba(236, 72, 153, 0.5);
   --btn-import-bg: linear-gradient(135deg, #34d399, #6ee7b7);
   --btn-import-shadow: 0 14px 32px rgba(52, 211, 153, 0.5);
   --btn-import-shadow-hover: 0 18px 40px rgba(52, 211, 153, 0.65);
   --btn-import-shadow-active: 0 8px 20px rgba(52, 211, 153, 0.5);
-  --btn-discord-bg: linear-gradient(135deg, #7289da, #5865f2);
-  --btn-discord-shadow: 0 14px 32px rgba(114, 137, 218, 0.5);
-  --btn-discord-shadow-hover: 0 18px 40px rgba(114, 137, 218, 0.6);
-  --btn-discord-shadow-active: 0 8px 20px rgba(114, 137, 218, 0.5);
+  --btn-discord-bg: linear-gradient(135deg, #db2777, #ec4899);
+  --btn-discord-shadow: 0 14px 32px rgba(219, 39, 119, 0.5);
+  --btn-discord-shadow-hover: 0 18px 40px rgba(219, 39, 119, 0.6);
+  --btn-discord-shadow-active: 0 8px 20px rgba(219, 39, 119, 0.5);
   --font-family: "Manrope", system-ui, sans-serif;
 }
 
@@ -228,7 +228,7 @@ html[data-theme="dark-pink"] {
 
 html[data-theme="dark"] *,
 html[data-theme="dark-pink"] * {
-  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -247,7 +247,7 @@ html[data-theme="dark-pink"] * {
 
 html[data-theme="dark"] *::-webkit-scrollbar-thumb,
 html[data-theme="dark-pink"] *::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--scrollbar-thumb);
 }
 
 html {
@@ -580,6 +580,18 @@ html[data-theme="dark-pink"] .btn-circle--reset {
 html[data-theme="dark"] .btn-circle--reset:hover,
 html[data-theme="dark-pink"] .btn-circle--reset:hover {
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 122, 168, 0.45);
+}
+
+html[data-theme="dark-pink"] .btn.primary {
+  box-shadow: 0 14px 32px rgba(219, 39, 119, 0.65);
+}
+
+html[data-theme="dark-pink"] .btn.primary:hover {
+  box-shadow: 0 18px 40px rgba(219, 39, 119, 0.85);
+}
+
+html[data-theme="dark-pink"] .btn.primary:active {
+  box-shadow: 0 8px 20px rgba(219, 39, 119, 0.65);
 }
 
 /* Add Task dialog form layout */
