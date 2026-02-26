@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.29";
+window.HatopiaAppVersion = "1.0.30";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -1771,6 +1771,7 @@ window.HatopiaAppVersion = "1.0.29";
     const weather = infoData && infoData.daily && infoData.daily.weather ? infoData.daily.weather : {};
     const override = String(weather[slot] || "").trim().toLowerCase();
     if (override === "meteor" || override === "rain" || override === "rainbow" || override === "aurora") return override;
+    if (/urora/i.test(override) && override.length >= 5 && override.length <= 8) return "aurora"; // fallback for unicode lookalikes
     return slot; // default: dawn, day, dusk, night
   }
 
