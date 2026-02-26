@@ -1993,6 +1993,10 @@ input:focus-visible {
   z-index: 100;
 }
 
+.theme-variant-listbox[hidden] {
+  display: none;
+}
+
 .theme-variant-opt {
   display: flex;
   align-items: center;

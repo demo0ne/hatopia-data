@@ -2129,12 +2129,14 @@ window.HatopiaAppVersion = "1.0.28";
       });
       opts.forEach((opt) => {
         opt.addEventListener("click", (e) => {
+          e.preventDefault();
           e.stopPropagation();
           const val = opt.dataset.value;
           localStorage.setItem(key, val);
           applyTheme();
           syncVariantUI(btn, opts, key, defaultColor);
           listbox.hidden = true;
+          listbox.setAttribute("hidden", "");
           btn.setAttribute("aria-expanded", "false");
         });
       });
