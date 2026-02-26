@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.23";
+window.HatopiaAppVersion = "1.0.24";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -8,6 +8,11 @@ window.HatopiaAppVersion = "1.0.23";
   const THEME_KEY = "hatopia_theme";
   const ADMIN_KEY = "hatopia_admin";
   const DISCORD_WEBHOOK_STORAGE_KEY = "hatopia_discord_webhook";
+  const SETUP_DONE_KEY = "hatopia_setup_done";
+  const SETUP_RESET_DAILY_KEY = "hatopia_reset_daily";
+  const SETUP_RESET_WEEKLY_KEY = "hatopia_reset_weekly";
+  const LAST_DAILY_RESET_KEY = "hatopia_last_daily_reset";
+  const LAST_WEEKLY_RESET_KEY = "hatopia_last_weekly_reset";
 
   /**
    * Get Discord webhook URL from localStorage, or prompt once and store. Returns null if user cancels.
@@ -1531,6 +1536,21 @@ window.HatopiaAppVersion = "1.0.23";
     return y + "-" + String(m + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0");
   }
 
+  /** Game resets weekly at 7:00 Saturday GMT+8. Week = Sat 7am to next Sat 6:59:59. Returns YYYY-MM-DD of current week's Saturday. */
+  function getCurrentWeeklyResetStartGMT8() {
+    const now = new Date();
+    const gmt8Ms = now.getTime() + 8 * 60 * 60 * 1000;
+    const gmt8 = new Date(gmt8Ms);
+    const hour = gmt8.getUTCHours();
+    const y = gmt8.getUTCFullYear();
+    const m = gmt8.getUTCMonth();
+    const d = gmt8.getUTCDate();
+    const dayOfWeek = gmt8.getUTCDay(); // 0=Sun, 6=Sat
+    const daysBack = dayOfWeek === 6 && hour >= 7 ? 0 : dayOfWeek === 6 ? 7 : dayOfWeek + 1;
+    const sat = new Date(Date.UTC(y, m, d - daysBack));
+    return sat.getUTCFullYear() + "-" + String(sat.getUTCMonth() + 1).padStart(2, "0") + "-" + String(sat.getUTCDate()).padStart(2, "0");
+  }
+
   let infoPanelLoaded = false;
 
   async function loadInfoPanel() {
@@ -1997,9 +2017,75 @@ window.HatopiaAppVersion = "1.0.23";
     document.addEventListener("dblclick", show, { passive: true });
   }
 
+  function runAutoResetOnLoad() {
+    const resetDaily = (localStorage.getItem(SETUP_RESET_DAILY_KEY) || "never").toLowerCase();
+    const resetWeekly = (localStorage.getItem(SETUP_RESET_WEEKLY_KEY) || "never").toLowerCase();
+    const currentGameDay = getCurrentGameDayStartGMT8();
+    const currentWeekly = getCurrentWeeklyResetStartGMT8();
+    const lastDaily = localStorage.getItem(LAST_DAILY_RESET_KEY) || "";
+    const lastWeekly = localStorage.getItem(LAST_WEEKLY_RESET_KEY) || "";
+    const dailyDue = lastDaily !== currentGameDay;
+    const weeklyDue = lastWeekly !== currentWeekly;
+    const needAskDaily = resetDaily === "ask" && dailyDue;
+    const needAskWeekly = resetWeekly === "ask" && weeklyDue;
+    if (needAskDaily || needAskWeekly) {
+      const ok = window.confirm("Date changed. Reset Tasks?");
+      if (ok) {
+        const types = [];
+        if (resetDaily === "ask" && dailyDue) types.push("daily");
+        if (resetWeekly === "ask" && weeklyDue) types.push("weekly");
+        if (types.length > 0) {
+          resetAllToActive(types);
+          if (types.includes("daily")) localStorage.setItem(LAST_DAILY_RESET_KEY, currentGameDay);
+          if (types.includes("weekly")) localStorage.setItem(LAST_WEEKLY_RESET_KEY, currentWeekly);
+        }
+      }
+    }
+    if (resetDaily === "always" && dailyDue) {
+      resetAllToActive(["daily"]);
+      localStorage.setItem(LAST_DAILY_RESET_KEY, currentGameDay);
+    }
+    if (resetWeekly === "always" && weeklyDue) {
+      resetAllToActive(["weekly"]);
+      localStorage.setItem(LAST_WEEKLY_RESET_KEY, currentWeekly);
+    }
+  }
+
   function init() {
     applyAdminTabVisibility();
     initGuideLightbox();
+
+    if (localStorage.getItem(SETUP_DONE_KEY) !== "1") {
+      const setupDialog = document.getElementById("setup-dialog");
+      const setupDoneBtn = document.getElementById("setup-dialog-done");
+      const setupResetDaily = document.getElementById("setup-reset-daily");
+      const setupResetWeekly = document.getElementById("setup-reset-weekly");
+      if (setupDialog && setupDoneBtn) {
+        setupDialog.showModal();
+        setupDialog.addEventListener("cancel", (e) => e.preventDefault());
+        setupDoneBtn.addEventListener(
+          "click",
+          () => {
+            const daily = (setupResetDaily?.value || "never").toLowerCase();
+            const weekly = (setupResetWeekly?.value || "never").toLowerCase();
+            localStorage.setItem(SETUP_DONE_KEY, "1");
+            localStorage.setItem(SETUP_RESET_DAILY_KEY, daily);
+            localStorage.setItem(SETUP_RESET_WEEKLY_KEY, weekly);
+            setupDialog.close();
+            runRestOfInit();
+          },
+          { once: true }
+        );
+      } else {
+        runRestOfInit();
+      }
+      return;
+    }
+
+    runRestOfInit();
+  }
+
+  function runRestOfInit() {
     if (
       !form ||
       !input ||
@@ -2026,6 +2112,7 @@ window.HatopiaAppVersion = "1.0.23";
 
     loadFromStorage();
     renderTodos();
+    runAutoResetOnLoad();
     renderDraftSubtasks();
     applyGroupOrder();
 
@@ -2122,6 +2209,8 @@ window.HatopiaAppVersion = "1.0.23";
           if (resetCheckSeasonal?.checked) types.push("seasonal");
           if (resetCheckOther?.checked) types.push("other");
           resetAllToActive(types.length === 4 ? "all" : types);
+          if (resetCheckDaily?.checked) localStorage.setItem(LAST_DAILY_RESET_KEY, getCurrentGameDayStartGMT8());
+          if (resetCheckWeekly?.checked) localStorage.setItem(LAST_WEEKLY_RESET_KEY, getCurrentWeeklyResetStartGMT8());
           resetDialog.close();
         });
       }

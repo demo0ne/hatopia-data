@@ -1,4 +1,4 @@
-window.HatopiaShellVersion = "1.0.8";
+window.HatopiaShellVersion = "1.0.9";
 window.APP_SHELL_HTML = `
         <div class="app-shell">
             <div class="sticky-top">
@@ -610,6 +610,32 @@ window.APP_SHELL_HTML = `
             </form>
             <div class="data-dialog-actions">
                 <button type="button" id="add-task-dialog-cancel" class="btn ghost">Cancel</button>
+            </div>
+        </dialog>
+
+        <dialog id="setup-dialog" class="data-dialog data-dialog--setup" aria-labelledby="setup-dialog-title">
+            <h2 id="setup-dialog-title">Set Up</h2>
+            <p class="data-dialog-desc">Complete setup to use the site.</p>
+            <div class="setup-dialog-fields">
+                <label class="setup-dialog-row">
+                    <span class="setup-dialog-label">(Beta) Reset Daily Tasks at Daily 7am</span>
+                    <select id="setup-reset-daily" aria-label="Reset Daily Tasks">
+                        <option value="never">Never</option>
+                        <option value="always">Always</option>
+                        <option value="ask">Ask first</option>
+                    </select>
+                </label>
+                <label class="setup-dialog-row">
+                    <span class="setup-dialog-label">(Beta) Reset Weekly Tasks every Saturday 7am</span>
+                    <select id="setup-reset-weekly" aria-label="Reset Weekly Tasks">
+                        <option value="never">Never</option>
+                        <option value="always">Always</option>
+                        <option value="ask">Ask first</option>
+                    </select>
+                </label>
+            </div>
+            <div class="data-dialog-actions">
+                <button type="button" id="setup-dialog-done" class="btn primary">Done</button>
             </div>
         </dialog>
 

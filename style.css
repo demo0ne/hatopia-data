@@ -1,6 +1,6 @@
 /* Light theme (pink) - default */
 :root {
-  --hatopia-version: "1.0.36";
+  --hatopia-version: "1.0.37";
   --bg: #fdf2f8;
   --bg-elevated: #fce7ef;
   --bg-elevated-soft: #fbcfe8;
@@ -541,6 +541,36 @@ html[data-theme="dark"] .btn-circle--reset:hover {
   width: 18px;
   height: 18px;
   accent-color: var(--accent);
+}
+
+/* Setup dialog */
+.setup-dialog-fields {
+  padding: 0 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.setup-dialog-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.setup-dialog-label {
+  font-weight: 500;
+}
+
+.setup-dialog-row select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-main);
+  max-width: 200px;
 }
 
 .add-task-form {
