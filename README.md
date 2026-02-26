@@ -2,6 +2,16 @@
 
 JSON and images for the Hatopia site. Use this as a **separate** GitHub repo so you can update content without redeploying the main site.
 
+## Last stable version
+
+| Component | Version |
+|-----------|---------|
+| App       | 1.0.29  |
+| Shell     | 1.0.13  |
+| Style     | 1.0.42  |
+
+*Versions in: `app.js`, `shell.js`, `style.css` (--hatopia-version).*
+
 ## Contents
 
 - **info.json** – Daily date, Roaming Oak, Flawless Flouride, and notes (Daily / Weekly / Seasonal / Other)

@@ -1,7 +1,7 @@
 /* Light theme default (white/light gray) - used as :root fallback and data-theme="light-default" */
 :root,
 html[data-theme="light-default"] {
-  --hatopia-version: "1.0.41";
+  --hatopia-version: "1.0.42";
   --bg: #f8fafc;
   --bg-elevated: #f1f5f9;
   --bg-elevated-soft: #e2e8f0;

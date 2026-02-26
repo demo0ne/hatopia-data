@@ -1,4 +1,4 @@
-window.HatopiaShellVersion = "1.0.12";
+window.HatopiaShellVersion = "1.0.13";
 window.APP_SHELL_HTML = `
         <div class="app-shell">
             <div class="sticky-top">
