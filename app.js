@@ -333,6 +333,7 @@ window.HatopiaAppVersion = "1.0.30";
 
   const SUBTASK_SOUND_URL = DATA_BASE + "sound/subtask.wav";
   const TADA_SOUND_URL = DATA_BASE + "sound/tada.wav";
+  const COMPLETE_SOUND_URL = DATA_BASE + "sound/complete.mp3";
 
   function playSound(url) {
     try {
@@ -355,7 +356,7 @@ window.HatopiaAppVersion = "1.0.30";
     if (wasIncomplete) {
       const groupTodos = todos.filter((t) => (t.group || "SEA") === groupId);
       const allComplete = groupTodos.length > 0 && groupTodos.every((t) => t.completed);
-      if (allComplete) playSound(TADA_SOUND_URL);
+      playSound(allComplete ? TADA_SOUND_URL : COMPLETE_SOUND_URL);
     }
     saveToStorage();
     renderTodos();
