@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.26";
+window.HatopiaAppVersion = "1.0.27";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";

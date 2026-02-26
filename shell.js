@@ -1,4 +1,4 @@
-window.HatopiaShellVersion = "1.0.10";
+window.HatopiaShellVersion = "1.0.11";
 window.APP_SHELL_HTML = `
         <div class="app-shell">
             <div class="sticky-top">
@@ -55,15 +55,6 @@ window.APP_SHELL_HTML = `
                             accept=".json"
                             style="display: none"
                         />
-                        <button
-                            type="button"
-                            id="btn-settings"
-                            class="btn btn-settings"
-                            aria-label="Settings"
-                            title="Settings"
-                        >
-                            <span aria-hidden="true">⚙️</span>
-                        </button>
                         <div class="theme-toggle-wrap">
                             <span class="theme-toggle-label" aria-hidden="true">☀️</span>
                             <button
@@ -79,6 +70,15 @@ window.APP_SHELL_HTML = `
                             </button>
                             <span class="theme-toggle-label" aria-hidden="true">🌙</span>
                         </div>
+                        <button
+                            type="button"
+                            id="btn-settings"
+                            class="btn btn-settings"
+                            aria-label="Settings"
+                            title="Settings"
+                        >
+                            <span aria-hidden="true">⚙️</span>
+                        </button>
                     </div>
                 </header>
             </div>
