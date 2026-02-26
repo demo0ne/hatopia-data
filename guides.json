@@ -117,12 +117,6 @@
           "url": "https://docs.google.com/spreadsheets/d/1aQhlEsigEA1Kbybvnm8J1RIygAwFQ1xLLE4c9Z_2IaI/edit?gid=900749870#gid=900749870",
           "text": "",
           "image": ""
-        },
-        {
-          "title": "test URL",
-          "image": "",
-          "text": "just a test url",
-          "url": "https://www.google.com/"
         }
       ]
     },
@@ -132,11 +126,19 @@
       "items": [
         {
           "title": "a branch",
-          "image": "a branch.png"
+          "image": "a branch.png",
+          "text": "test",
+          "url": ""
         },
         {
           "title": "albert why",
-          "image": "albert why.png"
+          "image": "albert why.png",
+          "text": "test",
+          "url": ""
+        },
+        {
+          "title": "Test Url",
+          "url": "https://www.google.com"
         }
       ]
     }
