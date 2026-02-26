@@ -138,7 +138,9 @@
         },
         {
           "title": "Test Url",
-          "url": "https://www.google.com"
+          "url": "https://www.google.com",
+          "text": "something",
+          "image": ""
         }
       ]
     }
