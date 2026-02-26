@@ -1,4 +1,4 @@
-window.HatopiaAppVersion = "1.0.25";
+window.HatopiaAppVersion = "1.0.26";
 (() => {
   const STORAGE_KEY = "hatopia_todos_v1";
   const SEA_ONLY_KEY = "hatopia_sea_only";
@@ -2003,7 +2003,8 @@ window.HatopiaAppVersion = "1.0.25";
       const appVer = window.HatopiaAppVersion || "—";
       const shellVer = window.HatopiaShellVersion || "—";
       const versionText = `app ${appVer} · shell ${shellVer} · style ${styleVer}`;
-      el.textContent = versionText;
+      const versionLines = `app: ${appVer}\nshell: ${shellVer}\nstyle: ${styleVer}`;
+      el.innerHTML = "<div class=\"hatopia-version-toast-title\">Versions</div><pre class=\"hatopia-version-toast-details\">" + versionLines.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</pre>";
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(versionText).catch(() => {});
       }
