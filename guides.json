@@ -149,6 +149,12 @@
       "label": "\uD83C\uDF38 Flowers",
       "items": [
         {
+          "title": "08_highland_poppy",
+          "image": "08_highland_poppy.jpg",
+          "text": "",
+          "url": ""
+        },
+        {
           "title": "06_morning_glory",
           "image": "06_morning_glory.jpg",
           "text": "",
@@ -187,12 +193,6 @@
         {
           "title": "01_laceleaf",
           "image": "01_laceleaf.jpg",
-          "text": "",
-          "url": ""
-        },
-        {
-          "title": "08_highland_poppy",
-          "image": "08_highland_poppy.jpg",
           "text": "",
           "url": ""
         }
