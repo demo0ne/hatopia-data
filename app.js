@@ -1595,6 +1595,25 @@ window.HatopiaAppVersion = "1.0.27";
         const cardsRow = document.createElement("div");
         cardsRow.className = "info-value-cards-row";
 
+        const weatherCard = document.createElement("div");
+        weatherCard.className = "info-value-card card";
+        const weatherTitle = document.createElement("h2");
+        weatherTitle.className = "weather-card-title";
+        weatherTitle.textContent = "Weather";
+        const weatherWrap = document.createElement("div");
+        weatherWrap.id = "weather-card-image-wrap";
+        weatherWrap.className = "admin-value-card-image-wrap";
+        weatherWrap.setAttribute("title", "");
+        const weatherImg = document.createElement("img");
+        weatherImg.id = "weather-card-img";
+        weatherImg.className = "admin-value-card-img";
+        weatherImg.src = "";
+        weatherImg.alt = "Weather";
+        weatherWrap.appendChild(weatherImg);
+        weatherCard.appendChild(weatherTitle);
+        weatherCard.appendChild(weatherWrap);
+        cardsRow.appendChild(weatherCard);
+
         const roamingCard = document.createElement("div");
         roamingCard.className = "info-value-card card";
         const roamingTitle = document.createElement("h2");
@@ -1687,6 +1706,7 @@ window.HatopiaAppVersion = "1.0.27";
       container.appendChild(sectionEl);
     });
 
+    syncWeatherCard();
     infoPanelLoaded = true;
   }
 
@@ -1720,8 +1740,11 @@ window.HatopiaAppVersion = "1.0.27";
     if (!img || !wrap) return;
     const name = getResolvedWeatherImage();
     const slot = getCurrentWeatherTimeSlotGMT8();
+    const weather = infoData && infoData.daily && infoData.daily.weather ? infoData.daily.weather : {};
+    const override = String(weather[slot] || "").trim();
+    const weatherLabel = override ? override.charAt(0).toUpperCase() + override.slice(1).toLowerCase() : "Sunny";
     img.src = DATA_BASE + "images/info/weather/" + name + ".png";
-    wrap.setAttribute("title", "Weather: " + slot + (name !== slot ? " (" + name + ")" : ""));
+    wrap.setAttribute("title", "Time: " + slot + "\nWeather: " + weatherLabel);
   }
 
   function syncUploadsReadonly() {
@@ -1764,7 +1787,6 @@ window.HatopiaAppVersion = "1.0.27";
       flawlessImageWrap.setAttribute("title", flawlessTooltip);
       flawlessImageWrap.setAttribute("aria-label", flawlessCurrent ? "Current" : "Expired");
     }
-    syncWeatherCard();
   }
 
   function removeUploadedItem(id) {
@@ -1958,6 +1980,18 @@ window.HatopiaAppVersion = "1.0.27";
     });
   }
 
+  function updateTabIndicator() {
+    const indicator = document.querySelector(".tab-nav-indicator");
+    const selected = document.querySelector(".tab-btn.is-selected");
+    if (!indicator || !selected) return;
+    const nav = selected.closest(".tab-nav");
+    if (!nav) return;
+    const navRect = nav.getBoundingClientRect();
+    const btnRect = selected.getBoundingClientRect();
+    indicator.style.left = (btnRect.left - navRect.left) + "px";
+    indicator.style.width = btnRect.width + "px";
+  }
+
   function initTabsAndFlowers() {
     const tabBtns = document.querySelectorAll(".tab-btn");
     const panelDashboard = document.getElementById("panel-dashboard");
@@ -1965,6 +1999,8 @@ window.HatopiaAppVersion = "1.0.27";
     const panelInfo = document.getElementById("panel-info");
     const panelUploads = document.getElementById("panel-uploads");
     if (!panelDashboard || !panelGuides || !panelInfo || !panelUploads) return;
+    requestAnimationFrame(updateTabIndicator);
+    window.addEventListener("resize", updateTabIndicator);
     tabBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
         const panelId = btn.getAttribute("data-panel");
@@ -1972,12 +2008,16 @@ window.HatopiaAppVersion = "1.0.27";
           b.classList.toggle("is-selected", b === btn);
           b.setAttribute("aria-selected", b === btn ? "true" : "false");
         });
+        updateTabIndicator();
         panelDashboard.hidden = panelId !== "dashboard";
         panelGuides.hidden = panelId !== "guides";
         panelInfo.hidden = panelId !== "info";
         panelUploads.hidden = panelId !== "uploads";
         if (panelId === "guides") loadGuidesPanel();
-        if (panelId === "info") loadInfoPanel();
+        if (panelId === "info") {
+          loadInfoPanel();
+          syncWeatherCard();
+        }
         if (panelId === "uploads") {
           syncUploadsReadonly();
           if (!uploadsPanelInitialized) {

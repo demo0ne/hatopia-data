@@ -594,6 +594,24 @@ html[data-theme="dark"] .btn-circle--reset:hover {
   padding: 8px 10px;
   font-size: 1.1rem;
   min-width: 40px;
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border-subtle);
+}
+
+.btn-settings:hover {
+  background: var(--accent-soft);
+  color: var(--text-main);
+  border-color: var(--accent);
+}
+
+html[data-theme="light"] .btn-settings {
+  color: var(--text-main);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+html[data-theme="light"] .btn-settings:hover {
+  color: var(--accent);
 }
 
 .add-task-form {
@@ -1571,6 +1589,19 @@ html[data-theme="dark"] .theme-toggle-thumb {
   align-items: center;
   gap: 2px;
   padding: 0;
+  position: relative;
+}
+
+.tab-nav-indicator {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: calc(100% - 8px);
+  border-radius: 10px;
+  background: var(--accent-soft);
+  pointer-events: none;
+  z-index: 0;
+  transition: left var(--transition-med), width var(--transition-med);
 }
 
 .app-header .tab-nav {
@@ -1583,6 +1614,8 @@ html[data-theme="dark"] .theme-toggle-thumb {
 }
 
 .tab-btn {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1608,7 +1641,6 @@ html[data-theme="light"] .tab-btn:hover {
 
 .tab-btn.is-selected {
   color: var(--accent-strong);
-  background: var(--accent-soft);
 }
 
 .tab-icon {

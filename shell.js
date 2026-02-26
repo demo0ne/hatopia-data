@@ -15,6 +15,7 @@ window.APP_SHELL_HTML = `
                         </div>
                     </div>
                     <nav class="tab-nav" role="tablist" aria-label="Main">
+                        <span class="tab-nav-indicator" aria-hidden="true"></span>
                         <button type="button" class="tab-btn is-selected" role="tab" id="tab-info-btn" aria-selected="true" aria-controls="panel-info" data-panel="info">
                             <span class="tab-icon" aria-hidden="true">ℹ️</span>
                             <span class="tab-label">Info</span>
@@ -341,15 +342,6 @@ window.APP_SHELL_HTML = `
                 hidden
             >
                 <section class="uploads-page">
-                    <!-- Weather card (top) -->
-                    <div class="uploads-weather-card-row">
-                        <div class="uploads-section uploads-section--weather-card card">
-                            <h2 class="weather-card-title">Weather</h2>
-                            <div id="weather-card-image-wrap" class="admin-value-card-image-wrap" title="">
-                                <img id="weather-card-img" src="" alt="Weather" class="admin-value-card-img" />
-                            </div>
-                        </div>
-                    </div>
                     <!-- Row A: Roaming / Flawless (read-only) + Include in Message -->
                     <div class="uploads-section uploads-section--row-a card">
                         <div class="uploads-row uploads-row--readonly">
