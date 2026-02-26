@@ -143,6 +143,60 @@
           "image": ""
         }
       ]
+    },
+    {
+      "id": "flowers2",
+      "label": "\uD83C\uDF38 Flowers",
+      "items": [
+        {
+          "title": "06_morning_glory",
+          "image": "06_morning_glory.jpg",
+          "text": "",
+          "url": ""
+        },
+        {
+          "title": "02_corn_poppy",
+          "image": "02_corn_poppy.jpg",
+          "text": "",
+          "url": ""
+        },
+        {
+          "title": "05_calla_lily",
+          "image": "05_calla_lily.jpg",
+          "text": "",
+          "url": ""
+        },
+        {
+          "title": "04_pansy",
+          "image": "04_pansy.jpg",
+          "text": "",
+          "url": ""
+        },
+        {
+          "title": "03_daisy",
+          "image": "03_daisy.jpg",
+          "text": "",
+          "url": ""
+        },
+        {
+          "title": "07_carnation",
+          "image": "07_carnation.jpg",
+          "text": "",
+          "url": ""
+        },
+        {
+          "title": "01_laceleaf",
+          "image": "01_laceleaf.jpg",
+          "text": "",
+          "url": ""
+        },
+        {
+          "title": "08_highland_poppy",
+          "image": "08_highland_poppy.jpg",
+          "text": "",
+          "url": ""
+        }
+      ]
     }
   ]
 }
