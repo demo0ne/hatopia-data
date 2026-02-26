@@ -2,13 +2,7 @@
 
 JSON and images for the Hatopia site. Use this as a **separate** GitHub repo so you can update content without redeploying the main site.
 
-## Last stable version
 
-| Component | Version | File |
-|-----------|---------|------|
-| App       | 1.0.30  | `app.js` (HatopiaAppVersion) |
-| Shell     | 1.0.13  | `shell.js` (HatopiaShellVersion) |
-| Style     | 1.0.42  | `style.css` (--hatopia-version) |
 
 ## Contents
 

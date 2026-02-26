@@ -34,28 +34,6 @@ window.APP_SHELL_HTML = `
                         </button>
                     </nav>
                     <div class="header-actions">
-                        <span class="header-action-hidden">
-                            <button
-                                type="button"
-                                id="export-tasks"
-                                class="btn export"
-                            >
-                                ⬆️ Export
-                            </button>
-                            <button
-                                type="button"
-                                id="import-tasks"
-                                class="btn import"
-                            >
-                                ⬇️ Import
-                            </button>
-                        </span>
-                        <input
-                            type="file"
-                            id="import-file"
-                            accept=".json"
-                            style="display: none"
-                        />
                         <div class="theme-dropdown-wrap" id="theme-dropdown-wrap">
                             <button type="button" id="theme-mode-btn" class="theme-mode-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Theme mode" title="Theme: Light / Dark / System">🎨</button>
                             <div id="theme-mode-listbox" class="theme-mode-listbox" role="listbox" aria-label="Theme mode" hidden>
@@ -337,7 +315,20 @@ window.APP_SHELL_HTML = `
                 aria-labelledby="tab-uploads-btn"
                 hidden
             >
+                <input
+                    type="file"
+                    id="import-file"
+                    accept=".json"
+                    style="display: none"
+                />
                 <section class="uploads-page">
+                    <!-- Row A0: Export / Import tasks -->
+                    <div class="uploads-section uploads-section--row-a0 card">
+                        <div class="uploads-row uploads-task-data-row">
+                            <button type="button" id="export-tasks" class="btn export">⬆️ Export</button>
+                            <button type="button" id="import-tasks" class="btn import">⬇️ Import</button>
+                        </div>
+                    </div>
                     <!-- Row A: Roaming / Flawless (read-only) + Include in Message -->
                     <div class="uploads-section uploads-section--row-a card">
                         <div class="uploads-row uploads-row--readonly">
